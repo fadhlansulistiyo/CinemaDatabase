@@ -1,4 +1,4 @@
-package com.fadhlansulistiyo.cinemadatabase.ui.search
+package com.fadhlansulistiyo.cinemadatabase.presenter.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentDashboardBinding
 
-class DashboardFragment : Fragment() {
+class SearchFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
 
@@ -22,14 +22,14 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+        val searchViewModel =
+            ViewModelProvider(this).get(SearchViewModel::class.java)
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
+        searchViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

@@ -1,4 +1,4 @@
-package com.fadhlansulistiyo.cinemadatabase.ui.profile
+package com.fadhlansulistiyo.cinemadatabase.presenter.profile
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
