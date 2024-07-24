@@ -1,12 +1,16 @@
 package com.fadhlansulistiyo.cinemadatabase.core.utils
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.MovieEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.TvEntity
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.MovieResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.TvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.Movie
+import com.fadhlansulistiyo.cinemadatabase.core.domain.Tv
 
 object DataMapper {
 
-    fun mapResponsesToEntities(input: List<MovieResponse>): List<MovieEntity> {
+    // Map MovieResponse to MovieEntity
+    fun mapMovieResponsesToEntities(input: List<MovieResponse>): List<MovieEntity> {
         val movieList = ArrayList<MovieEntity>()
         input.map {
             val movie = MovieEntity(
@@ -22,7 +26,25 @@ object DataMapper {
         return movieList
     }
 
-    fun mapEntitiesToDomain(input: List<MovieEntity>): List<Movie> =
+    // Map TvResponse to TvEntity
+    fun mapTvResponsesToEntities(input: List<TvResponse>): List<TvEntity> {
+        val tvList = ArrayList<TvEntity>()
+        input.map {
+            val tv = TvEntity(
+                id = it.id,
+                name = it.name,
+                posterPath = it.posterPath,
+                firstAirDate = it.firstAirDate,
+                voteAverage = it.voteAverage,
+                isBookmarked = false
+            )
+            tvList.add(tv)
+        }
+        return tvList
+    }
+
+    // Map MovieEntity to Movie
+    fun mapMovieEntitiesToDomain(input: List<MovieEntity>): List<Movie> =
         input.map {
             Movie(
                 id = it.id,
@@ -34,11 +56,35 @@ object DataMapper {
             )
         }
 
-    fun mapDomainToEntity(input: Movie) = MovieEntity(
+    // Map TvEntity to Tv
+    fun mapTvEntitiesToDomain(input: List<TvEntity>): List<Tv> =
+        input.map {
+            Tv(
+                id = it.id,
+                name = it.name,
+                posterPath = it.posterPath,
+                firstAirDate = it.firstAirDate,
+                voteAverage = it.voteAverage,
+                isBookmarked = it.isBookmarked
+            )
+        }
+
+    // Map Movie to MovieEntity
+    fun mapMovieDomainToEntity(input: Movie) = MovieEntity(
         id = input.id,
         title = input.title,
         posterPath = input.posterPath,
         releaseDate = input.releaseDate,
+        voteAverage = input.voteAverage,
+        isBookmarked = input.isBookmarked
+    )
+
+    // Map Tv to TvEntity
+    fun mapTvDomainToEntity(input: Tv) = TvEntity(
+        id = input.id,
+        name = input.name,
+        posterPath = input.posterPath,
+        firstAirDate = input.firstAirDate,
         voteAverage = input.voteAverage,
         isBookmarked = input.isBookmarked
     )

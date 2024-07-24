@@ -9,4 +9,5 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(cinemaUseCase: CinemaUseCase) : ViewModel() {
     val getNowPlaying = cinemaUseCase.getNowPlaying().asLiveData()
+    val getAiringTodayTv = cinemaUseCase.getAiringTodayTv().asLiveData()
 }

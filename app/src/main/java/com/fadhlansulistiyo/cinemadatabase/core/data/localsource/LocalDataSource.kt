@@ -9,9 +9,13 @@ class LocalDataSource @Inject constructor(private val cinemaDao: CinemaDao) {
 
     fun getAllMovie(): Flow<List<MovieEntity>> = cinemaDao.getAllMovie()
 
+    fun getAllTv(): Flow<List<TvEntity>> = cinemaDao.getAllTv()
+
     fun getBookmarkedMovie(): Flow<List<MovieEntity>> = cinemaDao.getBookmarkedMovie()
 
     suspend fun insertMovie(movie: List<MovieEntity>) = cinemaDao.insertMovies(movie)
+
+    suspend fun insertTv(tv: List<TvEntity>) = cinemaDao.insertTv(tv)
 
     fun setBookmarkedMovie(movie: MovieEntity, newState: Boolean) {
         movie.isBookmarked = newState

@@ -19,7 +19,7 @@ class DatabaseModule {
     fun provideDatabase(@ApplicationContext context: Context): CinemaDatabase = Room.databaseBuilder(
         context,
         CinemaDatabase::class.java, "Cinema.db"
-    ).fallbackToDestructiveMigrationFrom().build()
+    ).fallbackToDestructiveMigration().build()
 
     @Provides
     fun provideCinemaDao(database: CinemaDatabase) = database.cinemaDao()

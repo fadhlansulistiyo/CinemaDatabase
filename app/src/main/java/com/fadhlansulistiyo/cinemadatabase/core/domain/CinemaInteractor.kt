@@ -10,6 +10,10 @@ class CinemaInteractor @Inject constructor(private val cinemaRepository: ICinema
         return cinemaRepository.getNowPlaying()
     }
 
+    override fun getAiringTodayTv(): Flow<Resource<List<Tv>>> {
+        return cinemaRepository.getAiringTodayTv()
+    }
+
     override fun getBookmarkedMovie(): Flow<List<Movie>> {
         return cinemaRepository.getBookmarkedMovie()
     }

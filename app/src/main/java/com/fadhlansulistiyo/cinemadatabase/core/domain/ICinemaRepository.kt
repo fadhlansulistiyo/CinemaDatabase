@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ICinemaRepository {
     fun getNowPlaying(): Flow<Resource<List<Movie>>>
+    fun getAiringTodayTv(): Flow<Resource<List<Tv>>>
     fun getBookmarkedMovie(): Flow<List<Movie>>
     fun setBookmarkedMovie(movie: Movie, state: Boolean)
 }

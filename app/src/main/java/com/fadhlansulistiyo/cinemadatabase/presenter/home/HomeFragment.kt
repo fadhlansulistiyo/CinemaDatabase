@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.ui.MovieAdapter
+import com.fadhlansulistiyo.cinemadatabase.core.ui.TvAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,10 +49,33 @@ class HomeFragment : Fragment() {
                         is Resource.Loading -> {
                             binding.progressBarNowPlaying.visibility = View.VISIBLE
                         }
+
                         is Resource.Success -> {
                             binding.progressBarNowPlaying.visibility = View.GONE
                             movieAdapter.submitList(movies.data)
                             binding.rvNowPlaying.adapter = movieAdapter
+                        }
+
+                        is Resource.Error -> {
+                            binding.progressBarNowPlaying.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+
+            val tvAdapter = TvAdapter()
+            binding.rvAiringTodayTv.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+            viewModel.getAiringTodayTv.observe(viewLifecycleOwner) { tv ->
+                if (tv != null) {
+                    when (tv) {
+                        is Resource.Loading -> {
+                            binding.progressBarNowPlaying.visibility = View.VISIBLE
+                        }
+                        is Resource.Success -> {
+                            tvAdapter.submitList(tv.data)
+                            binding.rvAiringTodayTv.adapter = tvAdapter
                         }
                         is Resource.Error -> {
                             binding.progressBarNowPlaying.visibility = View.GONE

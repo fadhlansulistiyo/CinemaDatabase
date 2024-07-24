@@ -4,8 +4,10 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.LocalDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.RemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.MovieResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.TvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.ICinemaRepository
 import com.fadhlansulistiyo.cinemadatabase.core.domain.Movie
+import com.fadhlansulistiyo.cinemadatabase.core.domain.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.utils.AppExecutors
 import com.fadhlansulistiyo.cinemadatabase.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +26,7 @@ class CinemaRepository @Inject constructor(
         object : NetworkBoundResource<List<Movie>, List<MovieResponse>>() {
             override fun loadFromDB(): Flow<List<Movie>> {
                 return localDataSource.getAllMovie().map {
-                    DataMapper.mapEntitiesToDomain(it)
+                    DataMapper.mapMovieEntitiesToDomain(it)
                 }
             }
 
@@ -33,7 +35,7 @@ class CinemaRepository @Inject constructor(
             }
 
             override suspend fun saveCallResult(data: List<MovieResponse>) {
-                val movieList = DataMapper.mapResponsesToEntities(data)
+                val movieList = DataMapper.mapMovieResponsesToEntities(data)
                 localDataSource.insertMovie(movieList)
             }
 
@@ -43,14 +45,36 @@ class CinemaRepository @Inject constructor(
 
         }.asFlow()
 
+    override fun getAiringTodayTv(): Flow<Resource<List<Tv>>> =
+        object : NetworkBoundResource<List<Tv>, List<TvResponse>>() {
+            override fun loadFromDB(): Flow<List<Tv>> {
+                return localDataSource.getAllTv().map {
+                    DataMapper.mapTvEntitiesToDomain(it)
+                }
+            }
+
+            override suspend fun createCall(): Flow<ApiResponseResult<List<TvResponse>>> {
+                return remoteDataSource.getAiringTodayTv()
+            }
+
+            override suspend fun saveCallResult(data: List<TvResponse>) {
+                val tvList = DataMapper.mapTvResponsesToEntities(data)
+                localDataSource.insertTv(tvList)
+            }
+
+            override fun shouldFetch(data: List<Tv>?): Boolean {
+                return data.isNullOrEmpty()
+            }
+        }.asFlow()
+
     override fun getBookmarkedMovie(): Flow<List<Movie>> {
         return localDataSource.getBookmarkedMovie().map {
-            DataMapper.mapEntitiesToDomain(it)
+            DataMapper.mapMovieEntitiesToDomain(it)
         }
     }
 
     override fun setBookmarkedMovie(movie: Movie, state: Boolean) {
-        val movieEntity = DataMapper.mapDomainToEntity(movie)
+        val movieEntity = DataMapper.mapMovieDomainToEntity(movie)
         appExecutors.diskIO().execute { localDataSource.setBookmarkedMovie(movieEntity, state) }
     }
 
