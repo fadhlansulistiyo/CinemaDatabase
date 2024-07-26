@@ -1,6 +1,7 @@
 package com.fadhlansulistiyo.cinemadatabase.core.domain
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
@@ -19,6 +20,10 @@ class CinemaInteractor @Inject constructor(private val cinemaRepository: ICinema
 
     override fun getTrendingPeople(): Flow<Resource<List<People>>> {
         return cinemaRepository.getTrendingPeople()
+    }
+
+    override suspend fun getDetailMovie(movieId: Int): Resource<DetailMovie> {
+        return cinemaRepository.getDetailMovie(movieId)
     }
 
     override fun getBookmarkedMovie(): Flow<List<Movie>> {

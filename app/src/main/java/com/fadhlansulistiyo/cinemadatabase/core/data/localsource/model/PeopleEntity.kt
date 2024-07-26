@@ -1,4 +1,4 @@
-package com.fadhlansulistiyo.cinemadatabase.core.data.localsource
+package com.fadhlansulistiyo.cinemadatabase.core.data.localsource.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

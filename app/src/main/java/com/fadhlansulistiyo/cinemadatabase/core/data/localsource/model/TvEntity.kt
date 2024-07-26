@@ -1,4 +1,4 @@
-package com.fadhlansulistiyo.cinemadatabase.core.data.localsource
+package com.fadhlansulistiyo.cinemadatabase.core.data.localsource.model
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

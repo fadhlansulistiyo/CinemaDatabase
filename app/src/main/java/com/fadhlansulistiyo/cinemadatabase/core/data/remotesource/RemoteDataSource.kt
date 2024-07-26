@@ -1,7 +1,9 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.remotesource
 
+import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiService
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailMovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.MovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.PeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.TvResponse
@@ -61,5 +63,15 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                 emit(ApiResponseResult.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getDetailMovie(movieId: Int): ApiResponseResult<DetailMovieResponse> {
+        return try {
+            val response = apiService.getDetailMovie(movieId, API_KEY)
+            Log.d("RemoteDataSource", "RemoteDataSource, getDetailMovie: $response")
+            ApiResponseResult.Success(response)
+        } catch (e: Exception) {
+            ApiResponseResult.Error(e.toString())
+        }
     }
 }

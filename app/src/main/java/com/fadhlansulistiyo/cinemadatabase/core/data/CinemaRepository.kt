@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data
 
+import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.LocalDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.RemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
@@ -7,12 +8,17 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.PeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.TvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.ICinemaRepository
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.utils.AppExecutors
 import com.fadhlansulistiyo.cinemadatabase.core.utils.DataMapper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -91,6 +97,21 @@ class CinemaRepository @Inject constructor(
             }
         }.asFlow()
 
+    override suspend fun getDetailMovie(movieId: Int): Resource<DetailMovie> {
+        return try {
+            when (val response = remoteDataSource.getDetailMovie(movieId)) {
+                is ApiResponseResult.Success -> {
+                    val movie = DataMapper.mapDetailMovieResponseToDomain(response.data)
+                    Log.d("CinemaRepository", "CinemaRepository, getDetailMovie: $movie")
+                    Resource.Success(movie)
+                }
+                is ApiResponseResult.Empty -> Resource.Error("No Data")
+                is ApiResponseResult.Error -> Resource.Error(response.errorMessage)
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.toString())
+        }
+    }
 
     override fun getBookmarkedMovie(): Flow<List<Movie>> {
         return localDataSource.getBookmarkedMovie().map {

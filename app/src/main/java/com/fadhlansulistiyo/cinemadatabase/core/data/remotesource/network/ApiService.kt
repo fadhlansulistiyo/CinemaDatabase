@@ -1,9 +1,11 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network
 
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailMovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.ListMovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.ListPeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.ListTvResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -21,4 +23,10 @@ interface ApiService {
     suspend fun getTrendingPeople(
         @Query("api_key") apiKey: String
     ): ListPeopleResponse
+
+    @GET("movie/{movie_id}")
+    suspend fun getDetailMovie(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): DetailMovieResponse
 }

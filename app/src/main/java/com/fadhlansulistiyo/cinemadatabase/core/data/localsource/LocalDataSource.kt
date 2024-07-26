@@ -1,5 +1,8 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.localsource
 
+import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.model.MovieEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.model.PeopleEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.model.TvEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton

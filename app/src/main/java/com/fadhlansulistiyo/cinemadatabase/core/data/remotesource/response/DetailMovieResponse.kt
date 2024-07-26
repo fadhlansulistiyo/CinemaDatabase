@@ -4,51 +4,51 @@ import com.google.gson.annotations.SerializedName
 
 data class DetailMovieResponse(
 
-	@field:SerializedName("id")
-	val id: Int? = null,
+    @field:SerializedName("id")
+	val id: Int,
 
-	@field:SerializedName("title")
+    @field:SerializedName("title")
 	val title: String? = null,
 
-	@field:SerializedName("original_title")
+    @field:SerializedName("original_title")
 	val originalTitle: String? = null,
 
-	@field:SerializedName("overview")
+    @field:SerializedName("overview")
 	val overview: String? = null,
 
-	@field:SerializedName("runtime")
+    @field:SerializedName("runtime")
 	val runtime: Int? = null,
 
-	@field:SerializedName("backdrop_path")
+    @field:SerializedName("backdrop_path")
 	val backdropPath: String? = null,
 
-	@field:SerializedName("revenue")
+    @field:SerializedName("revenue")
 	val revenue: Int? = null,
 
-	@field:SerializedName("release_date")
+    @field:SerializedName("release_date")
 	val releaseDate: String? = null,
 
-	@field:SerializedName("genres")
+    @field:SerializedName("genres")
 	val genres: List<GenresItem?>? = null,
 
-	@field:SerializedName("popularity")
+    @field:SerializedName("popularity")
 	val popularity: Double? = null,
 
-	@field:SerializedName("vote_count")
+    @field:SerializedName("vote_count")
 	val voteCount: Int? = null,
 
-	@field:SerializedName("budget")
+    @field:SerializedName("budget")
 	val budget: Int? = null,
 
-	@field:SerializedName("poster_path")
+    @field:SerializedName("poster_path")
 	val posterPath: String? = null,
 
-	@field:SerializedName("production_companies")
-	val productionCompanies: List<ProductionCompaniesItem?>? = null,
+    @field:SerializedName("production_companies")
+	val productionCompanies: List<ProductionCompaniesResponse?>? = null,
 
-	@field:SerializedName("vote_average")
+    @field:SerializedName("vote_average")
 	val voteAverage: Double? = null,
 
-	@field:SerializedName("status")
+    @field:SerializedName("status")
 	val status: String? = null
 )

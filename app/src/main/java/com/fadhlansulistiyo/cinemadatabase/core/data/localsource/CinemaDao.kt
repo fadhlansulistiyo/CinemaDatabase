@@ -5,6 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.model.MovieEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.model.PeopleEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.model.TvEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
