@@ -1,34 +1,28 @@
-package com.fadhlansulistiyo.cinemadatabase.core.data
+package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 
 import android.util.Log
+import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
+import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.LocalDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.RemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.MovieResponse
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.PeopleResponse
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.TvResponse
-import com.fadhlansulistiyo.cinemadatabase.core.domain.ICinemaRepository
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
+import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
 import com.fadhlansulistiyo.cinemadatabase.core.utils.AppExecutors
 import com.fadhlansulistiyo.cinemadatabase.core.utils.DataMapper
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CinemaRepository @Inject constructor(
+class MovieRepository @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource,
     private val appExecutors: AppExecutors
-) : ICinemaRepository {
+) : IMovieRepository {
 
     override fun getNowPlaying(): Flow<Resource<List<Movie>>> =
         object : NetworkBoundResource<List<Movie>, List<MovieResponse>>() {
@@ -53,56 +47,11 @@ class CinemaRepository @Inject constructor(
 
         }.asFlow()
 
-    override fun getAiringTodayTv(): Flow<Resource<List<Tv>>> =
-        object : NetworkBoundResource<List<Tv>, List<TvResponse>>() {
-            override fun loadFromDB(): Flow<List<Tv>> {
-                return localDataSource.getAllTv().map {
-                    DataMapper.mapTvEntitiesToDomain(it)
-                }
-            }
-
-            override suspend fun createCall(): Flow<ApiResponseResult<List<TvResponse>>> {
-                return remoteDataSource.getAiringTodayTv()
-            }
-
-            override suspend fun saveCallResult(data: List<TvResponse>) {
-                val tvList = DataMapper.mapTvResponsesToEntities(data)
-                localDataSource.insertTv(tvList)
-            }
-
-            override fun shouldFetch(data: List<Tv>?): Boolean {
-                return data.isNullOrEmpty()
-            }
-        }.asFlow()
-
-    override fun getTrendingPeople(): Flow<Resource<List<People>>> =
-        object : NetworkBoundResource<List<People>, List<PeopleResponse>>() {
-            override fun loadFromDB(): Flow<List<People>> {
-                return localDataSource.getAllPeople().map {
-                    DataMapper.mapPeopleEntitiesToDomain(it)
-                }
-            }
-
-            override suspend fun createCall(): Flow<ApiResponseResult<List<PeopleResponse>>> {
-                return remoteDataSource.getTrendingPeople()
-            }
-
-            override suspend fun saveCallResult(data: List<PeopleResponse>) {
-                val peopleList = DataMapper.mapPeopleResponsesToEntities(data)
-                localDataSource.insertPeople(peopleList)
-            }
-
-            override fun shouldFetch(data: List<People>?): Boolean {
-                return data.isNullOrEmpty()
-            }
-        }.asFlow()
-
     override suspend fun getDetailMovie(movieId: Int): Resource<DetailMovie> {
         return try {
             when (val response = remoteDataSource.getDetailMovie(movieId)) {
                 is ApiResponseResult.Success -> {
                     val movie = DataMapper.mapDetailMovieResponseToDomain(response.data)
-                    Log.d("CinemaRepository", "CinemaRepository, getDetailMovie: $movie")
                     Resource.Success(movie)
                 }
                 is ApiResponseResult.Empty -> Resource.Error("No Data")
@@ -123,5 +72,4 @@ class CinemaRepository @Inject constructor(
         val movieEntity = DataMapper.mapMovieDomainToEntity(movie)
         appExecutors.diskIO().execute { localDataSource.setBookmarkedMovie(movieEntity, state) }
     }
-
 }
