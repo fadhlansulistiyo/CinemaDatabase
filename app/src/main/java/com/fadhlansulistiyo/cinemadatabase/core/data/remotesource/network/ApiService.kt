@@ -1,6 +1,7 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.ListMovieResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.ListPeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.ListTvResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,4 +16,9 @@ interface ApiService {
     suspend fun getAiringTodayTv(
         @Query("api_key") apiKey: String
     ): ListTvResponse
+
+    @GET("trending/person/day")
+    suspend fun getTrendingPeople(
+        @Query("api_key") apiKey: String
+    ): ListPeopleResponse
 }

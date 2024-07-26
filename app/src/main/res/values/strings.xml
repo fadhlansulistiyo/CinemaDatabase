@@ -9,4 +9,5 @@
     <string name="content_desc_poster">Poster of the Movie</string>
     <string name="now_playing">Now Playing</string>
     <string name="airing_today_tv">Airing Today Tv</string>
+    <string name="trending_people">Trending People</string>
 </resources>

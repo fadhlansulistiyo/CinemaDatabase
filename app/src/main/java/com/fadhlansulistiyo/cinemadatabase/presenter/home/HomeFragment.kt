@@ -1,6 +1,7 @@
 package com.fadhlansulistiyo.cinemadatabase.presenter.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.ui.MovieAdapter
+import com.fadhlansulistiyo.cinemadatabase.core.ui.PeopleAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.TvAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,6 +78,28 @@ class HomeFragment : Fragment() {
                         is Resource.Success -> {
                             tvAdapter.submitList(tv.data)
                             binding.rvAiringTodayTv.adapter = tvAdapter
+                        }
+                        is Resource.Error -> {
+                            binding.progressBarNowPlaying.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+
+            val peopleAdapter = PeopleAdapter()
+            binding.rvTrendingPeople.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+            viewModel.getTrendingPeople.observe(viewLifecycleOwner) { people ->
+                if (people != null) {
+                    when (people) {
+                        is Resource.Loading -> {
+                            binding.progressBarNowPlaying.visibility = View.VISIBLE
+                        }
+                        is Resource.Success -> {
+                            peopleAdapter.submitList(people.data)
+                            Log.d("GetTrendingPeople", people.data.toString())
+                            binding.rvTrendingPeople.adapter = peopleAdapter
                         }
                         is Resource.Error -> {
                             binding.progressBarNowPlaying.visibility = View.GONE

@@ -4,10 +4,12 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.LocalDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.RemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.MovieResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.PeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.TvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.ICinemaRepository
-import com.fadhlansulistiyo.cinemadatabase.core.domain.Movie
-import com.fadhlansulistiyo.cinemadatabase.core.domain.Tv
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.utils.AppExecutors
 import com.fadhlansulistiyo.cinemadatabase.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
@@ -66,6 +68,29 @@ class CinemaRepository @Inject constructor(
                 return data.isNullOrEmpty()
             }
         }.asFlow()
+
+    override fun getTrendingPeople(): Flow<Resource<List<People>>> =
+        object : NetworkBoundResource<List<People>, List<PeopleResponse>>() {
+            override fun loadFromDB(): Flow<List<People>> {
+                return localDataSource.getAllPeople().map {
+                    DataMapper.mapPeopleEntitiesToDomain(it)
+                }
+            }
+
+            override suspend fun createCall(): Flow<ApiResponseResult<List<PeopleResponse>>> {
+                return remoteDataSource.getTrendingPeople()
+            }
+
+            override suspend fun saveCallResult(data: List<PeopleResponse>) {
+                val peopleList = DataMapper.mapPeopleResponsesToEntities(data)
+                localDataSource.insertPeople(peopleList)
+            }
+
+            override fun shouldFetch(data: List<People>?): Boolean {
+                return data.isNullOrEmpty()
+            }
+        }.asFlow()
+
 
     override fun getBookmarkedMovie(): Flow<List<Movie>> {
         return localDataSource.getBookmarkedMovie().map {

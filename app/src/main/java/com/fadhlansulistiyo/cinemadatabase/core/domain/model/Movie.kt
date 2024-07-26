@@ -1,4 +1,4 @@
-package com.fadhlansulistiyo.cinemadatabase.core.domain
+package com.fadhlansulistiyo.cinemadatabase.core.domain.model
 
 data class Movie(
     val id: Int,

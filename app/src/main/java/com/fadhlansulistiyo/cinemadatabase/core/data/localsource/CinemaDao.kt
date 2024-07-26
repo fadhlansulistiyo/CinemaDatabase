@@ -15,6 +15,9 @@ interface CinemaDao {
     @Query("SELECT * FROM tv")
     fun getAllTv(): Flow<List<TvEntity>>
 
+    @Query("SELECT * FROM people")
+    fun getAllPeople(): Flow<List<PeopleEntity>>
+
     @Query("SELECT * FROM movie where isBookmarked = 1")
     fun getBookmarkedMovie(): Flow<List<MovieEntity>>
 
@@ -23,6 +26,9 @@ interface CinemaDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTv(tv: List<TvEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPeople(people: List<PeopleEntity>)
 
     @Update
     fun updateBookmarkMovie(movie: MovieEntity)

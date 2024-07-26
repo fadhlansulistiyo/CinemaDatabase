@@ -10,4 +10,5 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(cinemaUseCase: CinemaUseCase) : ViewModel() {
     val getNowPlaying = cinemaUseCase.getNowPlaying().asLiveData()
     val getAiringTodayTv = cinemaUseCase.getAiringTodayTv().asLiveData()
+    val getTrendingPeople = cinemaUseCase.getTrendingPeople().asLiveData()
 }
