@@ -1,10 +1,9 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 
-import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.LocalDataSource
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.RemoteDataSource
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.datasource.MovieRemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.MovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
@@ -20,7 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class MovieRepository @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource,
+    private val remoteDataSource: MovieRemoteDataSource,
     private val appExecutors: AppExecutors
 ) : IMovieRepository {
 

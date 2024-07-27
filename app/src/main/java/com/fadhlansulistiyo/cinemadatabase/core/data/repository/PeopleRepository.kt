@@ -3,7 +3,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.LocalDataSource
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.RemoteDataSource
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.datasource.PeopleRemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.PeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 @Singleton
 class PeopleRepository @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource
+    private val remoteDataSource: PeopleRemoteDataSource
 ) : IPeopleRepository {
 
     override fun getTrendingPeople(): Flow<Resource<List<People>>> =

@@ -14,6 +14,7 @@ class HomeViewModel @Inject constructor(
     tvUseCase: TvUseCase,
     peopleUseCase: PeopleUseCase
 ) : ViewModel() {
+
     val getNowPlaying = movieUseCase.getNowPlaying().asLiveData()
     val getAiringTodayTv = tvUseCase.getAiringTodayTv().asLiveData()
     val getTrendingPeople = peopleUseCase.getTrendingPeople().asLiveData()

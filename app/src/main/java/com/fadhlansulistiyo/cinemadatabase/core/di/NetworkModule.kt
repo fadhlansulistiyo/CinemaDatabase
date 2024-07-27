@@ -1,6 +1,7 @@
 package com.fadhlansulistiyo.cinemadatabase.core.di
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiService
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -19,6 +20,20 @@ class NetworkModule {
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor { chain ->
+                val original = chain.request()
+                val originalHttpUrl = original.url
+
+                val url = originalHttpUrl.newBuilder()
+                    .addQueryParameter("api_key", CONSTANTS.API_KEY)
+                    .build()
+
+                val requestBuilder = original.newBuilder()
+                    .url(url)
+
+                val request = requestBuilder.build()
+                chain.proceed(request)
+            }
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
             .build()
