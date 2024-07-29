@@ -1,15 +1,17 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 
+import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.LocalDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.datasource.TvRemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.TvResponse
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.ITvRepository
 import com.fadhlansulistiyo.cinemadatabase.core.utils.AppExecutors
-import com.fadhlansulistiyo.cinemadatabase.core.utils.DataMapper
+import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.TvMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -26,7 +28,7 @@ class TvRepository @Inject constructor(
         object : NetworkBoundResource<List<Tv>, List<TvResponse>>() {
             override fun loadFromDB(): Flow<List<Tv>> {
                 return localDataSource.getAllTv().map {
-                    DataMapper.mapTvEntitiesToDomain(it)
+                    TvMapper.mapTvEntitiesToDomain(it)
                 }
             }
 
@@ -35,7 +37,7 @@ class TvRepository @Inject constructor(
             }
 
             override suspend fun saveCallResult(data: List<TvResponse>) {
-                val tvList = DataMapper.mapTvResponsesToEntities(data)
+                val tvList = TvMapper.mapTvResponsesToEntities(data)
                 localDataSource.insertTv(tvList)
             }
 
@@ -43,4 +45,28 @@ class TvRepository @Inject constructor(
                 return data.isNullOrEmpty()
             }
         }.asFlow()
+
+    override suspend fun getDetailTv(seriesId: Int): Resource<DetailTv> {
+        return try {
+            when (val response = remoteDataSource.getDetailTv(seriesId)) {
+                is ApiResponseResult.Success -> {
+                    val tv = TvMapper.mapDetailTvResponseToDomain(response.data)
+                    Log.d("TvRepository", "TvRepository: getTv: ${response.data}")
+                    Resource.Success(tv)
+                }
+                is ApiResponseResult.Empty -> {
+                    Log.d("TvRepository", "TvRepository: getTv: Empty")
+                    Resource.Error("No Data")
+                }
+                is ApiResponseResult.Error -> {
+                    Log.d("TvRepository", "TvRepository: getTv: ${response.errorMessage}")
+                    Resource.Error(response.errorMessage)
+                }
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.toString())
+        }
+    }
+
+
 }

@@ -87,5 +87,4 @@ class DetailMovieActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_MOVIE_ID = "extra_movie_id"
     }
-
 }

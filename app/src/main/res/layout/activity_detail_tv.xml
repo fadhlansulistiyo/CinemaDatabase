@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".presenter.detail.DetailTvActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+        <!-- TV Poster -->
+        <ImageView
+            android:id="@+id/posterImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars" />
+
+        <!-- TV Name -->
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="TV Name"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- TV Original Name -->
+        <TextView
+            android:id="@+id/originalNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Original Name"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <!-- First Air Date -->
+        <TextView
+            android:id="@+id/firstAirDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="First Air Date: 2020-01-01"
+            android:textSize="16sp" />
+
+        <!-- Last Air Date -->
+        <TextView
+            android:id="@+id/lastAirDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Last Air Date: 2023-01-01"
+            android:textSize="16sp" />
+
+        <!-- Number of Seasons -->
+        <TextView
+            android:id="@+id/numberOfSeasonsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Number of Seasons: 3"
+            android:textSize="16sp" />
+
+        <!-- Number of Episodes -->
+        <TextView
+            android:id="@+id/numberOfEpisodesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Number of Episodes: 30"
+            android:textSize="16sp" />
+
+        <!-- Episode Run Time -->
+        <TextView
+            android:id="@+id/episodeRunTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Episode Run Time: 45 min"
+            android:textSize="16sp" />
+
+        <!-- Genres -->
+        <TextView
+            android:id="@+id/genresTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Genres: Drama, Fantasy"
+            android:textSize="16sp" />
+
+        <!-- Overview -->
+        <TextView
+            android:id="@+id/overviewTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Overview: This is a TV show about..."
+            android:textSize="16sp" />
+
+        <!-- Popularity -->
+        <TextView
+            android:id="@+id/popularityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Popularity: 8.0"
+            android:textSize="16sp" />
+
+        <!-- Vote Average -->
+        <TextView
+            android:id="@+id/voteAverageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Vote Average: 8.5"
+            android:textSize="16sp" />
+
+        <!-- Vote Count -->
+        <TextView
+            android:id="@+id/voteCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Vote Count: 5000"
+            android:textSize="16sp" />
+
+        <!-- Status -->
+        <TextView
+            android:id="@+id/statusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Status: Running"
+            android:textSize="16sp" />
+
+        <!-- Production Companies -->
+        <TextView
+            android:id="@+id/productionCompaniesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Production Companies: ABC Studios"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</ScrollView>

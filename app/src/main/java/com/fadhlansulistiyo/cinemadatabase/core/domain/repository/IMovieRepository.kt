@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IMovieRepository {
     fun getNowPlaying(): Flow<Resource<List<Movie>>>
-    suspend fun getDetailMovie(movieId: Int): Resource<DetailMovie>
     fun getBookmarkedMovie(): Flow<List<Movie>>
     fun setBookmarkedMovie(movie: Movie, state: Boolean)
+    suspend fun getDetailMovie(movieId: Int): Resource<DetailMovie>
 }

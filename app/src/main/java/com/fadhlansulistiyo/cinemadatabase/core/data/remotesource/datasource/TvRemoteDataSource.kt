@@ -2,6 +2,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.datasource
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiService
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailTvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.TvResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -18,4 +19,9 @@ class TvRemoteDataSource @Inject constructor(private val apiService: ApiService)
         }
     }
 
+    suspend fun getDetailTv(seriesId: Int): ApiResponseResult<DetailTvResponse> {
+        return handleApiCall {
+            apiService.getDetailTv(seriesId)
+        }
+    }
 }

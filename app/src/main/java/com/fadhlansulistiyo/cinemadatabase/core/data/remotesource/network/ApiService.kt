@@ -7,7 +7,6 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.ListP
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.ListTvResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface ApiService {
     @GET("discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc")
@@ -24,8 +23,8 @@ interface ApiService {
         @Path("movie_id") movieId: Int
     ): DetailMovieResponse
 
-    @GET("tv/{tv_id}")
+    @GET("tv/{series_id}")
     suspend fun getDetailTv(
-        @Path("tv_id") tvId: Int
+        @Path("series_id") seriesId: Int
     ): DetailTvResponse
 }

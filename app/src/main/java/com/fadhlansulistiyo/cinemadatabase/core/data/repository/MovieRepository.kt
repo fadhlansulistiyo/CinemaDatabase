@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 
+import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.LocalDataSource
@@ -10,7 +11,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
 import com.fadhlansulistiyo.cinemadatabase.core.utils.AppExecutors
-import com.fadhlansulistiyo.cinemadatabase.core.utils.DataMapper
+import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.MovieMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -27,7 +28,7 @@ class MovieRepository @Inject constructor(
         object : NetworkBoundResource<List<Movie>, List<MovieResponse>>() {
             override fun loadFromDB(): Flow<List<Movie>> {
                 return localDataSource.getAllMovie().map {
-                    DataMapper.mapMovieEntitiesToDomain(it)
+                    MovieMapper.mapMovieEntitiesToDomain(it)
                 }
             }
 
@@ -36,7 +37,7 @@ class MovieRepository @Inject constructor(
             }
 
             override suspend fun saveCallResult(data: List<MovieResponse>) {
-                val movieList = DataMapper.mapMovieResponsesToEntities(data)
+                val movieList = MovieMapper.mapMovieResponsesToEntities(data)
                 localDataSource.insertMovie(movieList)
             }
 
@@ -50,11 +51,18 @@ class MovieRepository @Inject constructor(
         return try {
             when (val response = remoteDataSource.getDetailMovie(movieId)) {
                 is ApiResponseResult.Success -> {
-                    val movie = DataMapper.mapDetailMovieResponseToDomain(response.data)
+                    val movie = MovieMapper.mapDetailMovieResponseToDomain(response.data)
+                    Log.d("MovieRepository", "MovieRepository: getDetailMovie: ${response.data}")
                     Resource.Success(movie)
                 }
-                is ApiResponseResult.Empty -> Resource.Error("No Data")
-                is ApiResponseResult.Error -> Resource.Error(response.errorMessage)
+                is ApiResponseResult.Empty -> {
+                    Log.d("MovieRepository", "MovieRepository: No data")
+                    Resource.Error("No Data")
+                }
+                is ApiResponseResult.Error -> {
+                    Log.d("MovieRepository", "MovieRepository: ${response.errorMessage}")
+                    Resource.Error(response.errorMessage)
+                }
             }
         } catch (e: Exception) {
             Resource.Error(e.toString())
@@ -63,12 +71,12 @@ class MovieRepository @Inject constructor(
 
     override fun getBookmarkedMovie(): Flow<List<Movie>> {
         return localDataSource.getBookmarkedMovie().map {
-            DataMapper.mapMovieEntitiesToDomain(it)
+            MovieMapper.mapMovieEntitiesToDomain(it)
         }
     }
 
     override fun setBookmarkedMovie(movie: Movie, state: Boolean) {
-        val movieEntity = DataMapper.mapMovieDomainToEntity(movie)
+        val movieEntity = MovieMapper.mapMovieDomainToEntity(movie)
         appExecutors.diskIO().execute { localDataSource.setBookmarkedMovie(movieEntity, state) }
     }
 }

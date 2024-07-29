@@ -8,8 +8,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiRes
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.PeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IPeopleRepository
-import com.fadhlansulistiyo.cinemadatabase.core.utils.AppExecutors
-import com.fadhlansulistiyo.cinemadatabase.core.utils.DataMapper
+import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.PeopleMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -25,7 +24,7 @@ class PeopleRepository @Inject constructor(
         object : NetworkBoundResource<List<People>, List<PeopleResponse>>() {
             override fun loadFromDB(): Flow<List<People>> {
                 return localDataSource.getAllPeople().map {
-                    DataMapper.mapPeopleEntitiesToDomain(it)
+                    PeopleMapper.mapPeopleEntitiesToDomain(it)
                 }
             }
 
@@ -34,7 +33,7 @@ class PeopleRepository @Inject constructor(
             }
 
             override suspend fun saveCallResult(data: List<PeopleResponse>) {
-                val peopleList = DataMapper.mapPeopleResponsesToEntities(data)
+                val peopleList = PeopleMapper.mapPeopleResponsesToEntities(data)
                 localDataSource.insertPeople(peopleList)
             }
 
