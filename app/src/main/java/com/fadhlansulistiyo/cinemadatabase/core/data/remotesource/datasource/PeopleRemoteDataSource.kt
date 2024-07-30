@@ -2,6 +2,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.datasource
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiService
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailPeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.PeopleResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -15,6 +16,12 @@ class PeopleRemoteDataSource @Inject constructor(private val apiService: ApiServ
         return flowApiCall {
             val response = apiService.getTrendingPeople()
             response.results.ifEmpty { throw EmptyDataException() }
+        }
+    }
+
+    suspend fun getDetailPeople(peopleId: Int): ApiResponseResult<DetailPeopleResponse> {
+        return handleApiCall {
+            apiService.getDetailPeople(peopleId)
         }
     }
 }

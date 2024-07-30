@@ -12,9 +12,7 @@ import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
-import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailMovieBinding
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailTvBinding
-import com.fadhlansulistiyo.cinemadatabase.presenter.detail.DetailMovieActivity.Companion.EXTRA_MOVIE_ID
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +35,7 @@ class DetailTvActivity : AppCompatActivity() {
         }
 
         val tvId = intent.getIntExtra(EXTRA_TV_ID, 0)
-        viewModel.fetchMovieDetail(tvId)
+        viewModel.fetchTvDetail(tvId)
 
         viewModel.tvDetail.observe(this) { detailTv ->
             when (detailTv) {

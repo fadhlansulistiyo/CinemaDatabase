@@ -1,6 +1,7 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailMovieResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailPeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailTvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.ListMovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.ListPeopleResponse
@@ -27,4 +28,10 @@ interface ApiService {
     suspend fun getDetailTv(
         @Path("series_id") seriesId: Int
     ): DetailTvResponse
+
+    @GET("person/{person_id}")
+    suspend fun getDetailPeople(
+        @Path("person_id") personId: Int
+    ): DetailPeopleResponse
+
 }

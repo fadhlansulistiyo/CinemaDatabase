@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.core.ui
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,6 +12,8 @@ import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ItemPeopleBinding
+import com.fadhlansulistiyo.cinemadatabase.presenter.detail.DetailMovieActivity
+import com.fadhlansulistiyo.cinemadatabase.presenter.detail.DetailPeopleActivity
 
 class PeopleAdapter : ListAdapter<People, PeopleAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
@@ -33,6 +36,13 @@ class PeopleAdapter : ListAdapter<People, PeopleAdapter.ListViewHolder>(DIFF_CAL
                     RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp).error(R.drawable.ic_error)
                 )
                 .into(binding.itemProfile)
+
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, DetailPeopleActivity::class.java)
+                intent.putExtra(DetailPeopleActivity.EXTRA_PEOPLE_ID, people.id)
+                itemView.context.startActivity(intent)
+            }
+
         }
     }
 

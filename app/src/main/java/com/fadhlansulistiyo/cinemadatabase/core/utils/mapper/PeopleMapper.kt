@@ -1,8 +1,15 @@
 package com.fadhlansulistiyo.cinemadatabase.core.utils.mapper
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.model.PeopleEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailMovieResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailPeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.PeopleResponse
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_NOT_YET_AVAILABLE
+import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapGenreItemToDomain
+import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapProductionCompanyResponseToDomain
 
 object PeopleMapper {
 
@@ -37,4 +44,18 @@ object PeopleMapper {
         name = input.name,
         profilePath = input.profilePath
     )
+
+    // Map DetailPeopleResponse to DetailPeople
+    fun mapDetailPeopleResponseToDomain(input: DetailPeopleResponse): DetailPeople {
+        return DetailPeople(
+            id = input.id,
+            name = input.name ?: DATA_NOT_YET_AVAILABLE,
+            birthday = input.birthday ?: DATA_NOT_YET_AVAILABLE,
+            gender = input.gender ?: 0,
+            knownForDepartment = input.knownForDepartment ?: DATA_NOT_YET_AVAILABLE,
+            profilePath = input.profilePath ?: "",
+            biography = input.biography ?: DATA_NOT_YET_AVAILABLE,
+            placeOfBirth = input.placeOfBirth ?: DATA_NOT_YET_AVAILABLE,
+        )
+    }
 }
