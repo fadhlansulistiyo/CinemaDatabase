@@ -3,14 +3,13 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.LocalDataSource
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.datasource.PeopleRemoteDataSource
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.PeopleResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.PeopleLocalDataSource
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.PeopleRemoteDataSource
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.PeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IPeopleRepository
-import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.MovieMapper
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.PeopleMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -19,7 +18,7 @@ import javax.inject.Singleton
 
 @Singleton
 class PeopleRepository @Inject constructor(
-    private val localDataSource: LocalDataSource,
+    private val localDataSource: PeopleLocalDataSource,
     private val remoteDataSource: PeopleRemoteDataSource
 ) : IPeopleRepository {
 

@@ -1,8 +1,8 @@
 package com.fadhlansulistiyo.cinemadatabase.core.utils.mapper
 
-import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.model.MovieEntity
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailMovieResponse
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.MovieResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.model.MovieEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailMovieResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_NOT_YET_AVAILABLE
@@ -21,7 +21,7 @@ object MovieMapper {
                 posterPath = it.posterPath,
                 releaseDate = it.releaseDate,
                 voteAverage = it.voteAverage,
-                isBookmarked = false
+                isWatchlist = false
             )
             movieList.add(movie)
         }
@@ -37,7 +37,7 @@ object MovieMapper {
                 posterPath = it.posterPath,
                 releaseDate = it.releaseDate,
                 voteAverage = it.voteAverage,
-                isBookmarked = it.isBookmarked
+                isBookmarked = it.isWatchlist
             )
         }
 
@@ -48,7 +48,7 @@ object MovieMapper {
         posterPath = input.posterPath,
         releaseDate = input.releaseDate,
         voteAverage = input.voteAverage,
-        isBookmarked = input.isBookmarked
+        isWatchlist = input.isBookmarked
     )
 
     // Map DetailMovieResponse to DetailMovie

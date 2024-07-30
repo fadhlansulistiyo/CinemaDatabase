@@ -12,8 +12,7 @@ import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ItemPeopleBinding
-import com.fadhlansulistiyo.cinemadatabase.presenter.detail.DetailMovieActivity
-import com.fadhlansulistiyo.cinemadatabase.presenter.detail.DetailPeopleActivity
+import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailPeopleActivity
 
 class PeopleAdapter : ListAdapter<People, PeopleAdapter.ListViewHolder>(DIFF_CALLBACK) {
 

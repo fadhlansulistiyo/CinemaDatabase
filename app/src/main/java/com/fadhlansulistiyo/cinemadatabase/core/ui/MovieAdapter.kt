@@ -12,7 +12,7 @@ import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ItemCinemaBinding
-import com.fadhlansulistiyo.cinemadatabase.presenter.detail.DetailMovieActivity
+import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailMovieActivity
 
 class MovieAdapter : ListAdapter<Movie, MovieAdapter.ListViewHolder>(DIFF_CALLBACK) {
 

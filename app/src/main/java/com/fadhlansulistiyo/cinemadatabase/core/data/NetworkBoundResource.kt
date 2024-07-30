@@ -1,6 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data
 
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first

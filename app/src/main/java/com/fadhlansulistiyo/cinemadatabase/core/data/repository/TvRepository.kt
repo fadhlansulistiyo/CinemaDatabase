@@ -3,10 +3,10 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.LocalDataSource
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.datasource.TvRemoteDataSource
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.TvResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.TvLocalDataSource
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.TvRemoteDataSource
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.TvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.ITvRepository
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 
 @Singleton
 class TvRepository @Inject constructor(
-    private val localDataSource: LocalDataSource,
+    private val localDataSource: TvLocalDataSource,
     private val remoteDataSource: TvRemoteDataSource,
     private val appExecutors: AppExecutors
 ) : ITvRepository {

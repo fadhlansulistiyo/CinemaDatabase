@@ -2,7 +2,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.di
 
 import android.content.Context
 import androidx.room.Room
-import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.CinemaDatabase
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.db.CinemaDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +22,11 @@ class DatabaseModule {
     ).fallbackToDestructiveMigration().build()
 
     @Provides
-    fun provideCinemaDao(database: CinemaDatabase) = database.cinemaDao()
+    fun provideMovieDao(database: CinemaDatabase) = database.movieDao()
 
+    @Provides
+    fun provideTvDao(database: CinemaDatabase) = database.tvDao()
+
+    @Provides
+    fun providePeopleDao(database: CinemaDatabase) = database.peopleDao()
 }

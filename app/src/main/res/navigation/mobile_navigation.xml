@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.fadhlansulistiyo.cinemadatabase.presenter.home.HomeFragment"
+        android:name="com.fadhlansulistiyo.cinemadatabase.presentation.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.fadhlansulistiyo.cinemadatabase.presenter.search.SearchFragment"
+        android:name="com.fadhlansulistiyo.cinemadatabase.presentation.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_people"
-        android:name="com.fadhlansulistiyo.cinemadatabase.presenter.people.PeopleFragment"
+        android:name="com.fadhlansulistiyo.cinemadatabase.presentation.people.PeopleFragment"
         android:label="@string/title_people"
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.fadhlansulistiyo.cinemadatabase.presenter.profile.ProfileFragment"
+        android:name="com.fadhlansulistiyo.cinemadatabase.presentation.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

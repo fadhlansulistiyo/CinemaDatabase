@@ -1,8 +1,8 @@
 package com.fadhlansulistiyo.cinemadatabase.core.utils.mapper
 
-import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.model.TvEntity
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailTvResponse
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.TvResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.model.TvEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailTvResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.TvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_NOT_YET_AVAILABLE
@@ -21,7 +21,7 @@ object TvMapper {
                 posterPath = it.posterPath,
                 firstAirDate = it.firstAirDate,
                 voteAverage = it.voteAverage,
-                isBookmarked = false
+                isWatchlist = false
             )
             tvList.add(tv)
         }
@@ -37,7 +37,7 @@ object TvMapper {
                 posterPath = it.posterPath,
                 firstAirDate = it.firstAirDate,
                 voteAverage = it.voteAverage,
-                isBookmarked = it.isBookmarked
+                isBookmarked = it.isWatchlist
             )
         }
 
@@ -48,7 +48,7 @@ object TvMapper {
         posterPath = input.posterPath,
         firstAirDate = input.firstAirDate,
         voteAverage = input.voteAverage,
-        isBookmarked = input.isBookmarked
+        isWatchlist = input.isBookmarked
     )
 
     // Map DetailTvResponse to DetailTv

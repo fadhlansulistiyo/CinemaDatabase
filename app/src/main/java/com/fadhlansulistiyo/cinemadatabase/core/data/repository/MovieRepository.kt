@@ -3,10 +3,10 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.LocalDataSource
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.datasource.MovieRemoteDataSource
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.network.ApiResponseResult
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.MovieResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.MovieLocalDataSource
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.MovieRemoteDataSource
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 
 @Singleton
 class MovieRepository @Inject constructor(
-    private val localDataSource: LocalDataSource,
+    private val localDataSource: MovieLocalDataSource,
     private val remoteDataSource: MovieRemoteDataSource,
     private val appExecutors: AppExecutors
 ) : IMovieRepository {
@@ -70,13 +70,13 @@ class MovieRepository @Inject constructor(
     }
 
     override fun getBookmarkedMovie(): Flow<List<Movie>> {
-        return localDataSource.getBookmarkedMovie().map {
+        return localDataSource.getWatchlistMovie().map {
             MovieMapper.mapMovieEntitiesToDomain(it)
         }
     }
 
     override fun setBookmarkedMovie(movie: Movie, state: Boolean) {
         val movieEntity = MovieMapper.mapMovieDomainToEntity(movie)
-        appExecutors.diskIO().execute { localDataSource.setBookmarkedMovie(movieEntity, state) }
+        appExecutors.diskIO().execute { localDataSource.setWatchlistMovie(movieEntity, state) }
     }
 }

@@ -12,8 +12,7 @@ import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ItemCinemaBinding
-import com.fadhlansulistiyo.cinemadatabase.presenter.detail.DetailMovieActivity
-import com.fadhlansulistiyo.cinemadatabase.presenter.detail.DetailTvActivity
+import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailTvActivity
 
 class TvAdapter : ListAdapter<Tv, TvAdapter.ListViewHolder>(DIFF_CALLBACK) {
 

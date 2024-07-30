@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.detail.DetailPeopleActivity">
+    tools:context=".presentation.detail.DetailPeopleActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

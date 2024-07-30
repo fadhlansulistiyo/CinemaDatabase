@@ -16,16 +16,16 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".presenter.detail.DetailPeopleActivity"
+            android:name=".presentation.detail.DetailPeopleActivity"
             android:exported="false" />
         <activity
-            android:name=".presenter.detail.DetailTvActivity"
+            android:name=".presentation.detail.DetailTvActivity"
             android:exported="false" />
         <activity
-            android:name=".presenter.detail.DetailMovieActivity"
+            android:name=".presentation.detail.DetailMovieActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>

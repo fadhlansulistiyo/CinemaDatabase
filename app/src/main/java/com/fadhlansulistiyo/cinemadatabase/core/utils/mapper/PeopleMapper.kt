@@ -1,15 +1,11 @@
 package com.fadhlansulistiyo.cinemadatabase.core.utils.mapper
 
-import com.fadhlansulistiyo.cinemadatabase.core.data.localsource.model.PeopleEntity
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailMovieResponse
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.DetailPeopleResponse
-import com.fadhlansulistiyo.cinemadatabase.core.data.remotesource.response.PeopleResponse
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.model.PeopleEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailPeopleResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.PeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_NOT_YET_AVAILABLE
-import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapGenreItemToDomain
-import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapProductionCompanyResponseToDomain
 
 object PeopleMapper {
 
