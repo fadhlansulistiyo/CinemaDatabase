@@ -15,17 +15,17 @@
         android:id="@+id/navigation_search"
         android:name="com.fadhlansulistiyo.cinemadatabase.presentation.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_people"
         android:name="com.fadhlansulistiyo.cinemadatabase.presentation.people.PeopleFragment"
         android:label="@string/title_people"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_people" />
 
     <fragment
-        android:id="@+id/navigation_profile"
-        android:name="com.fadhlansulistiyo.cinemadatabase.presentation.profile.ProfileFragment"
-        android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        android:id="@+id/navigation_watchlist"
+        android:name="com.fadhlansulistiyo.cinemadatabase.presentation.watchlist.WatchlistFragment"
+        android:label="@string/title_watchlist"
+        tools:layout="@layout/fragment_watchlist" />
 </navigation>
