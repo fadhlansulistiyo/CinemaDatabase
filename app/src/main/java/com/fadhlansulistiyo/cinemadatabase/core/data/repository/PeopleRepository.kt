@@ -64,6 +64,5 @@ class PeopleRepository @Inject constructor(
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
-
     }
 }

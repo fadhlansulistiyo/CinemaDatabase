@@ -1,6 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.core.utils.mapper
 
-import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.model.WatchlistEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.entity.WatchlistEntity
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Watchlist
 import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistUI
 

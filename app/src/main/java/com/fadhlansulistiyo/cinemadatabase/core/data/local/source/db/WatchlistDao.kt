@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.model.WatchlistEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.entity.WatchlistEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

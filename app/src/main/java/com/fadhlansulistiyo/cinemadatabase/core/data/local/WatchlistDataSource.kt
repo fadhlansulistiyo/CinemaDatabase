@@ -1,7 +1,7 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.local
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.db.WatchlistDao
-import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.model.WatchlistEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.entity.WatchlistEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton

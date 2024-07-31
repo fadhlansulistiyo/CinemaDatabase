@@ -1,7 +1,7 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.local
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.db.MovieDao
-import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.model.MovieEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.entity.MovieEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton

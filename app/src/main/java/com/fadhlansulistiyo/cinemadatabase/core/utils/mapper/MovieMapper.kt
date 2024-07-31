@@ -1,6 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.core.utils.mapper
 
-import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.model.MovieEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.entity.MovieEntity
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailMovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie

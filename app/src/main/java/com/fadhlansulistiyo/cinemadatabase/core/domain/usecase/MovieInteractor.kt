@@ -9,7 +9,9 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieReposito
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class MovieInteractor @Inject constructor(private val movieRepository: IMovieRepository) : MovieUseCase {
+class MovieInteractor @Inject constructor(private val movieRepository: IMovieRepository) :
+    MovieUseCase {
+
     override fun getNowPlaying(): Flow<Resource<List<Movie>>> {
         return movieRepository.getNowPlaying()
     }

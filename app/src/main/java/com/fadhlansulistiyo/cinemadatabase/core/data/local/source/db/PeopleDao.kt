@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.model.PeopleEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.entity.PeopleEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
