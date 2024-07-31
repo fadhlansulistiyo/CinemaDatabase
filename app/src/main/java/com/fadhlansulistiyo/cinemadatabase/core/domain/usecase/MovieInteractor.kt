@@ -14,14 +14,6 @@ class MovieInteractor @Inject constructor(private val movieRepository: IMovieRep
         return movieRepository.getNowPlaying()
     }
 
-    override fun getBookmarkedMovie(): Flow<List<Movie>> {
-        return movieRepository.getBookmarkedMovie()
-    }
-
-    override fun setBookmarkedMovie(movie: Movie, state: Boolean) {
-        return movieRepository.setBookmarkedMovie(movie, state)
-    }
-
     override suspend fun getDetailMovie(movieId: Int): Resource<DetailMovie> {
         return movieRepository.getDetailMovie(movieId)
     }

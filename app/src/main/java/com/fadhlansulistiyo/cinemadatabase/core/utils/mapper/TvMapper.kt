@@ -21,7 +21,6 @@ object TvMapper {
                 posterPath = it.posterPath,
                 firstAirDate = it.firstAirDate,
                 voteAverage = it.voteAverage,
-                isWatchlist = false
             )
             tvList.add(tv)
         }
@@ -37,7 +36,6 @@ object TvMapper {
                 posterPath = it.posterPath,
                 firstAirDate = it.firstAirDate,
                 voteAverage = it.voteAverage,
-                isBookmarked = it.isWatchlist
             )
         }
 
@@ -48,7 +46,6 @@ object TvMapper {
         posterPath = input.posterPath,
         firstAirDate = input.firstAirDate,
         voteAverage = input.voteAverage,
-        isWatchlist = input.isBookmarked
     )
 
     // Map DetailTvResponse to DetailTv

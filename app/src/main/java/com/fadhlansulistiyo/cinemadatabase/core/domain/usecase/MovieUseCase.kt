@@ -7,7 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieUseCase {
     fun getNowPlaying(): Flow<Resource<List<Movie>>>
-    fun getBookmarkedMovie(): Flow<List<Movie>>
-    fun setBookmarkedMovie(movie: Movie, state: Boolean)
     suspend fun getDetailMovie(movieId: Int): Resource<DetailMovie>
 }

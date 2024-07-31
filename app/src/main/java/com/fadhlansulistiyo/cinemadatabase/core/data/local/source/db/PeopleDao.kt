@@ -9,11 +9,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PeopleDao {
-
     @Query("SELECT * FROM people")
     fun getAllPeople(): Flow<List<PeopleEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPeople(people: List<PeopleEntity>)
-
 }

@@ -1,6 +1,6 @@
-package com.fadhlansulistiyo.cinemadatabase.core.domain.model
+package com.fadhlansulistiyo.cinemadatabase.presentation.model
 
-data class Movie(
+data class WatchlistUI(
     val id: Int,
     val title: String,
     val posterPath: String,

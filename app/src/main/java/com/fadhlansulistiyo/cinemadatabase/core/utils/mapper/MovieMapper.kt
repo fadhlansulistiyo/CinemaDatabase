@@ -21,7 +21,6 @@ object MovieMapper {
                 posterPath = it.posterPath,
                 releaseDate = it.releaseDate,
                 voteAverage = it.voteAverage,
-                isWatchlist = false
             )
             movieList.add(movie)
         }
@@ -37,7 +36,6 @@ object MovieMapper {
                 posterPath = it.posterPath,
                 releaseDate = it.releaseDate,
                 voteAverage = it.voteAverage,
-                isBookmarked = it.isWatchlist
             )
         }
 
@@ -48,7 +46,6 @@ object MovieMapper {
         posterPath = input.posterPath,
         releaseDate = input.releaseDate,
         voteAverage = input.voteAverage,
-        isWatchlist = input.isBookmarked
     )
 
     // Map DetailMovieResponse to DetailMovie
@@ -69,7 +66,8 @@ object MovieMapper {
             posterPath = input.posterPath ?: "",
             productionCompanies = input.productionCompanies?.map { mapProductionCompanyResponseToDomain(it) } ?: emptyList(),
             voteAverage = input.voteAverage ?: 0.0,
-            status = input.status ?: DATA_NOT_YET_AVAILABLE
+            status = input.status ?: DATA_NOT_YET_AVAILABLE,
+            isWatchlist = false
         )
     }
 }

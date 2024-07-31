@@ -10,7 +10,6 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieRespon
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
-import com.fadhlansulistiyo.cinemadatabase.core.utils.AppExecutors
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.MovieMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -20,8 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class MovieRepository @Inject constructor(
     private val localDataSource: MovieLocalDataSource,
-    private val remoteDataSource: MovieRemoteDataSource,
-    private val appExecutors: AppExecutors
+    private val remoteDataSource: MovieRemoteDataSource
 ) : IMovieRepository {
 
     override fun getNowPlaying(): Flow<Resource<List<Movie>>> =
@@ -67,16 +65,5 @@ class MovieRepository @Inject constructor(
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
-    }
-
-    override fun getBookmarkedMovie(): Flow<List<Movie>> {
-        return localDataSource.getWatchlistMovie().map {
-            MovieMapper.mapMovieEntitiesToDomain(it)
-        }
-    }
-
-    override fun setBookmarkedMovie(movie: Movie, state: Boolean) {
-        val movieEntity = MovieMapper.mapMovieDomainToEntity(movie)
-        appExecutors.diskIO().execute { localDataSource.setWatchlistMovie(movieEntity, state) }
     }
 }

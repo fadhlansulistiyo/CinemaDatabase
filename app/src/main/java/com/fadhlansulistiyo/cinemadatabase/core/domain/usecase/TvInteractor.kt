@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class TvInteractor @Inject constructor(private val tvRepository: ITvRepository) : TvUseCase {
+
     override fun getAiringTodayTv(): Flow<Resource<List<Tv>>> {
         return tvRepository.getAiringTodayTv()
     }

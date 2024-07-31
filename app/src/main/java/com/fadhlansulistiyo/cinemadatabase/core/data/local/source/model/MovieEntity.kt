@@ -24,9 +24,6 @@ data class MovieEntity(
     var releaseDate: String,
 
     @ColumnInfo("vote_average")
-    var voteAverage: Double,
-
-    @ColumnInfo(name = "isWatchlist")
-    var isWatchlist: Boolean = false
+    var voteAverage: Double
 
 ) : Parcelable

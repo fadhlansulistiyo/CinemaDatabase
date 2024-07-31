@@ -5,6 +5,5 @@ data class Tv(
     val name: String,
     val posterPath: String,
     val firstAirDate: String,
-    val voteAverage: Double,
-    val isBookmarked: Boolean
+    val voteAverage: Double
 )

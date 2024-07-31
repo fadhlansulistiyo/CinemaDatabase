@@ -13,6 +13,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailMovieBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistUI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,6 +57,23 @@ class DetailMovieActivity : AppCompatActivity() {
                 }
             }
         }
+
+        viewModel.isFavorite.observe(this) { isFavorite ->
+            setFavoriteState(isFavorite)
+        }
+
+        binding.fab.setOnClickListener {
+            val currentDetail = viewModel.movieDetail.value?.data ?: return@setOnClickListener
+            viewModel.setUserFavorite(
+                WatchlistUI(
+                    id = currentDetail.id,
+                    title = currentDetail.title.toString(),
+                    posterPath = currentDetail.posterPath.toString(),
+                    releaseDate = currentDetail.releaseDate.toString(),
+                    voteAverage = currentDetail.voteAverage!!
+                )
+            )
+        }
     }
 
     private fun setDetailMovie(detailMovie: DetailMovie) {
@@ -73,9 +91,18 @@ class DetailMovieActivity : AppCompatActivity() {
             popularityTextView.text = detailMovie.popularity.toString()
             voteCountTextView.text = detailMovie.voteCount.toString()
             budgetTextView.text = detailMovie.budget.toString()
-            productionCompaniesTextView.text = detailMovie.productionCompanies?.joinToString(", ") { it?.name ?: "" }
+            productionCompaniesTextView.text =
+                detailMovie.productionCompanies?.joinToString(", ") { it?.name ?: "" }
             voteAverageTextView.text = detailMovie.voteAverage.toString()
             statusTextView.text = detailMovie.status
+        }
+    }
+
+    private fun setFavoriteState(isFavorite: Boolean) {
+        if (isFavorite) {
+            binding.fab.setImageResource(R.drawable.ic_favorite_white_24dp)
+        } else {
+            binding.fab.setImageResource(R.drawable.ic_not_favorite_white_24dp)
         }
     }
 

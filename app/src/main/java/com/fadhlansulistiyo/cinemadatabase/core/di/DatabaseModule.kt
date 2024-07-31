@@ -29,4 +29,7 @@ class DatabaseModule {
 
     @Provides
     fun providePeopleDao(database: CinemaDatabase) = database.peopleDao()
+
+    @Provides
+    fun provideWatchlistDao(database: CinemaDatabase) = database.watchlistDao()
 }

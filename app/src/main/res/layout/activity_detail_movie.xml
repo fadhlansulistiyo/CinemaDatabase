@@ -1,154 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/mainCoordinatorLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".presentation.detail.DetailMovieActivity">
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/main"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:indeterminate="true"
+                android:visibility="gone" />
+
+            <!-- Movie Poster -->
+            <ImageView
+                android:id="@+id/posterImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_marginBottom="16dp"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/avatars" />
+
+            <!-- Movie Title -->
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Inside Out 2"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!-- Movie Original Title -->
+            <TextView
+                android:id="@+id/originalTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Inside Out"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+
+            <!-- Release Date -->
+            <TextView
+                android:id="@+id/releaseDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Release Date: 2019-06-15"
+                android:textSize="16sp" />
+
+            <!-- Runtime -->
+            <TextView
+                android:id="@+id/runtimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Runtime: 92 min"
+                android:textSize="16sp" />
+
+            <!-- Genres -->
+            <TextView
+                android:id="@+id/genresTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Genres: Action, Adventure, Comedy"
+                android:textSize="16sp" />
+
+            <!-- Overview -->
+            <TextView
+                android:id="@+id/overviewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Overview: Inside Out is a 2019 American 3D computer-animated musical fantasy film produced by Pixar"
+                android:textSize="16sp" />
+
+            <!-- Popularity -->
+            <TextView
+                android:id="@+id/popularityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Popularity: 7.3"
+                android:textSize="16sp" />
+
+            <!-- Vote Average -->
+            <TextView
+                android:id="@+id/voteAverageTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Vote Average: 7.8"
+                android:textSize="16sp" />
+
+            <!-- Vote Count -->
+            <TextView
+                android:id="@+id/voteCountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Vote Count: 12345"
+                android:textSize="16sp" />
+
+            <!-- Budget -->
+            <TextView
+                android:id="@+id/budgetTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Budget: $150,000,000"
+                android:textSize="16sp" />
+
+            <!-- Revenue -->
+            <TextView
+                android:id="@+id/revenueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Revenue: $200,000,000"
+                android:textSize="16sp" />
+
+            <!-- Status -->
+            <TextView
+                android:id="@+id/statusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Status: Released"
+                android:textSize="16sp" />
+
+            <!-- Production Companies -->
+            <TextView
+                android:id="@+id/productionCompaniesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Production Companies: Pixar Animation Studios"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_not_favorite_white_24dp"
+        app:backgroundTint="@color/md_theme_primary"
+        app:layout_anchor="@id/main"
+        app:layout_anchorGravity="bottom|end"/>
 
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:indeterminate="true"
-            android:visibility="gone" />
-
-        <!-- Movie Poster -->
-        <ImageView
-            android:id="@+id/posterImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_marginBottom="16dp"
-            android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars" />
-
-        <!-- Movie Title -->
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Inside Out 2"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <!-- Movie Original Title -->
-        <TextView
-            android:id="@+id/originalTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Inside Out"
-            android:textSize="18sp"
-            android:textStyle="italic" />
-
-        <!-- Release Date -->
-        <TextView
-            android:id="@+id/releaseDateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Release Date: 2019-06-15"
-            android:textSize="16sp" />
-
-        <!-- Runtime -->
-        <TextView
-            android:id="@+id/runtimeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Runtime: 92 min"
-            android:textSize="16sp" />
-
-        <!-- Genres -->
-        <TextView
-            android:id="@+id/genresTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Genres: Action, Adventure, Comedy"
-            android:textSize="16sp" />
-
-        <!-- Overview -->
-        <TextView
-            android:id="@+id/overviewTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Overview: Inside Out is a 2019 American 3D computer-animated musical fantasy film produced by Pixar"
-            android:textSize="16sp" />
-
-        <!-- Popularity -->
-        <TextView
-            android:id="@+id/popularityTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Popularity: 7.3"
-            android:textSize="16sp" />
-
-        <!-- Vote Average -->
-        <TextView
-            android:id="@+id/voteAverageTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Vote Average: 7.8"
-            android:textSize="16sp" />
-
-        <!-- Vote Count -->
-        <TextView
-            android:id="@+id/voteCountTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Vote Count: 12345"
-            android:textSize="16sp" />
-
-        <!-- Budget -->
-        <TextView
-            android:id="@+id/budgetTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Budget: $150,000,000"
-            android:textSize="16sp" />
-
-        <!-- Revenue -->
-        <TextView
-            android:id="@+id/revenueTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Revenue: $200,000,000"
-            android:textSize="16sp" />
-
-        <!-- Status -->
-        <TextView
-            android:id="@+id/statusTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Status: Released"
-            android:textSize="16sp" />
-
-        <!-- Production Companies -->
-        <TextView
-            android:id="@+id/productionCompaniesTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Production Companies: Pixar Animation Studios"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

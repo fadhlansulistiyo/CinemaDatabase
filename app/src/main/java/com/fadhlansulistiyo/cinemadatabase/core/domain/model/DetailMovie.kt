@@ -16,5 +16,6 @@ data class DetailMovie(
     val posterPath: String? = null,
     val productionCompanies: List<ProductionCompanies?>? = null,
     val voteAverage: Double? = null,
-    val status: String? = null
+    val status: String? = null,
+    val isWatchlist: Boolean? = false
 )

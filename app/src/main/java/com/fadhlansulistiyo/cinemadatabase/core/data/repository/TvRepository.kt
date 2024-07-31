@@ -10,7 +10,6 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.TvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.ITvRepository
-import com.fadhlansulistiyo.cinemadatabase.core.utils.AppExecutors
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.TvMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -20,8 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class TvRepository @Inject constructor(
     private val localDataSource: TvLocalDataSource,
-    private val remoteDataSource: TvRemoteDataSource,
-    private val appExecutors: AppExecutors
+    private val remoteDataSource: TvRemoteDataSource
 ) : ITvRepository {
 
     override fun getAiringTodayTv(): Flow<Resource<List<Tv>>> =

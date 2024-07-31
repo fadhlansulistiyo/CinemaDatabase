@@ -8,9 +8,6 @@ import javax.inject.Singleton
 
 @Singleton
 class PeopleLocalDataSource @Inject constructor(private val peopleDao: PeopleDao) {
-
     fun getAllPeople(): Flow<List<PeopleEntity>> = peopleDao.getAllPeople()
-
     suspend fun insertPeople(people: List<PeopleEntity>) = peopleDao.insertPeople(people)
-
 }
