@@ -6,16 +6,16 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
-@Entity(tableName = "watchlist")
+@Entity(tableName = "watchlist_tv")
 @Parcelize
-data class WatchlistEntity(
+data class WatchlistTvEntity(
 
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = false)
     val id: Int,
 
-    val title: String,
+    val name: String,
     val posterPath: String,
-    val releaseDate: String,
+    val firstAirDate: String,
     val voteAverage: Double
 ) : Parcelable

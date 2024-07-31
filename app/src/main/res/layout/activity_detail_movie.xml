@@ -167,6 +167,6 @@
         android:src="@drawable/ic_not_favorite_white_24dp"
         app:backgroundTint="@color/md_theme_primary"
         app:layout_anchor="@id/main"
-        app:layout_anchorGravity="bottom|end"/>
+        app:layout_anchorGravity="bottom|end" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

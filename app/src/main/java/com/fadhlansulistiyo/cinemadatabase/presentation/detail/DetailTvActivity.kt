@@ -13,6 +13,8 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailTvBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistMovieUI
+import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistTvUI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,6 +58,23 @@ class DetailTvActivity : AppCompatActivity() {
                 }
             }
         }
+
+        viewModel.isWatchlist.observe(this) { isWatchlist ->
+            setFavoriteState(isWatchlist)
+        }
+
+        binding.fab.setOnClickListener {
+            val currentDetail = viewModel.tvDetail.value?.data ?: return@setOnClickListener
+            viewModel.setUserFavorite(
+                WatchlistTvUI(
+                    id = currentDetail.id,
+                    name = currentDetail.name.toString(),
+                    posterPath = currentDetail.posterPath.toString(),
+                    firstAirDate = currentDetail.firstAirDate.toString(),
+                    voteAverage = currentDetail.voteAverage!!
+                )
+            )
+        }
     }
 
     private fun setDetailTv(detailTv: DetailTv) {
@@ -77,6 +96,14 @@ class DetailTvActivity : AppCompatActivity() {
             voteAverageTextView.text = detailTv.voteAverage.toString()
             statusTextView.text = detailTv.status
             productionCompaniesTextView.text = detailTv.productionCompanies?.joinToString(", ") { it?.name ?: "" }
+        }
+    }
+
+    private fun setFavoriteState(isFavorite: Boolean) {
+        if (isFavorite) {
+            binding.fab.setImageResource(R.drawable.ic_favorite_white_24dp)
+        } else {
+            binding.fab.setImageResource(R.drawable.ic_not_favorite_white_24dp)
         }
     }
 

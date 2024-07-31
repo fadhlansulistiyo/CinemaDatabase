@@ -1,12 +1,12 @@
 package com.fadhlansulistiyo.cinemadatabase.core.utils.mapper
 
-import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.entity.WatchlistEntity
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Watchlist
-import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistUI
+import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.entity.WatchlistMovieEntity
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
+import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistMovieUI
 
-object WatchlistMapper {
-    fun toEntity(domain: Watchlist): WatchlistEntity {
-        return WatchlistEntity(
+object WatchlistMovieMapper {
+    fun toEntity(domain: WatchlistMovie): WatchlistMovieEntity {
+        return WatchlistMovieEntity(
             id = domain.id,
             title = domain.title,
             posterPath = domain.posterPath,
@@ -15,8 +15,8 @@ object WatchlistMapper {
         )
     }
 
-    fun toDomain(entity: WatchlistEntity): Watchlist {
-        return Watchlist(
+    fun toDomain(entity: WatchlistMovieEntity): WatchlistMovie {
+        return WatchlistMovie(
             id = entity.id,
             title = entity.title,
             posterPath = entity.posterPath,
@@ -25,8 +25,8 @@ object WatchlistMapper {
         )
     }
 
-    fun toUI(domain: Watchlist): WatchlistUI {
-        return WatchlistUI(
+    fun toUI(domain: WatchlistMovie): WatchlistMovieUI {
+        return WatchlistMovieUI(
             id = domain.id,
             title = domain.title,
             posterPath = domain.posterPath,
@@ -35,8 +35,8 @@ object WatchlistMapper {
         )
     }
 
-    fun fromUI(ui: WatchlistUI): Watchlist {
-        return Watchlist(
+    fun fromUI(ui: WatchlistMovieUI): WatchlistMovie {
+        return WatchlistMovie(
             id = ui.id,
             title = ui.title,
             posterPath = ui.posterPath,

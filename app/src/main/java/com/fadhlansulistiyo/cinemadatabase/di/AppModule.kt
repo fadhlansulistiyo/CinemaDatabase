@@ -6,8 +6,10 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.PeopleInteractor
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.PeopleUseCase
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.TvInteractor
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.TvUseCase
-import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistInteractor
-import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistUseCase
+import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistMovieInteractor
+import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistMovieUseCase
+import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistTvInteractor
+import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistTvUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -32,5 +34,9 @@ abstract class AppModule {
 
     @Binds
     @ViewModelScoped
-    abstract fun provideWatchlistUseCase(watchlistInteractor: WatchlistInteractor): WatchlistUseCase
+    abstract fun provideWatchlistMovieUseCase(watchlistInteractor: WatchlistMovieInteractor): WatchlistMovieUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun provideWatchlistTvUseCase(watchlistInteractor: WatchlistTvInteractor): WatchlistTvUseCase
 }

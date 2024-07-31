@@ -13,7 +13,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailMovieBinding
-import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistUI
+import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistMovieUI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,14 +58,14 @@ class DetailMovieActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.isFavorite.observe(this) { isFavorite ->
-            setFavoriteState(isFavorite)
+        viewModel.isWatchlist.observe(this) { isWatchlist ->
+            setFavoriteState(isWatchlist)
         }
 
         binding.fab.setOnClickListener {
             val currentDetail = viewModel.movieDetail.value?.data ?: return@setOnClickListener
             viewModel.setUserFavorite(
-                WatchlistUI(
+                WatchlistMovieUI(
                     id = currentDetail.id,
                     title = currentDetail.title.toString(),
                     posterPath = currentDetail.posterPath.toString(),

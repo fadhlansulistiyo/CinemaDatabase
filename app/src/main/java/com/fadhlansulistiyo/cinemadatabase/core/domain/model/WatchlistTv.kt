@@ -1,9 +1,9 @@
 package com.fadhlansulistiyo.cinemadatabase.core.domain.model
 
-data class Watchlist(
+data class WatchlistTv(
     val id: Int,
-    val title: String,
+    val name: String,
     val posterPath: String,
-    val releaseDate: String,
+    val firstAirDate: String,
     val voteAverage: Double
 )
