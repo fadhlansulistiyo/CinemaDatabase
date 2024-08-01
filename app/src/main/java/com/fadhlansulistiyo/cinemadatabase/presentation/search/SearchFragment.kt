@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentSearchBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.SearchUtils
 
 class SearchFragment : Fragment() {
 
@@ -22,17 +23,18 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val searchViewModel =
-            ViewModelProvider(this).get(SearchViewModel::class.java)
 
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textDashboard
-        searchViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val setUpSearch = SearchUtils()
+        setUpSearch.setUpSearchBar(requireActivity(), binding.searchBar)
+        setUpSearch.setUpSearchView(requireActivity() as AppCompatActivity, binding.searchBar, binding.searchView)
     }
 
     override fun onDestroyView() {
