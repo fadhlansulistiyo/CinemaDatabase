@@ -14,8 +14,16 @@ data class WatchlistTvEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
 
+    @ColumnInfo("name")
     val name: String,
+
+    @ColumnInfo("poster_path")
     val posterPath: String,
+
+    @ColumnInfo("first_air_date")
     val firstAirDate: String,
+
+    @ColumnInfo("vote_average")
     val voteAverage: Double
+
 ) : Parcelable

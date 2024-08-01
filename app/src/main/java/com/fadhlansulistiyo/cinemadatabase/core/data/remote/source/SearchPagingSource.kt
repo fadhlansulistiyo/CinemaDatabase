@@ -3,39 +3,42 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.remote.source
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
-import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MultiSearchResponse
-import retrofit2.HttpException
-import java.io.IOException
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiSearch
 
-@Singleton
-class SearchPagingSource @Inject constructor(
+class SearchPagingSource(
     private val apiService: ApiService,
-    private val searchParam: String
-) : PagingSource<Int, MultiSearchResponse>() {
+    private var searchParam: String
+) : PagingSource<Int, MultiSearch>() {
 
-    override fun getRefreshKey(state: PagingState<Int, MultiSearchResponse>): Int? {
-        return state.anchorPosition
-    }
-
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MultiSearchResponse> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MultiSearch> {
         return try {
-            val nextPage = params.key ?: 1
-            val multiSearch = apiService.getMultiSearch(
-                page = nextPage,
-                query = searchParam
-            )
+            val page = params.key ?: 1
+            val response = apiService.getMultiSearch(query = searchParam, page = page)
+            val results = response.results.map {
+                MultiSearch(
+                    id = it.id,
+                    title = it.title,
+                    posterPath = it.posterPath,
+                    releaseDate = it.releaseDate,
+                    voteAverage = it.voteAverage,
+                    name = it.name
+                )
+            }
             LoadResult.Page(
-                data = multiSearch.results,
-                prevKey = if (nextPage == 1) null else nextPage - 1,
-                nextKey = if (multiSearch.results.isEmpty()) null else multiSearch.page + 1
+                data = results,
+                prevKey = if (page == 1) null else page - 1,
+                nextKey = if (response.totalPages > page) page + 1 else null
             )
-        } catch (e: IOException) {
-            return LoadResult.Error(e)
-        } catch (e: HttpException) {
-            return LoadResult.Error(e)
+        } catch (exception: Exception) {
+            LoadResult.Error(exception)
         }
-
     }
+
+    override fun getRefreshKey(state: PagingState<Int, MultiSearch>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
+    }
+
 }
