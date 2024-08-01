@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.watchlistMovie.WatchlistActivity"
+            android:name=".presentation.watchlist.WatchlistFragment"
             android:exported="false" />
         <activity
             android:name=".presentation.detail.DetailPeopleActivity"

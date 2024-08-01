@@ -6,10 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.MovieUseCase
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistMovieUseCase
-import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.WatchlistMovieMapper
-import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistMovieUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,18 +29,18 @@ class DetailMovieViewModel @Inject constructor(
         viewModelScope.launch {
             _movieDetail.value = Resource.Loading()
             _movieDetail.value = movieUseCase.getDetailMovie(movieId)
-            checkIfFavorite(movieId.toString())
+            checkIfFavorite(movieDetail.value?.data?.title.toString())
         }
     }
 
-    fun setUserFavorite(watchlistMovieUI: WatchlistMovieUI) {
+    fun setUserFavorite(watchlistMovie: WatchlistMovie) {
         viewModelScope.launch {
-            val watchlist = watchlistMovieUseCase.getWatchlistByTitle(watchlistMovieUI.title)
+            val watchlist = watchlistMovieUseCase.getWatchlistByTitle(watchlistMovie.title)
             if (watchlist == null) {
-                watchlistMovieUseCase.addWatchlist(WatchlistMovieMapper.fromUI(watchlistMovieUI))
+                watchlistMovieUseCase.addWatchlist(watchlistMovie)
                 _isWatchlist.postValue(true)
             } else {
-                watchlistMovieUseCase.removeWatchlist(WatchlistMovieMapper.fromUI(watchlistMovieUI))
+                watchlistMovieUseCase.removeWatchlist(watchlistMovie)
                 _isWatchlist.postValue(false)
             }
         }

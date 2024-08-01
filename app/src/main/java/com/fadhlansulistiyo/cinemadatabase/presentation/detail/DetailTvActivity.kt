@@ -11,10 +11,9 @@ import com.bumptech.glide.Glide
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistTv
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailTvBinding
-import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistMovieUI
-import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistTvUI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,6 +38,10 @@ class DetailTvActivity : AppCompatActivity() {
         val tvId = intent.getIntExtra(EXTRA_TV_ID, 0)
         viewModel.fetchTvDetail(tvId)
 
+        viewModel.isWatchlist.observe(this) { isWatchlist ->
+            setFavoriteState(isWatchlist)
+        }
+
         viewModel.tvDetail.observe(this) { detailTv ->
             when (detailTv) {
                 is Resource.Error -> {
@@ -59,14 +62,10 @@ class DetailTvActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.isWatchlist.observe(this) { isWatchlist ->
-            setFavoriteState(isWatchlist)
-        }
-
         binding.fab.setOnClickListener {
             val currentDetail = viewModel.tvDetail.value?.data ?: return@setOnClickListener
             viewModel.setUserFavorite(
-                WatchlistTvUI(
+                WatchlistTv(
                     id = currentDetail.id,
                     name = currentDetail.name.toString(),
                     posterPath = currentDetail.posterPath.toString(),

@@ -6,10 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.TvUseCase
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistTvUseCase
-import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.WatchlistTvMapper
-import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistTvUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,17 +29,18 @@ class DetailTvViewModel @Inject constructor(
         viewModelScope.launch {
             _tvDetail.value = Resource.Loading()
             _tvDetail.value = tvUseCase.getDetailTv(tvId)
+            checkIfFavorite(tvDetail.value?.data?.name.toString())
         }
     }
 
-    fun setUserFavorite(watchlistTvUI: WatchlistTvUI) {
+    fun setUserFavorite(watchlistTv: WatchlistTv) {
         viewModelScope.launch {
-            val watchlist = watchlistTvUSeCase.getWatchlistByTitle(watchlistTvUI.name)
+            val watchlist = watchlistTvUSeCase.getWatchlistByTitle(watchlistTv.name)
             if (watchlist == null) {
-                watchlistTvUSeCase.addWatchlist(WatchlistTvMapper.fromUI(watchlistTvUI))
+                watchlistTvUSeCase.addWatchlist(watchlistTv)
                 _isWatchlist.postValue(true)
             } else {
-                watchlistTvUSeCase.removeWatchlist(WatchlistTvMapper.fromUI(watchlistTvUI))
+                watchlistTvUSeCase.removeWatchlist(watchlistTv)
                 _isWatchlist.postValue(false)
             }
         }

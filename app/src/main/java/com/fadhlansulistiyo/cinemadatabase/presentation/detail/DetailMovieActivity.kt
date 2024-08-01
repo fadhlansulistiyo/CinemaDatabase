@@ -11,9 +11,9 @@ import com.bumptech.glide.Glide
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailMovieBinding
-import com.fadhlansulistiyo.cinemadatabase.presentation.model.WatchlistMovieUI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,6 +38,10 @@ class DetailMovieActivity : AppCompatActivity() {
         val movieId = intent.getIntExtra(EXTRA_MOVIE_ID, 0)
         viewModel.fetchMovieDetail(movieId)
 
+        viewModel.isWatchlist.observe(this) { isWatchlist ->
+            setFavoriteState(isWatchlist)
+        }
+
         viewModel.movieDetail.observe(this) { detailMovie ->
             when (detailMovie) {
                 is Resource.Error -> {
@@ -58,14 +62,10 @@ class DetailMovieActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.isWatchlist.observe(this) { isWatchlist ->
-            setFavoriteState(isWatchlist)
-        }
-
         binding.fab.setOnClickListener {
             val currentDetail = viewModel.movieDetail.value?.data ?: return@setOnClickListener
             viewModel.setUserFavorite(
-                WatchlistMovieUI(
+                WatchlistMovie(
                     id = currentDetail.id,
                     title = currentDetail.title.toString(),
                     posterPath = currentDetail.posterPath.toString(),

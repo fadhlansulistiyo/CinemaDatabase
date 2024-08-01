@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_watchlist"
-        android:name="com.fadhlansulistiyo.cinemadatabase.presentation.watchlistMovie.WatchlistFragment"
+        android:name="com.fadhlansulistiyo.cinemadatabase.presentation.watchlist.WatchlistFragment"
         android:label="@string/title_watchlist"
         tools:layout="@layout/fragment_watchlist" />
 </navigation>
