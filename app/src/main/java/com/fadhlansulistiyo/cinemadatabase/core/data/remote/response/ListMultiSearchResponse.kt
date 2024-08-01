@@ -11,7 +11,7 @@ data class ListMultiSearchResponse(
 	val totalPages: Int,
 
 	@field:SerializedName("results")
-	val results: List<MultiResponse>,
+	val results: List<MultiSearchResponse>,
 
 	@field:SerializedName("total_results")
 	val totalResults: Int

@@ -4,10 +4,12 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailPeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailTvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListMovieResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListMultiSearchResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListPeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListTvResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     @GET("discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc")
@@ -34,4 +36,10 @@ interface ApiService {
         @Path("person_id") personId: Int
     ): DetailPeopleResponse
 
+    @GET("search/multi")
+    suspend fun getMultiSearch(
+        @Query("query") query: String,
+        @Query("page") page: Int = 0,
+        @Query("language") language: String = "en"
+    ): ListMultiSearchResponse
 }

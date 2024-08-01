@@ -2,7 +2,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class MultiResponse(
+data class MultiSearchResponse(
 
     @field:SerializedName("id")
     val id: Int,

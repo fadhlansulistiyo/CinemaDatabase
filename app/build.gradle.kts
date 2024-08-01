@@ -94,4 +94,8 @@ dependencies {
 
     // viewPager2
     implementation(libs.androidx.viewpager2)
+
+    // paging
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.room.paging)
 }

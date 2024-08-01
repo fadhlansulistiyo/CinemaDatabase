@@ -2,11 +2,13 @@ package com.fadhlansulistiyo.cinemadatabase.core.di
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.repository.MovieRepository
 import com.fadhlansulistiyo.cinemadatabase.core.data.repository.PeopleRepository
+import com.fadhlansulistiyo.cinemadatabase.core.data.repository.SearchRepository
 import com.fadhlansulistiyo.cinemadatabase.core.data.repository.TvRepository
 import com.fadhlansulistiyo.cinemadatabase.core.data.repository.WatchlistMovieRepository
 import com.fadhlansulistiyo.cinemadatabase.core.data.repository.WatchlistTvRepository
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IPeopleRepository
+import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.ISearchRepository
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.ITvRepository
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IWatchlistMovieRepository
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IWatchlistTvRepository
@@ -34,4 +36,6 @@ abstract class RepositoryModule {
     @Binds
     abstract fun provideWatchlistTvRepository(watchlistRepository: WatchlistTvRepository): IWatchlistTvRepository
 
+    @Binds
+    abstract fun provideSearchRepository(searchRepository: SearchRepository): ISearchRepository
 }
