@@ -22,7 +22,6 @@ class SearchPagingSource(
                     posterPath = it.posterPath,
                     releaseDate = it.releaseDate,
                     voteAverage = it.voteAverage,
-                    name = it.name,
                     mediaType = it.mediaType
                 )
             }

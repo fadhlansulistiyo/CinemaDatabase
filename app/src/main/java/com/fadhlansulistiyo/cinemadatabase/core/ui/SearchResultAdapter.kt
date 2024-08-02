@@ -43,7 +43,7 @@ class SearchResultAdapter(
 
         fun bind(searchResult: MultiSearch) {
             with(binding) {
-                titleTextView.text = searchResult.title ?: searchResult.name ?: "Unknown"
+                titleTextView.text = searchResult.title ?: "Unknown"
                 releaseDateTextView.text = "Release Date: ${searchResult.releaseDate ?: "Unknown"}"
                 ratingTextView.text = "Rating: ${searchResult.voteAverage ?: "N/A"}"
                 Glide.with(itemView.context)
