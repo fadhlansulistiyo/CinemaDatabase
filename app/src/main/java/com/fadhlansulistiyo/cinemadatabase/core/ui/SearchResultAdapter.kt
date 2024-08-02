@@ -12,12 +12,13 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiSearch
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ItemSearchBinding
 
-class SearchResultAdapter :
-    PagingDataAdapter<MultiSearch, SearchResultAdapter.SearchResultViewHolder>(DIFF_CALLBACK) {
+class SearchResultAdapter(
+    private val onItemClicked: (MultiSearch) -> Unit
+) : PagingDataAdapter<MultiSearch, SearchResultAdapter.SearchResultViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
         val binding = ItemSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return SearchResultViewHolder(binding)
+        return SearchResultViewHolder(binding, onItemClicked)
     }
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
@@ -25,8 +26,20 @@ class SearchResultAdapter :
         item?.let { holder.bind(it) }
     }
 
-    class SearchResultViewHolder(private val binding: ItemSearchBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class SearchResultViewHolder(
+        private val binding: ItemSearchBinding,
+        private val onItemClicked: (MultiSearch) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = (bindingAdapter as SearchResultAdapter).getItem(position)
+                    item?.let { onItemClicked(it) }
+                }
+            }
+        }
 
         fun bind(searchResult: MultiSearch) {
             with(binding) {
@@ -36,7 +49,8 @@ class SearchResultAdapter :
                 Glide.with(itemView.context)
                     .load(IMAGE_URL + searchResult.posterPath)
                     .apply(
-                        RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp).error(R.drawable.ic_error)
+                        RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
+                            .error(R.drawable.ic_error)
                     )
                     .into(posterImageView)
             }

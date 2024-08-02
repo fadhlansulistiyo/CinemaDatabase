@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.remote.source
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
@@ -21,9 +22,11 @@ class SearchPagingSource(
                     posterPath = it.posterPath,
                     releaseDate = it.releaseDate,
                     voteAverage = it.voteAverage,
-                    name = it.name
+                    name = it.name,
+                    mediaType = it.mediaType
                 )
             }
+            Log.d("SearchPagingSource", "Results: $results")
             LoadResult.Page(
                 data = results,
                 prevKey = if (page == 1) null else page - 1,
