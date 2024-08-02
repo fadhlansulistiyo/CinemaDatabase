@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.fadhlansulistiyo.cinemadatabase.core.ui.LoadingStateAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.SearchResultAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentSearchBinding
 import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailMovieActivity
@@ -69,7 +70,9 @@ class SearchFragment : Fragment() {
             }
         }
 
-        binding.recyclerView.adapter = searchResultAdapter
+        binding.recyclerView.adapter = searchResultAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter { searchResultAdapter.retry() }
+        )
 
         searchViewModel.searchResults.observe(viewLifecycleOwner) {
             searchResultAdapter.submitData(lifecycle, it)

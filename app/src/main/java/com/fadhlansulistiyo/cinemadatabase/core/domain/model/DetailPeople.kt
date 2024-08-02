@@ -1,7 +1,5 @@
 package com.fadhlansulistiyo.cinemadatabase.core.domain.model
 
-import com.google.gson.annotations.SerializedName
-
 data class DetailPeople(
     val id: Int,
     val birthday: String? = null,

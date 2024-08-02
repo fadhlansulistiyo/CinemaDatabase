@@ -1,17 +1,12 @@
 package com.fadhlansulistiyo.cinemadatabase.presentation
 
-import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityMainBinding
-import com.fadhlansulistiyo.cinemadatabase.presentation.utils.setKeyboardVisibilityListener
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
