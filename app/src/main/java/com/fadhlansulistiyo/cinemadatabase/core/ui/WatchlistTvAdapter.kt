@@ -12,7 +12,6 @@ import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistTv
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ItemWatchlistBinding
-import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailMovieActivity
 import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailTvActivity
 
 class WatchlistTvAdapter :

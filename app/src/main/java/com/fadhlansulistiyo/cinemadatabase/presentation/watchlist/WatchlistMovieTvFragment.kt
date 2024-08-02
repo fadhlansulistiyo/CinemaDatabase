@@ -1,4 +1,4 @@
-package com.fadhlansulistiyo.cinemadatabase.presentation.watchlist.movies
+package com.fadhlansulistiyo.cinemadatabase.presentation.watchlist
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,12 +13,12 @@ import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentWatchlistMovieBin
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WatchlistMovieFragment : Fragment() {
+class WatchlistMovieTvFragment : Fragment() {
 
     private var _binding: FragmentWatchlistMovieBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: WatchlistMovieViewModel by viewModels()
+    private val viewModel: WatchlistMovieTvViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

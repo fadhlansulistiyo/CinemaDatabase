@@ -9,8 +9,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MovieRemoteDataSource @Inject constructor(private val apiService: ApiService) :
-    BaseRemoteDataSource() {
+class MovieRemoteDataSource @Inject constructor(
+    private val apiService: ApiService
+) : BaseRemoteDataSource() {
 
     fun getNowPlaying(): Flow<ApiResponseResult<List<MovieResponse>>> {
         return flowApiCall {
@@ -24,5 +25,4 @@ class MovieRemoteDataSource @Inject constructor(private val apiService: ApiServi
             apiService.getDetailMovie(movieId)
         }
     }
-
 }

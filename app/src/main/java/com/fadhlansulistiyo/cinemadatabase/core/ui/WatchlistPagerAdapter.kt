@@ -3,18 +3,18 @@ package com.fadhlansulistiyo.cinemadatabase.core.ui
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.fadhlansulistiyo.cinemadatabase.presentation.watchlist.movies.WatchlistMovieFragment
+import com.fadhlansulistiyo.cinemadatabase.presentation.watchlist.WatchlistMovieTvFragment
 
-class MovieTvPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class WatchlistPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int {
         return 2
     }
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = WatchlistMovieFragment()
+        val fragment = WatchlistMovieTvFragment()
         fragment.arguments = Bundle().apply {
-            putInt(WatchlistMovieFragment.ARG_POSITION, position + 1)
+            putInt(WatchlistMovieTvFragment.ARG_POSITION, position + 1)
         }
         return fragment
     }

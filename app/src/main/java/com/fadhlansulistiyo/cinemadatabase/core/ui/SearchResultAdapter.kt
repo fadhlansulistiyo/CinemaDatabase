@@ -1,22 +1,23 @@
 package com.fadhlansulistiyo.cinemadatabase.core.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiSearch
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
+import com.fadhlansulistiyo.cinemadatabase.databinding.ItemSearchBinding
 
-class SearchResultAdapter : PagingDataAdapter<MultiSearch, SearchResultAdapter.SearchResultViewHolder>(DIFF_CALLBACK) {
+class SearchResultAdapter :
+    PagingDataAdapter<MultiSearch, SearchResultAdapter.SearchResultViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_search, parent, false)
-        return SearchResultViewHolder(view)
+        val binding = ItemSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return SearchResultViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
@@ -24,19 +25,21 @@ class SearchResultAdapter : PagingDataAdapter<MultiSearch, SearchResultAdapter.S
         item?.let { holder.bind(it) }
     }
 
-    class SearchResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val posterImageView: ImageView = itemView.findViewById(R.id.posterImageView)
-        private val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
-        private val releaseDateTextView: TextView = itemView.findViewById(R.id.releaseDateTextView)
-        private val ratingTextView: TextView = itemView.findViewById(R.id.ratingTextView)
+    class SearchResultViewHolder(private val binding: ItemSearchBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(searchResult: MultiSearch) {
-            titleTextView.text = searchResult.title ?: searchResult.name ?: "Unknown"
-            releaseDateTextView.text = "Release Date: ${searchResult.releaseDate ?: "Unknown"}"
-            ratingTextView.text = "Rating: ${searchResult.voteAverage ?: "N/A"}"
-            Glide.with(itemView.context)
-                .load("https://image.tmdb.org/t/p/w500/${searchResult.posterPath}")
-                .into(posterImageView)
+            with(binding) {
+                titleTextView.text = searchResult.title ?: searchResult.name ?: "Unknown"
+                releaseDateTextView.text = "Release Date: ${searchResult.releaseDate ?: "Unknown"}"
+                ratingTextView.text = "Rating: ${searchResult.voteAverage ?: "N/A"}"
+                Glide.with(itemView.context)
+                    .load(IMAGE_URL + searchResult.posterPath)
+                    .apply(
+                        RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp).error(R.drawable.ic_error)
+                    )
+                    .into(posterImageView)
+            }
         }
     }
 

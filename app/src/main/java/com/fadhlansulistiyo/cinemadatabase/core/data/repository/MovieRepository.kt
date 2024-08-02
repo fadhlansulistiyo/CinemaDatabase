@@ -1,6 +1,5 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 
-import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.data.local.MovieLocalDataSource
@@ -10,6 +9,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieRespon
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_IS_EMPTY
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.MovieMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -50,15 +50,12 @@ class MovieRepository @Inject constructor(
             when (val response = remoteDataSource.getDetailMovie(movieId)) {
                 is ApiResponseResult.Success -> {
                     val movie = MovieMapper.mapDetailMovieResponseToDomain(response.data)
-                    Log.d("MovieRepository", "MovieRepository: getDetailMovie: ${response.data}")
                     Resource.Success(movie)
                 }
                 is ApiResponseResult.Empty -> {
-                    Log.d("MovieRepository", "MovieRepository: No data")
-                    Resource.Error("No Data")
+                    Resource.Error(DATA_IS_EMPTY)
                 }
                 is ApiResponseResult.Error -> {
-                    Log.d("MovieRepository", "MovieRepository: ${response.errorMessage}")
                     Resource.Error(response.errorMessage)
                 }
             }

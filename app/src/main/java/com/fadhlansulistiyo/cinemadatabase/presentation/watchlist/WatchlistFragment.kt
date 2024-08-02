@@ -9,7 +9,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.fadhlansulistiyo.cinemadatabase.R
-import com.fadhlansulistiyo.cinemadatabase.core.ui.MovieTvPagerAdapter
+import com.fadhlansulistiyo.cinemadatabase.core.ui.WatchlistPagerAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentWatchlistBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -20,8 +20,6 @@ class WatchlistFragment : Fragment() {
 
     private var _binding: FragmentWatchlistBinding? = null
     private val binding get() = _binding!!
-
-    private val viewModel: WatchlistViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +38,7 @@ class WatchlistFragment : Fragment() {
     }
 
     private fun setUpSectionsPager() {
-        val sectionsPagerAdapter = MovieTvPagerAdapter(this)
+        val sectionsPagerAdapter = WatchlistPagerAdapter(this)
         val viewPager: ViewPager2 = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
 

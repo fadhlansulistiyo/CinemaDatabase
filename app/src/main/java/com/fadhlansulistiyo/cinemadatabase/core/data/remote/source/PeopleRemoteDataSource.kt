@@ -9,8 +9,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PeopleRemoteDataSource @Inject constructor(private val apiService: ApiService) :
-    BaseRemoteDataSource() {
+class PeopleRemoteDataSource @Inject constructor(
+    private val apiService: ApiService
+) : BaseRemoteDataSource() {
 
     fun getTrendingPeople(): Flow<ApiResponseResult<List<PeopleResponse>>> {
         return flowApiCall {

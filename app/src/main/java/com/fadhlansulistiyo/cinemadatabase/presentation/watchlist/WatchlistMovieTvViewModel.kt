@@ -8,9 +8,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class WatchlistViewModel @Inject constructor(
+class WatchlistMovieTvViewModel @Inject constructor(
     watchlistMovieUseCase: WatchlistMovieUseCase,
     watchlistTvUseCase: WatchlistTvUseCase
 ) : ViewModel() {
 
+    val getWatchlistMovies = watchlistMovieUseCase.getAllWatchlist().asLiveData()
+    val getWatchlistTv = watchlistTvUseCase.getAllWatchlist().asLiveData()
 }

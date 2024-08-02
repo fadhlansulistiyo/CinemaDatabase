@@ -24,4 +24,5 @@
     <string name="hint_search">Search</string>
     <string name="searchbar_hint">Search</string>
     <string name="search_filter">Search Filter</string>
+    <string name="no_data_available">No data available.</string>
 </resources>

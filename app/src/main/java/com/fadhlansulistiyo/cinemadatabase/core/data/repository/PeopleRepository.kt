@@ -1,6 +1,5 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 
-import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.data.local.PeopleLocalDataSource
@@ -10,6 +9,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.PeopleRespo
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IPeopleRepository
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_IS_EMPTY
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.PeopleMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -49,15 +49,12 @@ class PeopleRepository @Inject constructor(
             when (val response = remoteDataSource.getDetailPeople(peopleId)) {
                 is ApiResponseResult.Success -> {
                     val people = PeopleMapper.mapDetailPeopleResponseToDomain(response.data)
-                    Log.d("PeopleRepository", "PeopleRepository: getDetailPeople: ${response.data}")
                     Resource.Success(people)
                 }
                 is ApiResponseResult.Empty -> {
-                    Log.d("PeopleRepository", "PeopleRepository: No data")
-                    Resource.Error("No Data")
+                    Resource.Error(DATA_IS_EMPTY)
                 }
                 is ApiResponseResult.Error -> {
-                    Log.d("PeopleRepository", "PeopleRepository: ${response.errorMessage}")
                     Resource.Error(response.errorMessage)
                 }
             }

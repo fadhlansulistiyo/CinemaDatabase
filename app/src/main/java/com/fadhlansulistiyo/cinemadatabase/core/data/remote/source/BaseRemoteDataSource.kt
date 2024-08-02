@@ -1,6 +1,7 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.remote.source
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NO_DATA_AVAILABLE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -23,5 +24,5 @@ open class BaseRemoteDataSource {
         }.flowOn(Dispatchers.IO)
     }
 
-    class EmptyDataException : Exception("No data available")
+    class EmptyDataException : Exception(NO_DATA_AVAILABLE)
 }

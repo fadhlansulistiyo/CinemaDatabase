@@ -12,7 +12,7 @@ class SearchUtils {
         activity: AppCompatActivity,
         searchBar: SearchBar,
         searchView: SearchView,
-        loadMultiSearch: (query: String) -> Unit
+        loadQuery: (query: String) -> Unit
     ) {
         searchView.inflateMenu(R.menu.option_search)
         searchView.editText.setOnEditorActionListener { _, _, _ ->
@@ -20,7 +20,7 @@ class SearchUtils {
             searchBar.setText(query)
             searchView.hide()
 
-            loadMultiSearch(query)
+            loadQuery(query)
             false
         }
         val onBackPressedCallback = object : OnBackPressedCallback(false) {

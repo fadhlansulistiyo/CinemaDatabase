@@ -9,8 +9,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TvRemoteDataSource @Inject constructor(private val apiService: ApiService) :
-    BaseRemoteDataSource() {
+class TvRemoteDataSource @Inject constructor(
+    private val apiService: ApiService
+) : BaseRemoteDataSource() {
 
     fun getAiringTodayTv(): Flow<ApiResponseResult<List<TvResponse>>> {
         return flowApiCall {
