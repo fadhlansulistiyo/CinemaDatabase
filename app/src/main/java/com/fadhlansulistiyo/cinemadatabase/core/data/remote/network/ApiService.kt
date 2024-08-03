@@ -12,10 +12,10 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc")
+    @GET("movie/now_playing?language=en-US&page=1")
     suspend fun getNowPlaying(): ListMovieResponse
 
-    @GET("discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc")
+    @GET("tv/airing_today?language=en-US&page=1")
     suspend fun getAiringTodayTv(): ListTvResponse
 
     @GET("trending/person/day")

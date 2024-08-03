@@ -17,10 +17,10 @@ object TvMapper {
         input.map {
             val tv = TvEntity(
                 id = it.id,
-                name = it.name,
-                posterPath = it.posterPath,
-                firstAirDate = it.firstAirDate,
-                voteAverage = it.voteAverage,
+                name = it.name.toString(),
+                posterPath = it.posterPath.toString(),
+                firstAirDate = it.firstAirDate.toString(),
+                voteAverage = it.voteAverage ?: 0.0,
             )
             tvList.add(tv)
         }

@@ -23,14 +23,14 @@ data class TvResponse(
 	val id: Int,
 
 	@field:SerializedName("name")
-	val name: String,
+	val name: String? = null,
 
 	@field:SerializedName("poster_path")
-	val posterPath: String,
+	val posterPath: String? = null,
 
 	@field:SerializedName("first_air_date")
-	val firstAirDate: String,
+	val firstAirDate: String? = null,
 
 	@field:SerializedName("vote_average")
-	val voteAverage: Double,
+	val voteAverage: Double? = null,
 )
