@@ -42,4 +42,10 @@ interface ApiService {
         @Query("page") page: Int = 0,
         @Query("language") language: String = "en"
     ): ListMultiSearchResponse
+
+    @GET("person/popular")
+    suspend fun getPopularPeople(
+        @Query("page") page: Int = 0,
+        @Query("language") language: String = "en"
+    ): ListPeopleResponse
 }

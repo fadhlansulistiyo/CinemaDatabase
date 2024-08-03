@@ -1,13 +1,20 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.data.local.PeopleLocalDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.PeopleRemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.PeopleResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.paging.PopularPeoplePagingSource
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.paging.SearchPagingSource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.PopularPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IPeopleRepository
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_IS_EMPTY
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.PeopleMapper
@@ -18,6 +25,7 @@ import javax.inject.Singleton
 
 @Singleton
 class PeopleRepository @Inject constructor(
+    private val apiService: ApiService,
     private val localDataSource: PeopleLocalDataSource,
     private val remoteDataSource: PeopleRemoteDataSource
 ) : IPeopleRepository {
@@ -61,5 +69,15 @@ class PeopleRepository @Inject constructor(
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
+    }
+
+    override fun getPopularPeople(): Flow<PagingData<PopularPeople>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { PopularPeoplePagingSource(apiService) }
+        ).flow
     }
 }

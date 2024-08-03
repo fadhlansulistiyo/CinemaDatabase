@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
-import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.SearchPagingSource
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.paging.SearchPagingSource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiSearch
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.ISearchRepository
 import kotlinx.coroutines.flow.Flow
