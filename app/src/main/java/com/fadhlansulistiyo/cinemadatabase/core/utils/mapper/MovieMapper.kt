@@ -41,16 +41,6 @@ object MovieMapper {
             )
         }
 
-    // Map Movie to MovieEntity
-    fun mapMovieDomainToEntity(input: Movie) = MovieEntity(
-        id = input.id,
-        title = input.title.toString(),
-        posterPath = input.posterPath.toString(),
-        releaseDate = input.releaseDate.toString(),
-        voteAverage = input.voteAverage ?: 0.0,
-        backdropPath = input.backdropPath.toString(),
-    )
-
     // Map DetailMovieResponse to DetailMovie
     fun mapDetailMovieResponseToDomain(input: DetailMovieResponse): DetailMovie {
         return DetailMovie(

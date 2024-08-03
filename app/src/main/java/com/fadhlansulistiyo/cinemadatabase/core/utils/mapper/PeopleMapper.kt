@@ -34,13 +34,6 @@ object PeopleMapper {
             )
         }
 
-    // Map People to PeopleEntity
-    fun mapPeopleDomainToEntity(input: People) = PeopleEntity(
-        id = input.id,
-        name = input.name.toString(),
-        profilePath = input.profilePath
-    )
-
     // Map DetailPeopleResponse to DetailPeople
     fun mapDetailPeopleResponseToDomain(input: DetailPeopleResponse): DetailPeople {
         return DetailPeople(
