@@ -11,13 +11,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
-import com.fadhlansulistiyo.cinemadatabase.databinding.ItemCinemaBinding
+import com.fadhlansulistiyo.cinemadatabase.databinding.ItemTvBinding
 import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailTvActivity
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.format
 
 class TvAdapter : ListAdapter<Tv, TvAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val binding = ItemCinemaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemTvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding)
     }
 
@@ -26,16 +27,16 @@ class TvAdapter : ListAdapter<Tv, TvAdapter.ListViewHolder>(DIFF_CALLBACK) {
         holder.bind(tv)
     }
 
-    class ListViewHolder(private val binding: ItemCinemaBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ListViewHolder(private val binding: ItemTvBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tv: Tv) {
-            binding.itemTitle.text = tv.name
-            binding.itemRating.text = tv.voteAverage.toString()
+            binding.itemNameTv.text = tv.name
+            binding.itemRatingTv.text = tv.voteAverage?.format(1)
             Glide.with(itemView.context)
                 .load(IMAGE_URL + tv.posterPath)
                 .apply(
                     RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp).error(R.drawable.ic_error)
                 )
-                .into(binding.itemPoster)
+                .into(binding.itemPosterPathTv)
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailTvActivity::class.java)

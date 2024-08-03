@@ -21,6 +21,7 @@ object MovieMapper {
                 posterPath = it.posterPath,
                 releaseDate = it.releaseDate,
                 voteAverage = it.voteAverage,
+                backdropPath = it.backdropPath
             )
             movieList.add(movie)
         }
@@ -36,16 +37,18 @@ object MovieMapper {
                 posterPath = it.posterPath,
                 releaseDate = it.releaseDate,
                 voteAverage = it.voteAverage,
+                backdropPath = it.backdropPath,
             )
         }
 
     // Map Movie to MovieEntity
     fun mapMovieDomainToEntity(input: Movie) = MovieEntity(
         id = input.id,
-        title = input.title,
-        posterPath = input.posterPath,
-        releaseDate = input.releaseDate,
-        voteAverage = input.voteAverage,
+        title = input.title.toString(),
+        posterPath = input.posterPath.toString(),
+        releaseDate = input.releaseDate.toString(),
+        voteAverage = input.voteAverage ?: 0.0,
+        backdropPath = input.backdropPath.toString(),
     )
 
     // Map DetailMovieResponse to DetailMovie

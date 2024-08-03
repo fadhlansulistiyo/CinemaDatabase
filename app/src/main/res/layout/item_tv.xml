@@ -11,14 +11,14 @@
         android:layout_width="6dp"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/movie_image_card"
+        app:layout_constraintBottom_toBottomOf="@id/cardProfilePathTv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/movie_image_card"
-        android:layout_width="125dp"
-        android:layout_height="170dp"
+        android:id="@+id/cardProfilePathTv"
+        android:layout_width="135dp"
+        android:layout_height="200dp"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
@@ -26,56 +26,57 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/item_poster"
+            android:id="@+id/itemPosterPathTv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/content_desc_poster"
+            android:contentDescription="@string/profile_path"
             android:scaleType="fitXY"
             tools:src="@tools:sample/avatars" />
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/item_title"
-        style="@style/TextAppearance.AppCompat.Headline"
+        android:id="@+id/itemNameTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="2dp"
         android:ellipsize="end"
+        android:fontFamily="@font/urbanist_medium"
         android:lines="1"
-        android:textSize="14dp"
-        app:layout_constraintEnd_toEndOf="@id/movie_image_card"
-        app:layout_constraintStart_toStartOf="@id/movie_image_card"
-        app:layout_constraintTop_toBottomOf="@id/movie_image_card"
+        android:textColor="@color/text_color"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@id/cardProfilePathTv"
+        app:layout_constraintStart_toStartOf="@id/cardProfilePathTv"
+        app:layout_constraintTop_toBottomOf="@id/cardProfilePathTv"
         tools:ignore="SpUsage"
         tools:text="@tools:sample/full_names" />
 
     <TextView
-        android:id="@+id/item_rating"
-        style="@style/TextAppearance.AppCompat.Caption"
+        android:id="@+id/itemRatingTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="2dp"
         android:drawablePadding="4dp"
         android:ellipsize="end"
+        android:fontFamily="@font/urbanist_semibold"
         android:lines="1"
+        android:textColor="@color/text_color"
         android:textSize="12dp"
-        app:layout_constraintEnd_toEndOf="@id/movie_image_card"
-        app:layout_constraintStart_toStartOf="@id/movie_image_card"
-        app:layout_constraintTop_toBottomOf="@id/item_title"
+        app:drawableStartCompat="@drawable/ic_star_rate_12dp"
+        app:layout_constraintStart_toStartOf="@id/itemNameTv"
+        app:layout_constraintTop_toBottomOf="@id/itemNameTv"
         tools:ignore="SpUsage"
-        tools:text="5.0" />
+        tools:text="4.8" />
 
     <Space
         android:id="@+id/spacing_end"
         android:layout_width="16dp"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/movie_image_card"
-        app:layout_constraintStart_toEndOf="@id/movie_image_card"
+        app:layout_constraintBottom_toBottomOf="@id/cardProfilePathTv"
+        app:layout_constraintStart_toEndOf="@id/cardProfilePathTv"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,20 +26,22 @@ class PeopleAdapter : ListAdapter<People, PeopleAdapter.ListViewHolder>(DIFF_CAL
         holder.bind(people)
     }
 
-    class ListViewHolder(private val binding: ItemPeopleBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ListViewHolder(private val binding: ItemPeopleBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(people: People) {
             binding.itemName.text = people.name
             Glide.with(itemView.context)
                 .load(IMAGE_URL + people.profilePath)
                 .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp).error(R.drawable.ic_error)
+                    RequestOptions.placeholderOf(R.drawable.ic_person_grey_32)
+                        .error(R.drawable.ic_error)
                 )
-                .into(binding.itemProfile)
+                .into(binding.itemProfilePeople)
 
             itemView.setOnClickListener {
-                val intent = Intent(itemView.context, DetailPeopleActivity::class.java)
-                intent.putExtra(DetailPeopleActivity.EXTRA_PEOPLE_ID, people.id)
-                itemView.context.startActivity(intent)
+                Intent(itemView.context, DetailPeopleActivity::class.java).apply {
+                    putExtra(DetailPeopleActivity.EXTRA_PEOPLE_ID, people.id)
+                }.run { itemView.context.startActivity(this) }
             }
 
         }

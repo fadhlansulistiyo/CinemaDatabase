@@ -34,4 +34,6 @@ data class MovieResponse(
 	@field:SerializedName("vote_average")
 	val voteAverage: Double,
 
+	@field:SerializedName("backdrop_path")
+	val backdropPath: String,
 )

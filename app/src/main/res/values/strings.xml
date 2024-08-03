@@ -7,7 +7,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="content_desc_poster">Poster of the Movie</string>
-    <string name="now_playing">Now Playing</string>
+    <string name="now_playing_movies">Now Playing Movies</string>
     <string name="airing_today_tv">Airing Today Tv</string>
     <string name="trending_people">Trending People</string>
     <string name="banner_image">Image Backdrop</string>
@@ -27,4 +27,6 @@
     <string name="no_data_available">No data available.</string>
     <string name="retry">Try Again</string>
     <string name="movies_and_tv_shows_hint">Movies, Tv Shows …</string>
+    <string name="movie_backdrop">Movie Backdrop</string>
+    <string name="profile_path">Profile Path</string>
 </resources>

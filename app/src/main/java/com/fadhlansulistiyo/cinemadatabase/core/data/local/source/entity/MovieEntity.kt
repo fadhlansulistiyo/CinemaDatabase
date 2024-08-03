@@ -24,6 +24,9 @@ data class MovieEntity(
     var releaseDate: String,
 
     @ColumnInfo("vote_average")
-    var voteAverage: Double
+    var voteAverage: Double,
+
+    @ColumnInfo("backdrop_path")
+    var backdropPath: String,
 
 ) : Parcelable

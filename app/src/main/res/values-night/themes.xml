@@ -4,6 +4,7 @@
     <style name="CinDesTheme" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:statusBarColor">@color/md_theme_surface</item>
+
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
@@ -50,9 +51,13 @@
         <item name="colorSurfaceContainer">@color/md_theme_surfaceContainer</item>
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
-        <item name="colorCustomColor">@color/colorCustomColor</item>
-        <item name="colorOnCustomColor">@color/colorOnCustomColor</item>
-        <item name="colorCustomColorContainer">@color/colorCustomColorContainer</item>
-        <item name="colorOnCustomColorContainer">@color/colorOnCustomColorContainer</item>
+    </style>
+
+    <style name="HeaderTextStyle">
+        <item name="android:fontFamily">@font/urbanist_bold</item>
+        <item name="android:textColor">@color/md_theme_primary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
     </style>
 </resources>

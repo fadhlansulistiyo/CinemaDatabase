@@ -10,14 +10,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
-import com.fadhlansulistiyo.cinemadatabase.databinding.ItemCinemaBinding
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL_ORIGINAL
+import com.fadhlansulistiyo.cinemadatabase.databinding.ItemNowPlayingBinding
 import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailMovieActivity
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.format
 
-class MovieAdapter : ListAdapter<Movie, MovieAdapter.ListViewHolder>(DIFF_CALLBACK) {
+class NowPlayingAdapter : ListAdapter<Movie, NowPlayingAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val binding = ItemCinemaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemNowPlayingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding)
     }
 
@@ -26,16 +28,18 @@ class MovieAdapter : ListAdapter<Movie, MovieAdapter.ListViewHolder>(DIFF_CALLBA
         holder.bind(movie)
     }
 
-    class ListViewHolder(private val binding: ItemCinemaBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ListViewHolder(private val binding: ItemNowPlayingBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
-            binding.itemTitle.text = movie.title
-            binding.itemRating.text = movie.voteAverage.toString()
+            binding.itemTitleNowPlaying.text = movie.title
+            binding.tvItemRatingNowPlaying.text = movie.voteAverage?.format(1)
             Glide.with(itemView.context)
-                .load(IMAGE_URL + movie.posterPath)
+                .load(IMAGE_URL_ORIGINAL + movie.backdropPath)
                 .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp).error(R.drawable.ic_error)
+                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
+                        .error(R.drawable.ic_error)
                 )
-                .into(binding.itemPoster)
+                .into(binding.itemPosterNowPlaying)
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailMovieActivity::class.java)

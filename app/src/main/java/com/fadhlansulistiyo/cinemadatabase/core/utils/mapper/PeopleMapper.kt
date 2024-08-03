@@ -37,7 +37,7 @@ object PeopleMapper {
     // Map People to PeopleEntity
     fun mapPeopleDomainToEntity(input: People) = PeopleEntity(
         id = input.id,
-        name = input.name,
+        name = input.name.toString(),
         profilePath = input.profilePath
     )
 

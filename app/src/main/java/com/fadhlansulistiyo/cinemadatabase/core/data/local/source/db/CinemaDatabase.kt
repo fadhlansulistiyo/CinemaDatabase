@@ -16,7 +16,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.entity.Watchli
         WatchlistMovieEntity::class,
         WatchlistTvEntity::class
     ],
-    version = 10,
+    version = 11,
     exportSchema = false
 )
 abstract class CinemaDatabase : RoomDatabase() {

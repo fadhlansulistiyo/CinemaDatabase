@@ -67,7 +67,7 @@
                 android:layout_marginBottom="4dp"
                 android:drawablePadding="4dp"
                 android:fontFamily="sans-serif-light"
-                app:drawableStartCompat="@drawable/ic_star_rate_grey_24"
+                app:drawableStartCompat="@drawable/ic_star_rate_12dp"
                 tools:text="0.0  (0)" />
 
         </LinearLayout>

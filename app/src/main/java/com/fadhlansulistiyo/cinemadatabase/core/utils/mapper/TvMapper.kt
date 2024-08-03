@@ -42,10 +42,10 @@ object TvMapper {
     // Map Tv to TvEntity
     fun mapTvDomainToEntity(input: Tv) = TvEntity(
         id = input.id,
-        name = input.name,
-        posterPath = input.posterPath,
-        firstAirDate = input.firstAirDate,
-        voteAverage = input.voteAverage,
+        name = input.name.toString(),
+        posterPath = input.posterPath.toString(),
+        firstAirDate = input.firstAirDate.toString(),
+        voteAverage = input.voteAverage ?: 0.0,
     )
 
     // Map DetailTvResponse to DetailTv
