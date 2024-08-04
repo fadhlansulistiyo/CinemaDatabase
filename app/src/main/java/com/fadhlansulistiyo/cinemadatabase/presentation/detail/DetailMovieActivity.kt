@@ -1,19 +1,26 @@
 package com.fadhlansulistiyo.cinemadatabase.presentation.detail
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Cast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
+import com.fadhlansulistiyo.cinemadatabase.core.ui.CastAdapter
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL_ORIGINAL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailMovieBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.format
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedRuntime
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,87 +30,146 @@ class DetailMovieActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
     private val viewModel: DetailMovieViewModel by viewModels()
+    private lateinit var castAdapter: CastAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupBinding()
         enableEdgeToEdge()
-        _binding = ActivityDetailMovieBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        handleWindowInsets()
 
         val movieId = intent.getIntExtra(EXTRA_MOVIE_ID, 0)
         viewModel.fetchMovieDetail(movieId)
+        setupRecyclerView()
+        setupObservers()
+        setupListeners()
+    }
 
+    private fun setupRecyclerView() {
+        castAdapter = CastAdapter()
+        binding.detailRecyclerViewCast.adapter = castAdapter
+    }
+
+    private fun setupObservers() {
         viewModel.isWatchlist.observe(this) { isWatchlist ->
-            setFavoriteState(isWatchlist)
+            setWatchlistState(isWatchlist)
         }
 
         viewModel.movieDetail.observe(this) { detailMovie ->
-            when (detailMovie) {
-                is Resource.Error -> {
-                    binding.progressBar.hide()
-                    Log.e("DetailMovieActivity", "Error: ${detailMovie.message}")
-                }
-
-                is Resource.Loading -> {
-                    binding.progressBar.show()
-                    Log.d("DetailMovieActivity", "Loading")
-                }
-
-                is Resource.Success -> {
-                    binding.progressBar.hide()
-                    Log.d("DetailMovieActivity", "Success: ${detailMovie.data}")
-                    detailMovie.data?.let { setDetailMovie(it) }
-                }
-            }
+            handleMovieDetail(detailMovie)
         }
 
-        binding.fab.setOnClickListener {
+        viewModel.cast.observe(this) { castResource ->
+            handleCastResource(castResource)
+        }
+    }
+
+    private fun handleMovieDetail(detailMovie: Resource<DetailMovie>) {
+        when (detailMovie) {
+            is Resource.Error -> {
+                binding.progressBar.visibility = View.GONE
+                showToast(detailMovie.message.toString())
+            }
+
+            is Resource.Loading -> {
+                binding.progressBar.visibility = View.VISIBLE
+            }
+
+            is Resource.Success -> {
+                binding.progressBar.visibility = View.GONE
+                detailMovie.data?.let { setDetailMovie(it) }
+            }
+        }
+    }
+
+    private fun handleCastResource(castResource: Resource<List<Cast>>) {
+        when (castResource) {
+            is Resource.Error -> {
+                binding.progressBarCast.visibility = View.GONE
+                showToast(castResource.message.toString())
+            }
+
+            is Resource.Loading -> {
+                binding.progressBarCast.visibility = View.VISIBLE
+            }
+
+            is Resource.Success -> {
+                binding.progressBarCast.visibility = View.GONE
+                castAdapter.submitList(castResource.data)
+            }
+        }
+    }
+
+    private fun setupListeners() {
+        binding.btnWatchlist.setOnClickListener {
             val currentDetail = viewModel.movieDetail.value?.data ?: return@setOnClickListener
-            viewModel.setUserFavorite(
+            viewModel.toggleWatchlistMovie(
                 WatchlistMovie(
                     id = currentDetail.id,
                     title = currentDetail.title.toString(),
                     posterPath = currentDetail.posterPath.toString(),
                     releaseDate = currentDetail.releaseDate.toString(),
-                    voteAverage = currentDetail.voteAverage!!
+                    voteAverage = currentDetail.voteAverage ?: 0.0
                 )
             )
+        }
+
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
         }
     }
 
     private fun setDetailMovie(detailMovie: DetailMovie) {
         binding.apply {
             Glide.with(this@DetailMovieActivity)
-                .load(IMAGE_URL + detailMovie.posterPath)
-                .into(posterImageView)
-            titleTextView.text = detailMovie.title
-            originalTitleTextView.text = detailMovie.originalTitle
-            overviewTextView.text = detailMovie.overview
-            runtimeTextView.text = detailMovie.runtime.toString()
-            revenueTextView.text = detailMovie.revenue.toString()
-            releaseDateTextView.text = detailMovie.releaseDate
-            genresTextView.text = detailMovie.genres?.joinToString(", ") { it?.name ?: "" }
-            popularityTextView.text = detailMovie.popularity.toString()
-            voteCountTextView.text = detailMovie.voteCount.toString()
-            budgetTextView.text = detailMovie.budget.toString()
-            productionCompaniesTextView.text =
+                .load(IMAGE_URL_ORIGINAL + detailMovie.backdropPath)
+                .apply(
+                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
+                        .error(R.drawable.ic_error)
+                )
+                .into(detailBackdropPath)
+
+            Glide.with(this@DetailMovieActivity)
+                .load(IMAGE_URL_ORIGINAL + detailMovie.posterPath)
+                .apply(
+                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
+                        .error(R.drawable.ic_error)
+                )
+                .into(detailPosterPath)
+            detailTitle.text = detailMovie.title
+            detailDescription.text = detailMovie.overview
+            detailRuntime.text = detailMovie.runtime?.toFormattedRuntime()
+            detailReleaseDate.text = detailMovie.releaseDate?.toFormattedDateString()
+            detailGenres.text = detailMovie.genres?.joinToString(", ") { it?.name ?: "" }
+            detailCompanies.text =
                 detailMovie.productionCompanies?.joinToString(", ") { it?.name ?: "" }
-            voteAverageTextView.text = detailMovie.voteAverage.toString()
-            statusTextView.text = detailMovie.status
+            detailVoteAverage.text = detailMovie.voteAverage?.format(1)
         }
     }
 
-    private fun setFavoriteState(isFavorite: Boolean) {
-        if (isFavorite) {
-            binding.fab.setImageResource(R.drawable.ic_favorite_white_24dp)
+    private fun setWatchlistState(isWatchlist: Boolean) {
+        if (isWatchlist) {
+            binding.btnWatchlist.setImageResource(R.drawable.baseline_watchlist_filled)
         } else {
-            binding.fab.setImageResource(R.drawable.ic_not_favorite_white_24dp)
+            binding.btnWatchlist.setImageResource(R.drawable.baseline_watchlist)
         }
+    }
+
+    private fun setupBinding() {
+        _binding = ActivityDetailMovieBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    private fun handleWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Cast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.MovieUseCase
@@ -25,15 +26,23 @@ class DetailMovieViewModel @Inject constructor(
     private val _isWatchlist = MutableLiveData<Boolean>()
     val isWatchlist: LiveData<Boolean> get() = _isWatchlist
 
+    private val _cast = MutableLiveData<Resource<List<Cast>>>()
+    val cast: LiveData<Resource<List<Cast>>> = _cast
+
     fun fetchMovieDetail(movieId: Int) {
         viewModelScope.launch {
-            _movieDetail.value = Resource.Loading()
-            _movieDetail.value = movieUseCase.getDetailMovie(movieId)
-            checkIfFavorite(movieDetail.value?.data?.title.toString())
-        }
-    }
+            try {
+                _movieDetail.value = Resource.Loading()
+                val detailResult = movieUseCase.getDetailMovie(movieId)
+                _movieDetail.value = detailResult
+                detailResult.data?.title?.let { checkIfWatchlist(it) }
+                fetchCast(movieId)
+            } catch (e: Exception) {
+                _movieDetail.value = Resource.Error(e.message ?: "Unknown error")
+            }
+        }    }
 
-    fun setUserFavorite(watchlistMovie: WatchlistMovie) {
+    fun toggleWatchlistMovie(watchlistMovie: WatchlistMovie) {
         viewModelScope.launch {
             val watchlist = watchlistMovieUseCase.getWatchlistByTitle(watchlistMovie.title)
             if (watchlist == null) {
@@ -46,10 +55,22 @@ class DetailMovieViewModel @Inject constructor(
         }
     }
 
-    private fun checkIfFavorite(title: String) {
+    private fun checkIfWatchlist(title: String) {
         viewModelScope.launch {
             val watchlist = watchlistMovieUseCase.getWatchlistByTitle(title)
             _isWatchlist.postValue(watchlist != null)
+        }
+    }
+
+    private fun fetchCast(movieId: Int) {
+        viewModelScope.launch {
+            try {
+                movieUseCase.getCast(movieId).collect {
+                    _cast.postValue(it)
+                }
+            } catch (e: Exception) {
+                _cast.postValue(Resource.Error(e.message ?: "Unknown error"))
+            }
         }
     }
 }

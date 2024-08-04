@@ -1,172 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainCoordinatorLayout"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.detail.DetailMovieActivity">
 
-    <ScrollView
-        android:id="@+id/main"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:indeterminate="true"
-                android:visibility="gone" />
+        <ImageView
+            android:id="@+id/detailBackdropPath"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:contentDescription="@string/movie_backdrop"
+            android:foreground="#59181A20"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
 
-            <!-- Movie Poster -->
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/btnWatchlist"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_watchlist"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="135dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="-8dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/detailTitle">
+
             <ImageView
-                android:id="@+id/posterImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:layout_marginBottom="16dp"
-                android:scaleType="centerCrop"
+                android:id="@+id/detailPosterPath"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/content_desc_poster"
+                android:scaleType="fitXY"
                 tools:src="@tools:sample/avatars" />
+        </com.google.android.material.card.MaterialCardView>
 
-            <!-- Movie Title -->
-            <TextView
-                android:id="@+id/titleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Inside Out 2"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/detailTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_extrabold"
+            android:maxLines="2"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/detailBackdropPath"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cardView"
+            tools:ignore="SpUsage"
+            tools:text="@tools:sample/full_names" />
 
-            <!-- Movie Original Title -->
-            <TextView
-                android:id="@+id/originalTitleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Inside Out"
-                android:textSize="18sp"
-                android:textStyle="italic" />
+        <TextView
+            android:id="@+id/detailVoteAverage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="6dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_medium"
+            android:lines="1"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_star_rate_12dp"
+            app:drawableTint="@color/md_theme_primary"
+            app:layout_constraintStart_toStartOf="@id/detailTitle"
+            app:layout_constraintTop_toBottomOf="@id/detailBackdropPath"
+            tools:ignore="SpUsage"
+            tools:text="4.8" />
 
-            <!-- Release Date -->
-            <TextView
-                android:id="@+id/releaseDateTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Release Date: 2019-06-15"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/detailRuntime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:drawablePadding="6dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_medium"
+            android:lines="1"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/baseline_access_time_24"
+            app:drawableTint="@color/md_theme_primary"
+            app:layout_constraintStart_toStartOf="@id/detailVoteAverage"
+            app:layout_constraintTop_toBottomOf="@id/detailVoteAverage"
+            tools:ignore="SpUsage"
+            tools:text="2h 23m" />
 
-            <!-- Runtime -->
-            <TextView
-                android:id="@+id/runtimeTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Runtime: 92 min"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/detailReleaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:drawablePadding="6dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_medium"
+            android:lines="1"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/baseline_calendar_today_12"
+            app:drawableTint="@color/md_theme_primary"
+            app:layout_constraintStart_toStartOf="@id/detailRuntime"
+            app:layout_constraintTop_toBottomOf="@id/detailRuntime"
+            tools:ignore="SpUsage"
+            tools:text="01 Jan 2024" />
 
-            <!-- Genres -->
-            <TextView
-                android:id="@+id/genresTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Genres: Action, Adventure, Comedy"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvGenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/urbanist_semibold"
+            android:text="@string/genres"
+            android:textColor="@color/md_theme_primary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/detailReleaseDate"
+            app:layout_constraintTop_toBottomOf="@id/detailReleaseDate" />
 
-            <!-- Overview -->
-            <TextView
-                android:id="@+id/overviewTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Overview: Inside Out is a 2019 American 3D computer-animated musical fantasy film produced by Pixar"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/detailGenres"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_medium"
+            android:maxLines="2"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvGenres"
+            app:layout_constraintTop_toBottomOf="@id/tvGenres"
+            tools:text="@string/dummy_genres" />
 
-            <!-- Popularity -->
-            <TextView
-                android:id="@+id/popularityTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Popularity: 7.3"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/urbanist_semibold"
+            android:text="@string/description"
+            android:textColor="@color/md_theme_primary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/cardView"
+            app:layout_constraintTop_toBottomOf="@id/cardView"
+            tools:ignore="SpUsage" />
 
-            <!-- Vote Average -->
-            <TextView
-                android:id="@+id/voteAverageTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Vote Average: 7.8"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/detailDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_medium"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription"
+            tools:ignore="SpUsage"
+            tools:text="@string/description" />
 
-            <!-- Vote Count -->
-            <TextView
-                android:id="@+id/voteCountTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Vote Count: 12345"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvCompanies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/urbanist_semibold"
+            android:text="@string/production_companies"
+            android:textColor="@color/md_theme_primary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailDescription" />
 
-            <!-- Budget -->
-            <TextView
-                android:id="@+id/budgetTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Budget: $150,000,000"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/detailCompanies"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/urbanist_medium"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCompanies"
+            tools:text="Marvel Production" />
 
-            <!-- Revenue -->
-            <TextView
-                android:id="@+id/revenueTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Revenue: $200,000,000"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvCast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16sp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/urbanist_semibold"
+            android:text="@string/cast"
+            android:textColor="@color/md_theme_primary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailCompanies"
+            tools:ignore="SpUsage" />
 
-            <!-- Status -->
-            <TextView
-                android:id="@+id/statusTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Status: Released"
-                android:textSize="16sp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/detailRecyclerViewCast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCast" />
 
-            <!-- Production Companies -->
-            <TextView
-                android:id="@+id/productionCompaniesTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Production Companies: Pixar Animation Studios"
-                android:textSize="16sp" />
+        <ProgressBar
+            android:id="@+id/progressBarCast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCast" />
 
-        </LinearLayout>
-
-    </ScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_not_favorite_white_24dp"
-        app:backgroundTint="@color/md_theme_primary"
-        app:layout_anchor="@id/main"
-        app:layout_anchorGravity="bottom|end" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

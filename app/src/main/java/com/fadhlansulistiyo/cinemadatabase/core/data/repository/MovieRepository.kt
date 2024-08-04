@@ -1,17 +1,20 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 
+import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.data.local.MovieLocalDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.MovieRemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieResponse
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Cast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_IS_EMPTY
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.MovieMapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -61,6 +64,29 @@ class MovieRepository @Inject constructor(
             }
         } catch (e: Exception) {
             Resource.Error(e.toString())
+        }
+    }
+
+    override fun getCast(movieId: Int): Flow<Resource<List<Cast>>> = flow {
+        emit(Resource.Loading())
+        try {
+            when (val response = remoteDataSource.getCast(movieId)) {
+                is ApiResponseResult.Success -> {
+                    val castList = response.data.map {
+                        MovieMapper.mapCastResponseToDomain(it)
+                    }
+                    emit(Resource.Success(castList))
+                }
+                is ApiResponseResult.Empty -> {
+                    emit(Resource.Error(DATA_IS_EMPTY))
+                }
+                is ApiResponseResult.Error -> {
+                    Log.e("MovieRepository", "Error: ${response.errorMessage}")
+                    emit(Resource.Error(response.errorMessage))
+                }
+            }
+        } catch (e: Exception) {
+            emit(Resource.Error(e.toString()))
         }
     }
 }

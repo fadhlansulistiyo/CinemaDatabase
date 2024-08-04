@@ -6,6 +6,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import retrofit2.HttpException
+import java.io.IOException
 
 open class BaseRemoteDataSource {
 
@@ -14,7 +16,11 @@ open class BaseRemoteDataSource {
             val response = apiCall()
             ApiResponseResult.Success(response)
         } catch (e: Exception) {
-            ApiResponseResult.Error(e.toString())
+            when (e) {
+                is IOException -> ApiResponseResult.Error("No internet connection")
+                is HttpException -> ApiResponseResult.Error("Network error: ${e.message}")
+                else -> ApiResponseResult.Error(e.toString())
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.remote.network
 
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListCreditsResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailMovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailPeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailTvResponse
@@ -48,4 +49,15 @@ interface ApiService {
         @Query("page") page: Int = 0,
         @Query("language") language: String = "en"
     ): ListPeopleResponse
+
+    @GET("movie/{movie_id}/credits?language=en-US")
+    suspend fun getMovieCredits(
+        @Path("movie_id") movieId: Int
+    ): ListCreditsResponse
+
+    @GET("movie/{movie_id}/images")
+    suspend fun getMovieImages(
+        @Path("movie_id") movieId: Int
+    ): ListCreditsResponse
+
 }

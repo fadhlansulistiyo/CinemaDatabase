@@ -2,6 +2,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.remote.source
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.CastResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailMovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieResponse
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +24,12 @@ class MovieRemoteDataSource @Inject constructor(
     suspend fun getDetailMovie(movieId: Int): ApiResponseResult<DetailMovieResponse> {
         return handleApiCall {
             apiService.getDetailMovie(movieId)
+        }
+    }
+
+    suspend fun getCast(movieId: Int): ApiResponseResult<List<CastResponse>> {
+        return handleApiCall {
+            apiService.getMovieCredits(movieId).cast
         }
     }
 }

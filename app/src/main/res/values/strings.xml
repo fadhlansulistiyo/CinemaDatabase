@@ -9,7 +9,6 @@
     <string name="now_playing_movies">Now Playing Movies</string>
     <string name="airing_today_tv">Airing Today Tv</string>
     <string name="trending_people">Trending People</string>
-    <string name="banner_image">Image Backdrop</string>
     <string name="movie_image">Detail Poster</string>
     <string name="overview">Overview</string>
     <string name="description">Description</string>
@@ -28,4 +27,8 @@
     <string name="movies_and_tv_shows_hint">Movies, Tv Shows …</string>
     <string name="movie_backdrop">Movie Backdrop</string>
     <string name="profile_path">Profile Path</string>
+    <string name="dummy_genres">Action, Adventure, Drama</string>
+    <string name="production_companies">Production Companies</string>
+    <string name="image">Images</string>
+    <string name="an_error_occurred">An error occurred</string>
 </resources>

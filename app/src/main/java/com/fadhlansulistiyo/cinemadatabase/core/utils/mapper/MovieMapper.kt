@@ -1,8 +1,10 @@
 package com.fadhlansulistiyo.cinemadatabase.core.utils.mapper
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.entity.MovieEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.CastResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailMovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieResponse
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Cast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_NOT_YET_AVAILABLE
@@ -61,6 +63,16 @@ object MovieMapper {
             voteAverage = input.voteAverage ?: 0.0,
             status = input.status ?: DATA_NOT_YET_AVAILABLE,
             isWatchlist = false
+        )
+    }
+
+    fun mapCastResponseToDomain(input: CastResponse): Cast {
+        return Cast(
+            id = input.id,
+            castId = input.castId,
+            name = input.name ?: DATA_NOT_YET_AVAILABLE,
+            character = input.character ?: DATA_NOT_YET_AVAILABLE,
+            profilePath = input.profilePath ?: "",
         )
     }
 }
