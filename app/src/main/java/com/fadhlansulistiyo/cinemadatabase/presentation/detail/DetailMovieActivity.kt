@@ -136,8 +136,8 @@ class DetailMovieActivity : AppCompatActivity() {
                         .error(R.drawable.ic_error)
                 )
                 .into(detailPosterPath)
-            detailTitle.text = detailMovie.title
-            detailDescription.text = detailMovie.overview
+            detailTitle.text = detailMovie.title ?: ""
+            detailOverview.text = detailMovie.overview ?: ""
             detailRuntime.text = detailMovie.runtime?.toFormattedRuntime()
             detailReleaseDate.text = detailMovie.releaseDate?.toFormattedDateString()
             detailGenres.text = detailMovie.genres?.joinToString(", ") { it?.name ?: "" }

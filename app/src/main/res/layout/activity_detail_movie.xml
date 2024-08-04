@@ -183,7 +183,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/urbanist_semibold"
-            android:text="@string/description"
+            android:text="@string/overview"
             android:textColor="@color/md_theme_primary"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/cardView"
@@ -191,7 +191,7 @@
             tools:ignore="SpUsage" />
 
         <TextView
-            android:id="@+id/detailDescription"
+            android:id="@+id/detailOverview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -205,7 +205,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvDescription"
             tools:ignore="SpUsage"
-            tools:text="@string/description" />
+            tools:text="@string/overview" />
 
         <TextView
             android:id="@+id/tvCompanies"
@@ -218,7 +218,7 @@
             android:textColor="@color/md_theme_primary"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailDescription" />
+            app:layout_constraintTop_toBottomOf="@id/detailOverview" />
 
         <TextView
             android:id="@+id/detailCompanies"

@@ -1,7 +1,9 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.remote.source
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NETWORK_ERROR
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NO_DATA_AVAILABLE
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NO_INTERNET_CONNECTION
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,8 +19,8 @@ open class BaseRemoteDataSource {
             ApiResponseResult.Success(response)
         } catch (e: Exception) {
             when (e) {
-                is IOException -> ApiResponseResult.Error("No internet connection")
-                is HttpException -> ApiResponseResult.Error("Network error: ${e.message}")
+                is IOException -> ApiResponseResult.Error(NO_INTERNET_CONNECTION)
+                is HttpException -> ApiResponseResult.Error("$NETWORK_ERROR: ${e.message}")
                 else -> ApiResponseResult.Error(e.toString())
             }
         }

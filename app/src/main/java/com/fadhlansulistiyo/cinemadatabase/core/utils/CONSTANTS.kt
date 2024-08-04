@@ -11,5 +11,7 @@ class CONSTANTS {
         const val DATA_NOT_YET_AVAILABLE = "Data not yet available."
         const val NO_DATA_AVAILABLE = "No data available."
         const val DATA_IS_EMPTY = "Data is empty."
+        const val NO_INTERNET_CONNECTION = "No internet connection."
+        const val NETWORK_ERROR = "Network error."
     }
 }

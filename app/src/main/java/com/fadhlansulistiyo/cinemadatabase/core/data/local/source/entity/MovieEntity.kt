@@ -15,18 +15,18 @@ data class MovieEntity(
     var id: Int,
 
     @ColumnInfo("title")
-    var title: String,
+    var title: String? = null,
 
     @ColumnInfo("poster_path")
-    var posterPath: String,
+    var posterPath: String? = null,
 
     @ColumnInfo("release_date")
-    var releaseDate: String,
+    var releaseDate: String? = null,
 
     @ColumnInfo("vote_average")
-    var voteAverage: Double,
+    var voteAverage: Double? = null,
 
     @ColumnInfo("backdrop_path")
-    var backdropPath: String,
+    var backdropPath: String? = null,
 
 ) : Parcelable
