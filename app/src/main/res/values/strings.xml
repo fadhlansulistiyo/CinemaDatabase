@@ -13,7 +13,7 @@
     <string name="overview">Overview</string>
     <string name="description">Description</string>
     <string name="genres">Genres</string>
-    <string name="cast">Cast</string>
+    <string name="movieCast">Cast</string>
     <string name="data_not_yet_available">Data not yet available.</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="action_settings">Settings</string>
@@ -31,4 +31,6 @@
     <string name="production_companies">Production Companies</string>
     <string name="image">Images</string>
     <string name="an_error_occurred">An error occurred</string>
+    <string name="current_season">Current Season</string>
+    <string name="seasons">Seasons</string>
 </resources>

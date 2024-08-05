@@ -13,7 +13,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ItemTvBinding
 import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailTvActivity
-import com.fadhlansulistiyo.cinemadatabase.presentation.utils.format
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toVoteAverageFormat
 
 class TvAdapter : ListAdapter<Tv, TvAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
@@ -30,7 +30,7 @@ class TvAdapter : ListAdapter<Tv, TvAdapter.ListViewHolder>(DIFF_CALLBACK) {
     class ListViewHolder(private val binding: ItemTvBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tv: Tv) {
             binding.itemNameTv.text = tv.name
-            binding.itemRatingTv.text = tv.voteAverage?.format(1)
+            binding.itemRatingTv.text = tv.voteAverage?.toVoteAverageFormat(1)
             Glide.with(itemView.context)
                 .load(IMAGE_URL + tv.posterPath)
                 .apply(

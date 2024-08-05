@@ -1,17 +1,22 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 
+import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.data.local.TvLocalDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.TvRemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.TvResponse
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.ITvRepository
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_IS_EMPTY
+import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.MovieMapper
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.TvMapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -63,5 +68,27 @@ class TvRepository @Inject constructor(
         }
     }
 
-
+    override fun getCast(seriesId: Int): Flow<Resource<List<TvCast>>> = flow {
+        emit(Resource.Loading())
+        try {
+            when (val response = remoteDataSource.getCast(seriesId)) {
+                is ApiResponseResult.Success -> {
+                    val castList = response.data.map {
+                        TvMapper.mapCastResponseToDomain(it)
+                    }
+                    Log.d("TvRepository", "Cast List: $castList")
+                    emit(Resource.Success(castList))
+                }
+                is ApiResponseResult.Empty -> {
+                    emit(Resource.Error(DATA_IS_EMPTY))
+                }
+                is ApiResponseResult.Error -> {
+                    Log.e("TvRepository", "Error: ${response.errorMessage}")
+                    emit(Resource.Error(response.errorMessage))
+                }
+            }
+        } catch (e: Exception) {
+            emit(Resource.Error(e.toString()))
+        }
+    }
 }

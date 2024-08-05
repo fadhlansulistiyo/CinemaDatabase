@@ -1,7 +1,7 @@
 package com.fadhlansulistiyo.cinemadatabase.core.domain.usecase
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Cast
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
@@ -19,7 +19,7 @@ class MovieInteractor @Inject constructor(private val movieRepository: IMovieRep
         return movieRepository.getDetailMovie(movieId)
     }
 
-    override fun getCast(movieId: Int): Flow<Resource<List<Cast>>> {
+    override fun getCast(movieId: Int): Flow<Resource<List<MovieCast>>> {
         return movieRepository.getCast(movieId)
     }
 }

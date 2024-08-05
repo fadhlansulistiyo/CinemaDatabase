@@ -29,7 +29,7 @@ data class DetailMovieResponse(
 	val releaseDate: String? = null,
 
     @field:SerializedName("genres")
-	val genres: List<GenresItem?>? = null,
+	val genres: List<GenresResponse?>? = null,
 
     @field:SerializedName("popularity")
 	val popularity: Double? = null,

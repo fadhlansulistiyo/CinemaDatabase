@@ -1,13 +1,17 @@
 package com.fadhlansulistiyo.cinemadatabase.core.utils.mapper
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.local.source.entity.TvEntity
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.CastResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailTvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.TvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_NOT_YET_AVAILABLE
-import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapGenreItemToDomain
-import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapProductionCompanyResponseToDomain
+import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapGenresResponseToDomain
+import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapProductionCompaniesResponseToDomain
+import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapSeasonsResponseToDomain
 
 object TvMapper {
 
@@ -40,26 +44,36 @@ object TvMapper {
         }
 
     // Map DetailTvResponse to DetailTv
-    fun mapDetailTvResponseToDomain(input: DetailTvResponse): DetailTv {
+    fun mapDetailTvResponseToDomain(detailTvResponse: DetailTvResponse): DetailTv {
         return DetailTv(
+            id = detailTvResponse.id,
+            numberOfEpisodes = detailTvResponse.numberOfEpisodes,
+            backdropPath = detailTvResponse.backdropPath,
+            genres = detailTvResponse.genres?.map { mapGenresResponseToDomain(it) } ?: emptyList(),
+            numberOfSeasons = detailTvResponse.numberOfSeasons,
+            firstAirDate = detailTvResponse.firstAirDate,
+            overview = detailTvResponse.overview,
+            posterPath = detailTvResponse.posterPath,
+            productionCompanies = detailTvResponse.productionCompanies.map {
+                mapProductionCompaniesResponseToDomain(
+                    it
+                )
+            },
+            voteAverage = detailTvResponse.voteAverage,
+            name = detailTvResponse.name,
+            seasons = detailTvResponse.seasons.map {
+                mapSeasonsResponseToDomain(it)
+            }
+        )
+    }
+
+    fun mapCastResponseToDomain(input: CastResponse): TvCast {
+        return TvCast(
             id = input.id,
-            originalLanguage = input.originalLanguage ?: DATA_NOT_YET_AVAILABLE,
-            numberOfEpisodes = input.numberOfEpisodes ?: 0,
-            backdropPath = input.backdropPath ?: "",
-            genres = input.genres?.map { mapGenreItemToDomain(it) } ?: emptyList(),
-            popularity = input.popularity ?: 0.0,
-            numberOfSeasons = input.numberOfSeasons ?: 0,
-            voteCount = input.voteCount ?: 0,
-            firstAirDate = input.firstAirDate ?: DATA_NOT_YET_AVAILABLE,
-            overview = input.overview ?: DATA_NOT_YET_AVAILABLE,
-            posterPath = input.posterPath ?: "",
-            productionCompanies = input.productionCompanies?.map { mapProductionCompanyResponseToDomain(it) } ?: emptyList(),
-            originalName = input.originalName ?: DATA_NOT_YET_AVAILABLE,
-            voteAverage = input.voteAverage ?: 0.0,
+            castId = input.castId ?: 0,
             name = input.name ?: DATA_NOT_YET_AVAILABLE,
-            episodeRunTime = input.episodeRunTime ?: emptyList(),
-            lastAirDate = input.lastAirDate ?: DATA_NOT_YET_AVAILABLE,
-            status = input.status ?: DATA_NOT_YET_AVAILABLE
+            character = input.character ?: DATA_NOT_YET_AVAILABLE,
+            profilePath = input.profilePath ?: "",
         )
     }
 }

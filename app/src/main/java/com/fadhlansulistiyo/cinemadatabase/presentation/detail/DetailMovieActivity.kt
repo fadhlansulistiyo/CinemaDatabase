@@ -1,6 +1,7 @@
 package com.fadhlansulistiyo.cinemadatabase.presentation.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -12,14 +13,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Cast
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
 import com.fadhlansulistiyo.cinemadatabase.core.ui.CastAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL_ORIGINAL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailMovieBinding
-import com.fadhlansulistiyo.cinemadatabase.presentation.utils.format
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toVoteAverageFormat
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedProductionCompanies
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedRuntime
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -59,7 +61,7 @@ class DetailMovieActivity : AppCompatActivity() {
             handleMovieDetail(detailMovie)
         }
 
-        viewModel.cast.observe(this) { castResource ->
+        viewModel.movieCast.observe(this) { castResource ->
             handleCastResource(castResource)
         }
     }
@@ -82,11 +84,12 @@ class DetailMovieActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleCastResource(castResource: Resource<List<Cast>>) {
-        when (castResource) {
+    private fun handleCastResource(movieCastResource: Resource<List<MovieCast>>) {
+        when (movieCastResource) {
             is Resource.Error -> {
                 binding.progressBarCast.visibility = View.GONE
-                showToast(castResource.message.toString())
+                showToast(movieCastResource.message.toString())
+                Log.e("GetCastMovieActivity", "Error: ${movieCastResource.message}")
             }
 
             is Resource.Loading -> {
@@ -94,8 +97,9 @@ class DetailMovieActivity : AppCompatActivity() {
             }
 
             is Resource.Success -> {
+                Log.d("GetCastMovieActivity", "Cast data: ${movieCastResource.data}")
                 binding.progressBarCast.visibility = View.GONE
-                castAdapter.submitList(castResource.data)
+                castAdapter.submitList(movieCastResource.data)
             }
         }
     }
@@ -141,9 +145,8 @@ class DetailMovieActivity : AppCompatActivity() {
             detailRuntime.text = detailMovie.runtime?.toFormattedRuntime()
             detailReleaseDate.text = detailMovie.releaseDate?.toFormattedDateString()
             detailGenres.text = detailMovie.genres?.joinToString(", ") { it?.name ?: "" }
-            detailCompanies.text =
-                detailMovie.productionCompanies?.joinToString(", ") { it?.name ?: "" }
-            detailVoteAverage.text = detailMovie.voteAverage?.format(1)
+            detailCompanies.text = detailMovie.productionCompanies?.map { it?.name }?.toFormattedProductionCompanies()
+            detailVoteAverage.text = detailMovie.voteAverage?.toVoteAverageFormat(1)
         }
     }
 

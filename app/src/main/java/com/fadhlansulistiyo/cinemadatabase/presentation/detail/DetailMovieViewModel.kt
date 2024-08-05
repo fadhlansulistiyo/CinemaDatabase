@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Cast
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.MovieUseCase
@@ -26,8 +26,8 @@ class DetailMovieViewModel @Inject constructor(
     private val _isWatchlist = MutableLiveData<Boolean>()
     val isWatchlist: LiveData<Boolean> get() = _isWatchlist
 
-    private val _cast = MutableLiveData<Resource<List<Cast>>>()
-    val cast: LiveData<Resource<List<Cast>>> = _cast
+    private val _movieCast = MutableLiveData<Resource<List<MovieCast>>>()
+    val movieCast: LiveData<Resource<List<MovieCast>>> = _movieCast
 
     fun fetchMovieDetail(movieId: Int) {
         viewModelScope.launch {
@@ -40,7 +40,8 @@ class DetailMovieViewModel @Inject constructor(
             } catch (e: Exception) {
                 _movieDetail.value = Resource.Error(e.message ?: "Unknown error")
             }
-        }    }
+        }
+    }
 
     fun toggleWatchlistMovie(watchlistMovie: WatchlistMovie) {
         viewModelScope.launch {
@@ -66,10 +67,10 @@ class DetailMovieViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 movieUseCase.getCast(movieId).collect {
-                    _cast.postValue(it)
+                    _movieCast.postValue(it)
                 }
             } catch (e: Exception) {
-                _cast.postValue(Resource.Error(e.message ?: "Unknown error"))
+                _movieCast.postValue(Resource.Error(e.message ?: "Unknown error"))
             }
         }
     }

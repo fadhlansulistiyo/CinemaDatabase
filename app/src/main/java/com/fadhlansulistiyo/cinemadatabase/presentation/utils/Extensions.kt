@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-fun Double.format(digits: Int): String {
+fun Double.toVoteAverageFormat(digits: Int): String {
     val df = DecimalFormat()
     df.decimalFormatSymbols = DecimalFormatSymbols(Locale.US)
     df.maximumFractionDigits = digits
@@ -28,4 +28,8 @@ fun Int.toFormattedRuntime(): String {
     } else {
         String.format(Locale.getDefault(), "%dm", minutes)
     }
+}
+
+fun List<String?>?.toFormattedProductionCompanies(): String {
+    return this?.filterNotNull()?.joinToString(" • ", prefix = "• ") ?: ""
 }

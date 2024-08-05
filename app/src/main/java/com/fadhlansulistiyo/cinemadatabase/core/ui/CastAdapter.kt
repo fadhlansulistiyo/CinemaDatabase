@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.core.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -22,8 +23,8 @@ class CastAdapter : ListAdapter<Cast, CastAdapter.ListViewHolder>(DIFF_CALLBACK)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val people = getItem(position)
-        holder.bind(people)
+        val cast = getItem(position)
+        holder.bind(cast)
     }
 
     class ListViewHolder(private val binding: ItemCastBinding) :
@@ -54,6 +55,7 @@ class CastAdapter : ListAdapter<Cast, CastAdapter.ListViewHolder>(DIFF_CALLBACK)
                 return oldItem.id == newItem.id
             }
 
+            @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(oldItem: Cast, newItem: Cast): Boolean {
                 return oldItem == newItem
             }

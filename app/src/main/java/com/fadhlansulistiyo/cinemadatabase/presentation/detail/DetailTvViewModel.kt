@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.TvUseCase
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistTvUseCase
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.UNKNOWN_ERROR
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,11 +27,20 @@ class DetailTvViewModel @Inject constructor(
     private val _isWatchlist = MutableLiveData<Boolean>()
     val isWatchlist: LiveData<Boolean> get() = _isWatchlist
 
+    private val _tvCast = MutableLiveData<Resource<List<TvCast>>>()
+    val tvCast: LiveData<Resource<List<TvCast>>> = _tvCast
+
     fun fetchTvDetail(tvId: Int) {
         viewModelScope.launch {
-            _tvDetail.value = Resource.Loading()
-            _tvDetail.value = tvUseCase.getDetailTv(tvId)
-            checkIfFavorite(tvDetail.value?.data?.name.toString())
+            try {
+                _tvDetail.value = Resource.Loading()
+                val detailResult = tvUseCase.getDetailTv(tvId)
+                _tvDetail.value = detailResult
+                detailResult.data?.name?.let { checkIfFavorite(it) }
+                fetchCast(tvId)
+            } catch (e: Exception) {
+                _tvDetail.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
+            }
         }
     }
 
@@ -52,4 +63,17 @@ class DetailTvViewModel @Inject constructor(
             _isWatchlist.postValue(watchlist != null)
         }
     }
+
+    private fun fetchCast(seriesId: Int) {
+        viewModelScope.launch {
+            try {
+                tvUseCase.getCast(seriesId).collect {
+                    _tvCast.postValue(it)
+                }
+            } catch (e: Exception) {
+                _tvCast.postValue(Resource.Error(e.message ?: UNKNOWN_ERROR))
+            }
+        }
+    }
+
 }

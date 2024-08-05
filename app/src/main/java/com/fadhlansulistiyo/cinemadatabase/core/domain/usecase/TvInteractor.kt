@@ -1,8 +1,10 @@
 package com.fadhlansulistiyo.cinemadatabase.core.domain.usecase
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.ITvRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,4 +18,9 @@ class TvInteractor @Inject constructor(private val tvRepository: ITvRepository) 
     override suspend fun getDetailTv(seriesId: Int): Resource<DetailTv> {
         return tvRepository.getDetailTv(seriesId)
     }
+
+    override fun getCast(seriesId: Int): Flow<Resource<List<TvCast>>> {
+        return tvRepository.getCast(seriesId)
+    }
+
 }

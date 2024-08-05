@@ -7,7 +7,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.local.MovieLocalDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.MovieRemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieResponse
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Cast
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
@@ -53,6 +53,7 @@ class MovieRepository @Inject constructor(
             when (val response = remoteDataSource.getDetailMovie(movieId)) {
                 is ApiResponseResult.Success -> {
                     val movie = MovieMapper.mapDetailMovieResponseToDomain(response.data)
+                    Log.d("MovieRepository", "Detail Movie: $movie")
                     Resource.Success(movie)
                 }
                 is ApiResponseResult.Empty -> {
@@ -67,7 +68,7 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    override fun getCast(movieId: Int): Flow<Resource<List<Cast>>> = flow {
+    override fun getCast(movieId: Int): Flow<Resource<List<MovieCast>>> = flow {
         emit(Resource.Loading())
         try {
             when (val response = remoteDataSource.getCast(movieId)) {
@@ -75,9 +76,11 @@ class MovieRepository @Inject constructor(
                     val castList = response.data.map {
                         MovieMapper.mapCastResponseToDomain(it)
                     }
+                    Log.d("MovieRepository", "Cast List: $castList")
                     emit(Resource.Success(castList))
                 }
                 is ApiResponseResult.Empty -> {
+                    Log.e("MovieRepository", "Error: $response")
                     emit(Resource.Error(DATA_IS_EMPTY))
                 }
                 is ApiResponseResult.Error -> {

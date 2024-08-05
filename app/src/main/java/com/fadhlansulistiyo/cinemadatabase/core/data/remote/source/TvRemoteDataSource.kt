@@ -2,6 +2,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.remote.source
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.CastResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailTvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.TvResponse
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +24,12 @@ class TvRemoteDataSource @Inject constructor(
     suspend fun getDetailTv(seriesId: Int): ApiResponseResult<DetailTvResponse> {
         return handleApiCall {
             apiService.getDetailTv(seriesId)
+        }
+    }
+
+    suspend fun getCast(seriesId: Int): ApiResponseResult<List<CastResponse>> {
+        return handleApiCall {
+            apiService.getTvCredits(seriesId).cast
         }
     }
 }

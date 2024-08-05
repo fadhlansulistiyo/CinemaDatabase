@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Space
+            android:id="@+id/spacing_start"
+            android:layout_width="6dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/cardPosterPath"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardPosterPath"
+            android:layout_width="135dp"
+            android:layout_height="200dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toEndOf="@+id/spacing_start"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/itemPosterPath"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/profile_path"
+                android:scaleType="fitXY"
+                tools:src="@tools:sample/avatars" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/itemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/urbanist_bold"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/cardPosterPath"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Season 4" />
+
+        <TextView
+            android:id="@+id/itemEpisodeCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:drawablePadding="6dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_bold"
+            android:lines="1"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/baseline_circle_6"
+            app:drawableTint="@color/md_theme_primary"
+            app:layout_constraintBottom_toBottomOf="@+id/itemName"
+            app:layout_constraintStart_toEndOf="@+id/itemName"
+            app:layout_constraintTop_toTopOf="@+id/itemName"
+            tools:ignore="SpUsage"
+            tools:text="8 Episode" />
+
+        <TextView
+            android:id="@+id/itemAirDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:drawablePadding="6dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_medium"
+            android:lines="1"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/baseline_calendar_today_12"
+            app:drawableTint="@color/md_theme_primary"
+            app:layout_constraintStart_toStartOf="@+id/itemName"
+            app:layout_constraintTop_toBottomOf="@+id/itemName"
+            tools:ignore="SpUsage"
+            tools:text="1 Jan 2024" />
+
+        <TextView
+            android:id="@+id/itemVoteAverage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:drawablePadding="6dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_medium"
+            android:lines="1"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/ic_star_rate_12dp"
+            app:drawableTint="@color/md_theme_primary"
+            app:layout_constraintStart_toStartOf="@+id/itemAirDate"
+            app:layout_constraintTop_toBottomOf="@+id/itemAirDate"
+            tools:ignore="SpUsage"
+            tools:text="4.8" />
+
+        <TextView
+            android:id="@+id/itemOverview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:drawablePadding="6dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_medium"
+            android:maxLines="3"
+            android:textColor="@color/text_color"
+            android:textSize="13sp"
+            app:drawableTint="@color/md_theme_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/itemVoteAverage"
+            app:layout_constraintTop_toBottomOf="@+id/itemVoteAverage"
+            tools:ignore="SpUsage"
+            tools:text="@string/overview" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

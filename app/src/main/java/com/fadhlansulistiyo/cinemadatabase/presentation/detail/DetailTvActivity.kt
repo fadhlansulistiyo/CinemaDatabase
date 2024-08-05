@@ -1,19 +1,27 @@
 package com.fadhlansulistiyo.cinemadatabase.presentation.detail
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistTv
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
+import com.fadhlansulistiyo.cinemadatabase.core.ui.CastAdapter
+import com.fadhlansulistiyo.cinemadatabase.core.ui.SeasonsAdapter
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL_ORIGINAL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailTvBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toVoteAverageFormat
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,46 +31,81 @@ class DetailTvActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
     private val viewModel: DetailTvViewModel by viewModels()
+    private lateinit var seasonsAdapter: SeasonsAdapter
+    private lateinit var castAdapter: CastAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupBinding()
         enableEdgeToEdge()
-        _binding = ActivityDetailTvBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        handleWindowInsets()
 
         val tvId = intent.getIntExtra(EXTRA_TV_ID, 0)
         viewModel.fetchTvDetail(tvId)
+        setupRecyclerView()
+        setupObservers()
+        setupListeners()
+    }
 
+    private fun setupRecyclerView() {
+        seasonsAdapter = SeasonsAdapter()
+        castAdapter = CastAdapter()
+        binding.detailRecyclerViewSeasons.adapter = seasonsAdapter
+        binding.detailRecyclerViewCast.adapter = castAdapter
+    }
+
+    private fun setupObservers() {
         viewModel.isWatchlist.observe(this) { isWatchlist ->
             setFavoriteState(isWatchlist)
         }
 
         viewModel.tvDetail.observe(this) { detailTv ->
-            when (detailTv) {
-                is Resource.Error -> {
-                    binding.progressBar.hide()
-                    Log.e("DetailTvActivity", "tvDetail, Error: ${detailTv.message}")
-                }
-
-                is Resource.Loading -> {
-                    binding.progressBar.show()
-                    Log.d("DetailTvActivity", "tvDetail, Loading")
-                }
-
-                is Resource.Success -> {
-                    binding.progressBar.hide()
-                    Log.d("DetailTvActivity", "tvDetail, Success: ${detailTv.data}")
-                    detailTv.data?.let { setDetailTv(it) }
-                }
-            }
+            handleTvDetail(detailTv)
         }
 
-        binding.fab.setOnClickListener {
+        viewModel.tvCast.observe(this) { castResource ->
+            handleCastResource(castResource)
+        }
+    }
+
+    private fun handleTvDetail(detailTv: Resource<DetailTv>) {
+        when (detailTv) {
+            is Resource.Error -> {
+                binding.progressBar.visibility = View.GONE
+                showToast(detailTv.message.toString())
+            }
+
+            is Resource.Loading -> {
+                binding.progressBar.visibility = View.VISIBLE
+            }
+
+            is Resource.Success -> {
+                binding.progressBar.visibility = View.GONE
+                detailTv.data?.let { setDetailTv(it) }
+            }
+        }
+    }
+
+    private fun handleCastResource(tvCastResource: Resource<List<TvCast>>) {
+        when (tvCastResource) {
+            is Resource.Error -> {
+                binding.progressBarCast.visibility = View.GONE
+                showToast(tvCastResource.message.toString())
+            }
+
+            is Resource.Loading -> {
+                binding.progressBarCast.visibility = View.VISIBLE
+            }
+
+            is Resource.Success -> {
+                binding.progressBarCast.visibility = View.GONE
+                castAdapter.submitList(tvCastResource.data)
+            }
+        }
+    }
+
+    private fun setupListeners() {
+        binding.btnWatchlist.setOnClickListener {
             val currentDetail = viewModel.tvDetail.value?.data ?: return@setOnClickListener
             viewModel.setUserFavorite(
                 WatchlistTv(
@@ -70,7 +113,7 @@ class DetailTvActivity : AppCompatActivity() {
                     name = currentDetail.name.toString(),
                     posterPath = currentDetail.posterPath.toString(),
                     firstAirDate = currentDetail.firstAirDate.toString(),
-                    voteAverage = currentDetail.voteAverage!!
+                    voteAverage = currentDetail.voteAverage ?: 0.0
                 )
             )
         }
@@ -79,31 +122,57 @@ class DetailTvActivity : AppCompatActivity() {
     private fun setDetailTv(detailTv: DetailTv) {
         binding.apply {
             Glide.with(this@DetailTvActivity)
-                .load(IMAGE_URL + detailTv.posterPath)
-                .into(posterImageView)
-            nameTextView.text = detailTv.name
-            originalNameTextView.text = detailTv.originalName
-            overviewTextView.text = detailTv.overview
-            firstAirDateTextView.text = detailTv.firstAirDate
-            lastAirDateTextView.text = detailTv.lastAirDate
-            numberOfSeasonsTextView.text = detailTv.numberOfSeasons.toString()
-            numberOfEpisodesTextView.text = detailTv.numberOfEpisodes.toString()
-            episodeRunTimeTextView.text = detailTv.episodeRunTime?.joinToString(", ") { it?.toString() ?: "" }
-            genresTextView.text = detailTv.genres?.joinToString(", ") { it?.name ?: "" }
-            popularityTextView.text = detailTv.popularity.toString()
-            voteCountTextView.text = detailTv.voteCount.toString()
-            voteAverageTextView.text = detailTv.voteAverage.toString()
-            statusTextView.text = detailTv.status
-            productionCompaniesTextView.text = detailTv.productionCompanies?.joinToString(", ") { it?.name ?: "" }
+                .load(IMAGE_URL_ORIGINAL + detailTv.backdropPath)
+                .apply(
+                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
+                        .error(R.drawable.ic_error)
+                )
+                .into(detailBackdropPath)
+
+            Glide.with(this@DetailTvActivity)
+                .load(IMAGE_URL_ORIGINAL + detailTv.posterPath)
+                .apply(
+                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
+                        .error(R.drawable.ic_error)
+                )
+                .into(detailPosterPath)
+
+            detailTitle.text = detailTv.name
+            detailOverview.text = detailTv.overview
+            detailFirstAirDate.text = detailTv.firstAirDate?.toFormattedDateString()
+            detailNumberOfSeason.text = detailTv.numberOfSeasons.toString()
+            detailNumberOfEpisode.text = detailTv.numberOfEpisodes.toString()
+            detailVoteAverage.text = detailTv.voteAverage?.toVoteAverageFormat(1)
+            detailGenres.text = detailTv.genres.joinToString(", ") { it.name }
+            detailCompanies.text = detailTv.productionCompanies.joinToString(" ") { "• ${it.name}" }
+
+            seasonsAdapter.submitList(detailTv.seasons)
         }
     }
 
     private fun setFavoriteState(isFavorite: Boolean) {
         if (isFavorite) {
-            binding.fab.setImageResource(R.drawable.ic_favorite_white_24dp)
+            binding.btnWatchlist.setImageResource(R.drawable.baseline_watchlist_filled)
         } else {
-            binding.fab.setImageResource(R.drawable.ic_not_favorite_white_24dp)
+            binding.btnWatchlist.setImageResource(R.drawable.baseline_watchlist)
         }
+    }
+
+    private fun setupBinding() {
+        _binding = ActivityDetailTvBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    private fun handleWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

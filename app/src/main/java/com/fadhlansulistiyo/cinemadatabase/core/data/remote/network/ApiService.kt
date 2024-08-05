@@ -1,6 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.remote.network
 
-import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListCreditsResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieCreditsResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailMovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailPeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailTvResponse
@@ -8,6 +8,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListMovieRe
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListMultiSearchResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListPeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListTvResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.TvCreditsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -53,11 +54,11 @@ interface ApiService {
     @GET("movie/{movie_id}/credits?language=en-US")
     suspend fun getMovieCredits(
         @Path("movie_id") movieId: Int
-    ): ListCreditsResponse
+    ): MovieCreditsResponse
 
-    @GET("movie/{movie_id}/images")
-    suspend fun getMovieImages(
-        @Path("movie_id") movieId: Int
-    ): ListCreditsResponse
+    @GET("tv/{series_id}/credits?language=en-US")
+    suspend fun getTvCredits(
+        @Path("series_id") seriesId: Int
+    ): TvCreditsResponse
 
 }
