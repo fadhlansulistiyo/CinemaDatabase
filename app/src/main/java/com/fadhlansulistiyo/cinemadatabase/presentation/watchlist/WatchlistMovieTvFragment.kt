@@ -18,6 +18,8 @@ class WatchlistMovieTvFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: WatchlistMovieTvViewModel by viewModels()
+    private lateinit var movieAdapter: WatchlistMovieAdapter
+    private lateinit var tvAdapter: WatchlistTvAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,21 +32,39 @@ class WatchlistMovieTvFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val index = arguments?.getInt(ARG_POSITION, 0)
+        setRecyclerView()
+        observeWatchlist(index)
+    }
 
+    private fun observeWatchlist(index: Int?) {
         if (index == 1) {
             viewModel.getWatchlistMovies.observe(viewLifecycleOwner) { movies ->
-                val adapter = WatchlistMovieAdapter()
-                binding.rvMovies.adapter = adapter
-                adapter.submitList(movies)
+                movieAdapter.submitList(movies)
+                binding.rvMovies.adapter = movieAdapter
+                toggleEmptyWatchlistLayout(movies.isEmpty())
             }
         } else {
             viewModel.getWatchlistTv.observe(viewLifecycleOwner) { tv ->
-                val adapter = WatchlistTvAdapter()
-                binding.rvMovies.adapter = adapter
-                adapter.submitList(tv)
+                tvAdapter.submitList(tv)
+                binding.rvMovies.adapter = tvAdapter
+                toggleEmptyWatchlistLayout(tv.isEmpty())
             }
+        }
+    }
+
+    private fun setRecyclerView() {
+        movieAdapter = WatchlistMovieAdapter()
+        tvAdapter = WatchlistTvAdapter()
+    }
+
+    private fun toggleEmptyWatchlistLayout(isEmpty: Boolean) {
+        if (isEmpty) {
+            binding.layoutEmptyWatchlist.visibility = View.VISIBLE
+            binding.rvMovies.visibility = View.GONE
+        } else {
+            binding.layoutEmptyWatchlist.visibility = View.GONE
+            binding.rvMovies.visibility = View.VISIBLE
         }
     }
 

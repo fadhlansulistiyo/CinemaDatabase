@@ -23,5 +23,4 @@ object WatchlistTvMapper {
             voteAverage = entity.voteAverage
         )
     }
-
 }

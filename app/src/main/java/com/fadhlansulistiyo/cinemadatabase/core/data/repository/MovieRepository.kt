@@ -1,6 +1,5 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.repository
 
-import android.util.Log
 import com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.data.local.MovieLocalDataSource
@@ -13,8 +12,10 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_IS_EMPTY
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.MovieMapper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -53,12 +54,13 @@ class MovieRepository @Inject constructor(
             when (val response = remoteDataSource.getDetailMovie(movieId)) {
                 is ApiResponseResult.Success -> {
                     val movie = MovieMapper.mapDetailMovieResponseToDomain(response.data)
-                    Log.d("MovieRepository", "Detail Movie: $movie")
                     Resource.Success(movie)
                 }
+
                 is ApiResponseResult.Empty -> {
                     Resource.Error(DATA_IS_EMPTY)
                 }
+
                 is ApiResponseResult.Error -> {
                     Resource.Error(response.errorMessage)
                 }
@@ -76,20 +78,19 @@ class MovieRepository @Inject constructor(
                     val castList = response.data.map {
                         MovieMapper.mapCastResponseToDomain(it)
                     }
-                    Log.d("MovieRepository", "Cast List: $castList")
                     emit(Resource.Success(castList))
                 }
+
                 is ApiResponseResult.Empty -> {
-                    Log.e("MovieRepository", "Error: $response")
                     emit(Resource.Error(DATA_IS_EMPTY))
                 }
+
                 is ApiResponseResult.Error -> {
-                    Log.e("MovieRepository", "Error: ${response.errorMessage}")
                     emit(Resource.Error(response.errorMessage))
                 }
             }
         } catch (e: Exception) {
             emit(Resource.Error(e.toString()))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }

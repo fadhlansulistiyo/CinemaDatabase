@@ -18,8 +18,10 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.PopularPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IPeopleRepository
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_IS_EMPTY
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.PeopleMapper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -108,5 +110,5 @@ class PeopleRepository @Inject constructor(
         } catch (e: Exception) {
             emit(Resource.Error(e.toString()))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }

@@ -5,7 +5,6 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.CastRespons
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailTvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.TvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_NOT_YET_AVAILABLE

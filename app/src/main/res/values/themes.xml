@@ -61,9 +61,4 @@
         <item name="android:layout_marginTop">16dp</item>
     </style>
 
-    <style name="TabLayout">
-        <item name="android:fontFamily">@font/urbanist_semibold</item>
-        <item name="android:textColor">@color/md_theme_primary</item>
-        <item name="android:textSize">16sp</item>
-    </style>
 </resources>

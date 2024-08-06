@@ -2,7 +2,6 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.remote.source
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
-import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.CastResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailPeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MultiCreditsMovieTvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.PeopleResponse

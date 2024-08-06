@@ -20,9 +20,7 @@ class WatchlistTvAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemWatchlistBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+            LayoutInflater.from(parent.context), parent, false
         )
         return MyViewHolder(binding)
     }
@@ -40,7 +38,8 @@ class WatchlistTvAdapter :
             Glide.with(itemView.context)
                 .load(IMAGE_URL + tv.posterPath)
                 .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp).error(R.drawable.ic_error)
+                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
+                        .error(R.drawable.ic_error)
                 )
                 .into(binding.itemPosterPath)
 
