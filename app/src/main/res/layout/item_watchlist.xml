@@ -1,77 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Material3.CardView.Filled"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginVertical="4dp">
 
-    <LinearLayout
-        android:id="@+id/tvDetailLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackground"
-        android:clipToPadding="false"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp">
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="108dp"
-            android:layout_height="162dp"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="4dp">
+            android:id="@+id/cardPosterPath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/ivPoster"
+                android:id="@+id/itemPosterPath"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                tools:srcCompat="@drawable/ic_movie_grey_24dp" />
-
+                android:contentDescription="@string/profile_path"
+                android:scaleType="center"
+                tools:src="@tools:sample/avatars" />
         </androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="42dp"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/itemTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_semibold"
+            android:lines="1"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardPosterPath"
+            tools:ignore="SpUsage"
+            tools:text="@tools:sample/full_names" />
 
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:ellipsize="end"
-                android:maxLines="4"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:text="TV Title" />
+        <TextView
+            android:id="@+id/itemRatingTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:drawablePadding="4dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_medium"
+            android:lines="1"
+            android:paddingBottom="8dp"
+            android:textColor="@color/text_color"
+            android:textSize="14dp"
+            app:drawableStartCompat="@drawable/ic_star_rate_12dp"
+            app:layout_constraintStart_toStartOf="@id/itemTitle"
+            app:layout_constraintTop_toBottomOf="@id/itemTitle"
+            tools:ignore="SpUsage"
+            tools:text="4.8" />
 
-            <TextView
-                android:id="@+id/tvReleaseDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:drawablePadding="4dp"
-                android:fontFamily="sans-serif-light"
-                app:drawableStartCompat="@drawable/ic_calendar_today_grey_24"
-                tools:text="01 January, 2022" />
-
-            <TextView
-                android:id="@+id/tvRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:drawablePadding="4dp"
-                android:fontFamily="sans-serif-light"
-                app:drawableStartCompat="@drawable/ic_star_rate_12dp"
-                tools:text="0.0  (0)" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

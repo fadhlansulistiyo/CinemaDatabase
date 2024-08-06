@@ -20,5 +20,8 @@ data class MultiSearchResponse(
     val voteAverage: Double? = null,
 
     @field:SerializedName("media_type")
-    val mediaType: String? = null
+    val mediaType: String? = null,
+
+    @field:SerializedName("overview")
+    val overview: String? = null
 )

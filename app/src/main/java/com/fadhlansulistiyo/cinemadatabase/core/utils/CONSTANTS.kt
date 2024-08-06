@@ -14,5 +14,7 @@ class CONSTANTS {
         const val NO_INTERNET_CONNECTION = "No internet connection."
         const val NETWORK_ERROR = "Network error."
         const val UNKNOWN_ERROR = "Unknown error."
+        const val NA = "N/A"
+        const val NOT_FOUND = "Not Found"
     }
 }

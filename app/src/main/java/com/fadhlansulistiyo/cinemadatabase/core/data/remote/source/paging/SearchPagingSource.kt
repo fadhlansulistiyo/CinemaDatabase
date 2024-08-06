@@ -21,7 +21,8 @@ class SearchPagingSource(
                     posterPath = it.posterPath,
                     releaseDate = it.releaseDate,
                     voteAverage = it.voteAverage,
-                    mediaType = it.mediaType
+                    mediaType = it.mediaType,
+                    overview = it.overview
                 )
             }
             LoadResult.Page(

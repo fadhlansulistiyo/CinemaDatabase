@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.paging.LoadState
+import com.fadhlansulistiyo.cinemadatabase.core.ui.LoadingStateAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.PopularPeopleAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentPeopleBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,20 +28,52 @@ class PeopleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPeopleBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        adapter = PopularPeopleAdapter()
-        binding.recyclerView.adapter = adapter
-
-        peopleViewModel.popularPeople.observe(viewLifecycleOwner) { pagingData ->
-            adapter.submitData(lifecycle, pagingData)
-        }
-
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        setupObservers()
+    }
+
+    private fun setupRecyclerView() {
+        adapter = PopularPeopleAdapter()
+        binding.recyclerView.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter { adapter.retry() }
+        )
+
+        adapter.addLoadStateListener { loadState ->
+            when (loadState.refresh) {
+                is LoadState.Loading -> {
+                    showLoading(true)
+                }
+
+                is LoadState.NotLoading -> {
+                    showLoading(false)
+                }
+
+                is LoadState.Error -> {
+                    showLoading(false)
+                    val errorState = loadState.refresh as LoadState.Error
+                    showToast(errorState.error.message.toString())
+                }
+            }
+        }
+    }
+
+    private fun setupObservers() {
+        peopleViewModel.popularPeople.observe(viewLifecycleOwner) { pagingData ->
+            adapter.submitData(lifecycle, pagingData)
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

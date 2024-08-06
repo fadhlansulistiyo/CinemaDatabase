@@ -6,5 +6,6 @@ data class MultiSearch(
     val posterPath: String?,
     val releaseDate: String?,
     val voteAverage: Double?,
-    val mediaType: String?
+    val mediaType: String?,
+    val overview: String?
 )

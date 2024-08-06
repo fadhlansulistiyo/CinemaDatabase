@@ -13,15 +13,16 @@ import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistTv
 import com.fadhlansulistiyo.cinemadatabase.core.ui.CastAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.SeasonsAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL_ORIGINAL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailTvBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toEpisodeString
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toVoteAverageFormat
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toSeasonString
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -117,6 +118,10 @@ class DetailTvActivity : AppCompatActivity() {
                 )
             )
         }
+
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun setDetailTv(detailTv: DetailTv) {
@@ -140,8 +145,8 @@ class DetailTvActivity : AppCompatActivity() {
             detailTitle.text = detailTv.name
             detailOverview.text = detailTv.overview
             detailFirstAirDate.text = detailTv.firstAirDate?.toFormattedDateString()
-            detailNumberOfSeason.text = detailTv.numberOfSeasons.toString()
-            detailNumberOfEpisode.text = detailTv.numberOfEpisodes.toString()
+            detailNumberOfSeason.text = detailTv.numberOfSeasons?.toSeasonString()
+            detailNumberOfEpisode.text = detailTv.numberOfEpisodes?.toEpisodeString()
             detailVoteAverage.text = detailTv.voteAverage?.toVoteAverageFormat(1)
             detailGenres.text = detailTv.genres.joinToString(", ") { it.name }
             detailCompanies.text = detailTv.productionCompanies.joinToString(" ") { "• ${it.name}" }

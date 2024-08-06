@@ -34,20 +34,17 @@ class WatchlistMovieTvFragment : Fragment() {
 
         val index = arguments?.getInt(ARG_POSITION, 0)
 
-        val layoutManager = LinearLayoutManager(requireActivity())
-        binding.rvMovies.layoutManager = layoutManager
-
         if (index == 1) {
             viewModel.getWatchlistMovies.observe(viewLifecycleOwner) { movies ->
                 val adapter = WatchlistMovieAdapter()
-                adapter.submitList(movies)
                 binding.rvMovies.adapter = adapter
+                adapter.submitList(movies)
             }
         } else {
             viewModel.getWatchlistTv.observe(viewLifecycleOwner) { tv ->
                 val adapter = WatchlistTvAdapter()
-                adapter.submitList(tv)
                 binding.rvMovies.adapter = adapter
+                adapter.submitList(tv)
             }
         }
     }

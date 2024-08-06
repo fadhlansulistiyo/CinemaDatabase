@@ -10,7 +10,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiSearch
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NA
 import com.fadhlansulistiyo.cinemadatabase.databinding.ItemSearchBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toVoteAverageFormat
 
 class SearchResultAdapter(
     private val onItemClicked: (MultiSearch) -> Unit
@@ -43,16 +46,17 @@ class SearchResultAdapter(
 
         fun bind(searchResult: MultiSearch) {
             with(binding) {
-                titleTextView.text = searchResult.title ?: "Unknown"
-                releaseDateTextView.text = "Release Date: ${searchResult.releaseDate ?: "Unknown"}"
-                ratingTextView.text = "Rating: ${searchResult.voteAverage ?: "N/A"}"
+                itemName.text = searchResult.title ?: NA
+                itemAirDate.text = searchResult.releaseDate?.toFormattedDateString() ?: NA
+                itemVoteAverage.text = searchResult.voteAverage?.toVoteAverageFormat(1) ?: NA
+                itemOverview.text = searchResult.overview ?: NA
                 Glide.with(itemView.context)
                     .load(IMAGE_URL + searchResult.posterPath)
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
                             .error(R.drawable.ic_error)
                     )
-                    .into(posterImageView)
+                    .into(itemPosterPath)
             }
         }
     }

@@ -13,6 +13,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ItemWatchlistBinding
 import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailMovieActivity
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toVoteAverageFormat
 
 class WatchlistMovieAdapter :
     ListAdapter<WatchlistMovie, WatchlistMovieAdapter.MyViewHolder>(DIFF_CALLBACK) {
@@ -34,15 +35,14 @@ class WatchlistMovieAdapter :
     class MyViewHolder(private val binding: ItemWatchlistBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: WatchlistMovie) {
-            binding.tvName.text = movie.title
-            binding.tvReleaseDate.text = movie.releaseDate
-            binding.tvRating.text = movie.voteAverage.toString()
+            binding.itemTitle.text = movie.title
+            binding.itemRatingTv.text = movie.voteAverage.toVoteAverageFormat(1)
             Glide.with(itemView.context)
                 .load(IMAGE_URL + movie.posterPath)
                 .apply(
                     RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp).error(R.drawable.ic_error)
                 )
-                .into(binding.ivPoster)
+                .into(binding.itemPosterPath)
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailMovieActivity::class.java)

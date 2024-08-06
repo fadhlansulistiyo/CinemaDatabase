@@ -11,6 +11,7 @@ import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Seasons
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ItemSeasonsBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toEpisodeString
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toVoteAverageFormat
 
@@ -31,7 +32,7 @@ class SeasonsAdapter : ListAdapter<Seasons, SeasonsAdapter.ListViewHolder>(DIFF_
         fun bind(season: Seasons) {
             binding.itemName.text = season.name
             binding.itemAirDate.text = season.airDate?.toFormattedDateString()
-            binding.itemEpisodeCount.text = season.episodeCount.toString()
+            binding.itemEpisodeCount.text = season.episodeCount?.toEpisodeString()
             binding.itemOverview.text = season.overview
             binding.itemVoteAverage.text = season.voteAverage?.toVoteAverageFormat(1)
             Glide.with(itemView.context)

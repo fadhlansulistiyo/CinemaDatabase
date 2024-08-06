@@ -45,7 +45,6 @@ class CastAdapter : ListAdapter<Cast, CastAdapter.ListViewHolder>(DIFF_CALLBACK)
                     putExtra(DetailPeopleActivity.EXTRA_PEOPLE_ID, cast.id)
                 }.run { itemView.context.startActivity(this) }
             }
-
         }
     }
 
