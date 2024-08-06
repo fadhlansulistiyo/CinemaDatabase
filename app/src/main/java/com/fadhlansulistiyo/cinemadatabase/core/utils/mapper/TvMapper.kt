@@ -45,6 +45,11 @@ object TvMapper {
 
     // Map DetailTvResponse to DetailTv
     fun mapDetailTvResponseToDomain(detailTvResponse: DetailTvResponse): DetailTv {
+        val sortedSeasons = detailTvResponse.seasons
+            .map { mapSeasonsResponseToDomain(it) }
+            .filter { it.airDate?.isNotEmpty() == true }
+            .sortedByDescending { it.airDate }
+
         return DetailTv(
             id = detailTvResponse.id,
             numberOfEpisodes = detailTvResponse.numberOfEpisodes,
@@ -61,9 +66,7 @@ object TvMapper {
             },
             voteAverage = detailTvResponse.voteAverage,
             name = detailTvResponse.name,
-            seasons = detailTvResponse.seasons.map {
-                mapSeasonsResponseToDomain(it)
-            }
+            seasons = sortedSeasons
         )
     }
 
