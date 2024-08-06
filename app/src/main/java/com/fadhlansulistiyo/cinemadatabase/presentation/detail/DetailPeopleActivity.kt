@@ -2,7 +2,6 @@ package com.fadhlansulistiyo.cinemadatabase.presentation.detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -13,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
-import com.fadhlansulistiyo.cinemadatabase.core.ui.CastAdapter
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.ui.MultiCreditsAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL_ORIGINAL
@@ -32,78 +31,61 @@ class DetailPeopleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupBinding()
         enableEdgeToEdge()
-        _binding = ActivityDetailPeopleBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        handleWindowInsets()
+        fetchPeopleDetail()
+        setupCreditsAdapter()
+        setupObservers()
+        setupListeners()
+    }
 
+    private fun setupCreditsAdapter() {
+        creditsAdapter = MultiCreditsAdapter { item ->
+            val intent = when (item.mediaType) {
+                "movie" -> Intent(this, DetailMovieActivity::class.java).apply {
+                    putExtra(DetailMovieActivity.EXTRA_MOVIE_ID, item.id)
+                }
+                "tv" -> Intent(this, DetailTvActivity::class.java).apply {
+                    putExtra(DetailTvActivity.EXTRA_TV_ID, item.id)
+                }
+                else -> null
+            }
+            intent?.let { startActivity(it) }
+        }
+        binding.detailRecyclerViewMovie.adapter = creditsAdapter
+    }
+
+    private fun fetchPeopleDetail() {
         val peopleId = intent.getIntExtra(EXTRA_PEOPLE_ID, 0)
         viewModel.fetchPeopleDetail(peopleId)
+    }
 
-        creditsAdapter = MultiCreditsAdapter { item ->
-            when (item.mediaType) {
-                "movie" -> startActivity(Intent(this, DetailMovieActivity::class.java).apply {
-                    putExtra(DetailMovieActivity.EXTRA_MOVIE_ID, item.id)
-                })
+    private fun setupObservers() {
+        viewModel.peopleDetail.observe(this) { handlePeopleDetail(it) }
+        viewModel.credits.observe(this) { handleCredits(it) }
+    }
 
-                "tv" -> startActivity(Intent(this, DetailTvActivity::class.java).apply {
-                    putExtra(DetailTvActivity.EXTRA_TV_ID, item.id)
-                })
-
-                else -> {}
-            }
-
-        }
-
-        viewModel.peopleDetail.observe(this) { detailPeople ->
-            when (detailPeople) {
-                is Resource.Error -> {
-                    showLoading(false)
-                    Log.e("DetailPeopleActivity", "peopleDetail, Error: ${detailPeople.message}")
-                }
-
-                is Resource.Loading -> {
-                    showLoading(true)
-                    Log.d("DetailPeopleActivity", "peopleDetail, Loading")
-                }
-
-                is Resource.Success -> {
-                    showLoading(false)
-                    Log.d("DetailPeopleActivity", "peopleDetail, Success: ${detailPeople.data}")
-                    detailPeople.data?.let { setDetailPeople(it) }
-                }
-            }
-
-        }
-
-        viewModel.credits.observe(this) { credits ->
-            when (credits) {
-                is Resource.Error -> {
-                    showLoading(false)
-                    Log.e("DetailPeopleActivity", "credits, Error: ${credits.message}")
-                }
-
-                is Resource.Loading -> {
-                    showLoading(true)
-                    Log.d("DetailPeopleActivity", "credits, Loading")
-                }
-
-                is Resource.Success -> {
-                    showLoading(false)
-                    Log.d("DetailPeopleActivity", "credits, Success: ${credits.data}")
-                    creditsAdapter.submitList(credits.data)
-                    binding.detailRecyclerViewMovie.adapter = creditsAdapter
-                }
-
-                else -> {}
+    private fun handlePeopleDetail(detailPeople: Resource<DetailPeople>) {
+        when (detailPeople) {
+            is Resource.Error -> showLoading(false)
+            is Resource.Loading -> showLoading(true)
+            is Resource.Success -> {
+                showLoading(false)
+                detailPeople.data?.let { setDetailPeople(it) }
             }
         }
+    }
 
-
+    private fun handleCredits(credits: Resource<List<MultiCreditsMovieTv>>) {
+        when (credits) {
+            is Resource.Error -> showLoading(false)
+            is Resource.Loading -> showLoading(true)
+            is Resource.Success -> {
+                showLoading(false)
+                creditsAdapter.submitList(credits.data)
+            }
+        }
     }
 
     private fun setDetailPeople(detailPeople: DetailPeople) {
@@ -127,6 +109,25 @@ class DetailPeopleActivity : AppCompatActivity() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
+    private fun setupBinding() {
+        _binding = ActivityDetailPeopleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    private fun handleWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
+    private fun setupListeners() {
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -135,5 +136,4 @@ class DetailPeopleActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_PEOPLE_ID = "extra_people_id"
     }
-
 }

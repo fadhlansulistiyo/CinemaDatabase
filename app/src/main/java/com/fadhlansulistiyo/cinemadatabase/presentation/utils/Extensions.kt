@@ -19,7 +19,7 @@ fun Double?.toVoteAverageFormat(digits: Int): String {
 
 fun String?.toFormattedDateString(): String {
     return try {
-        if (this.isNullOrEmpty()) return "N/A"
+        if (this.isNullOrEmpty()) return NA
         val originalFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val targetFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         val date: Date? = originalFormat.parse(this)

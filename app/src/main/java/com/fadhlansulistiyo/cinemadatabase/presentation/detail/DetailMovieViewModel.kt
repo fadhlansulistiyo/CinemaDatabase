@@ -10,6 +10,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.MovieUseCase
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistMovieUseCase
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.UNKNOWN_ERROR
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,7 +39,7 @@ class DetailMovieViewModel @Inject constructor(
                 detailResult.data?.title?.let { checkIfWatchlist(it) }
                 fetchCast(movieId)
             } catch (e: Exception) {
-                _movieDetail.value = Resource.Error(e.message ?: "Unknown error")
+                _movieDetail.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
             }
         }
     }
@@ -70,7 +71,7 @@ class DetailMovieViewModel @Inject constructor(
                     _movieCast.postValue(it)
                 }
             } catch (e: Exception) {
-                _movieCast.postValue(Resource.Error(e.message ?: "Unknown error"))
+                _movieCast.postValue(Resource.Error(e.message ?: UNKNOWN_ERROR))
             }
         }
     }

@@ -34,7 +34,6 @@ class AutoScrollViewPagerHelper(
                 val nextItem = if (viewPager.currentItem == itemCount - 1) 0 else viewPager.currentItem + 1
 
                 if (nextItem == 0) {
-                    // Delay the reset to the first item to ensure smooth transition
                     handler.postDelayed({
                         viewPager.setCurrentItem(nextItem, false)
                     }, scrollDuration)
@@ -45,7 +44,6 @@ class AutoScrollViewPagerHelper(
                 handler.postDelayed(this, scrollInterval)
             }
         }
-        // Use the initial delay before starting the auto-scroll
         handler.postDelayed(runnable!!, initialDelay)
     }
 

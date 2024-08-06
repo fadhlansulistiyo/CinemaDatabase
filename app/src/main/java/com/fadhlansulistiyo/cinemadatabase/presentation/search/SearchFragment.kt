@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
 import com.fadhlansulistiyo.cinemadatabase.core.ui.LoadingStateAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.SearchResultAdapter
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NOT_FOUND
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentSearchBinding
 import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailMovieActivity
 import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailTvActivity
@@ -93,15 +92,15 @@ class SearchFragment : Fragment() {
 
     }
 
-    private fun toggleViews(isSearching: Boolean) {
-        binding.exploreMovieTv.visibility = if (isSearching) View.GONE else View.VISIBLE
-        binding.recyclerView.visibility = if (isSearching) View.VISIBLE else View.GONE
-    }
-
     private fun setupObservers() {
         searchViewModel.searchResults.observe(viewLifecycleOwner) {
             searchResultAdapter.submitData(lifecycle, it)
         }
+    }
+
+    private fun toggleViews(isSearching: Boolean) {
+        binding.exploreMovieTv.visibility = if (isSearching) View.GONE else View.VISIBLE
+        binding.recyclerView.visibility = if (isSearching) View.VISIBLE else View.GONE
     }
 
     private fun showToast(message: String) {

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.fadhlansulistiyo.cinemadatabase.core.ui.WatchlistMovieAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.WatchlistTvAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentWatchlistMovieBinding

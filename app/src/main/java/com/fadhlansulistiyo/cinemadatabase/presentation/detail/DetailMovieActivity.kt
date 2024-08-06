@@ -1,7 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.presentation.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -89,7 +88,6 @@ class DetailMovieActivity : AppCompatActivity() {
             is Resource.Error -> {
                 binding.progressBarCast.visibility = View.GONE
                 showToast(movieCastResource.message.toString())
-                Log.e("GetCastMovieActivity", "Error: ${movieCastResource.message}")
             }
 
             is Resource.Loading -> {
@@ -97,7 +95,6 @@ class DetailMovieActivity : AppCompatActivity() {
             }
 
             is Resource.Success -> {
-                Log.d("GetCastMovieActivity", "Cast data: ${movieCastResource.data}")
                 binding.progressBarCast.visibility = View.GONE
                 castAdapter.submitList(movieCastResource.data)
             }

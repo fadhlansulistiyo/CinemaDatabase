@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
@@ -44,14 +43,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            initializeAdapters()
-            initializeAutoScrollViewPagerHelper()
             setupRecyclerViews()
+            initializeAutoScrollViewPagerHelper()
             setupObservers()
         }
     }
 
-    private fun initializeAdapters() {
+    private fun setupRecyclerViews() {
         nowPlayingAdapter = NowPlayingAdapter()
         tvAdapter = TvAdapter()
         peopleAdapter = PeopleAdapter()
@@ -61,13 +59,6 @@ class HomeFragment : Fragment() {
         val viewPager = binding.viewPagerNowPlaying
         autoScrollViewPagerHelper =
             AutoScrollViewPagerHelper(viewPager, scrollInterval = 4000L, scrollDuration = 500L)
-    }
-
-    private fun setupRecyclerViews() {
-        binding.rvAiringTodayTv.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvTrendingPeople.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun setupObservers() {

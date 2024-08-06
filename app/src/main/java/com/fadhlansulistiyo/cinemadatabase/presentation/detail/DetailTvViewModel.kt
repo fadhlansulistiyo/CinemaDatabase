@@ -75,5 +75,4 @@ class DetailTvViewModel @Inject constructor(
             }
         }
     }
-
 }

@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.PeopleUseCase
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.UNKNOWN_ERROR
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,7 +32,7 @@ class DetailPeopleViewModel @Inject constructor(
                 _peopleDetail.value = detailResult
                 fetchCredits(tvId)
             } catch (e: Exception) {
-                _peopleDetail.value = Resource.Error(e.message ?: "Unknown error")
+                _peopleDetail.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
             }
         }
     }
@@ -44,7 +44,7 @@ class DetailPeopleViewModel @Inject constructor(
                     _credits.postValue(it)
                 }
             } catch (e: Exception) {
-                _credits.postValue(Resource.Error(e.message ?: "Unknown error"))
+                _credits.postValue(Resource.Error(e.message ?: UNKNOWN_ERROR))
             }
         }
     }
