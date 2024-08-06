@@ -10,9 +10,6 @@ data class DetailPeopleResponse(
 	@field:SerializedName("birthday")
 	val birthday: String? = null,
 
-	@field:SerializedName("gender")
-	val gender: Int? = null,
-
 	@field:SerializedName("known_for_department")
 	val knownForDepartment: String? = null,
 

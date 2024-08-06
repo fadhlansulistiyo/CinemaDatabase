@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="76dp"
     tools:context=".presentation.watchlist.WatchlistMovieTvFragment">
 
     <androidx.recyclerview.widget.RecyclerView

@@ -98,4 +98,7 @@ dependencies {
     // paging
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.room.paging)
+
+    // Show More TextView
+    implementation(libs.showmoretextview)
 }

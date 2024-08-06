@@ -8,6 +8,8 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListMovieRe
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListMultiSearchResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListPeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ListTvResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MultiCreditsMovieTvResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.PersonMultiCreditsResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.TvCreditsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -61,4 +63,8 @@ interface ApiService {
         @Path("series_id") seriesId: Int
     ): TvCreditsResponse
 
+    @GET("person/{person_id}/combined_credits")
+    suspend fun getCredits(
+        @Path("person_id") personId: Int
+    ): PersonMultiCreditsResponse
 }

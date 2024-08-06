@@ -11,14 +11,15 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseR
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.PeopleResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.paging.PopularPeoplePagingSource
-import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.paging.SearchPagingSource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.PopularPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IPeopleRepository
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_IS_EMPTY
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.PeopleMapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -59,9 +60,11 @@ class PeopleRepository @Inject constructor(
                     val people = PeopleMapper.mapDetailPeopleResponseToDomain(response.data)
                     Resource.Success(people)
                 }
+
                 is ApiResponseResult.Empty -> {
                     Resource.Error(DATA_IS_EMPTY)
                 }
+
                 is ApiResponseResult.Error -> {
                     Resource.Error(response.errorMessage)
                 }
@@ -79,5 +82,31 @@ class PeopleRepository @Inject constructor(
             ),
             pagingSourceFactory = { PopularPeoplePagingSource(apiService) }
         ).flow
+    }
+
+    override fun getCredits(id: Int): Flow<Resource<List<MultiCreditsMovieTv>>> = flow {
+        emit(Resource.Loading())
+        try {
+            when (val response = remoteDataSource.getCredits(id)) {
+                is ApiResponseResult.Success -> {
+                    val creditsList = response.data.map {
+                        PeopleMapper.mapMultiCreditsResponseToDomain(it)
+                    }.filter { it.releaseDate?.isNotEmpty() == true }
+                        .sortedByDescending { it.releaseDate }
+
+                    emit(Resource.Success(creditsList))
+                }
+
+                is ApiResponseResult.Empty -> {
+                    emit(Resource.Error(DATA_IS_EMPTY))
+                }
+
+                is ApiResponseResult.Error -> {
+                    emit(Resource.Error(response.errorMessage))
+                }
+            }
+        } catch (e: Exception) {
+            emit(Resource.Error(e.toString()))
+        }
     }
 }

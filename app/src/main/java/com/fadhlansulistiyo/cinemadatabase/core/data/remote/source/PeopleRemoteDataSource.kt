@@ -2,7 +2,9 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.remote.source
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.CastResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.DetailPeopleResponse
+import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MultiCreditsMovieTvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.PeopleResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -23,6 +25,12 @@ class PeopleRemoteDataSource @Inject constructor(
     suspend fun getDetailPeople(peopleId: Int): ApiResponseResult<DetailPeopleResponse> {
         return handleApiCall {
             apiService.getDetailPeople(peopleId)
+        }
+    }
+
+    suspend fun getCredits(id: Int): ApiResponseResult<List<MultiCreditsMovieTvResponse>> {
+        return handleApiCall {
+            apiService.getCredits(id).cast
         }
     }
 }
