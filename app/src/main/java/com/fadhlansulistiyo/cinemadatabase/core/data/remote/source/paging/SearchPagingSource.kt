@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiSearch
+import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.SearchMapper
 
 class SearchPagingSource(
     private val apiService: ApiService,
@@ -15,15 +16,7 @@ class SearchPagingSource(
             val page = params.key ?: 1
             val response = apiService.getMultiSearch(query = searchParam, page = page)
             val results = response.results.map {
-                MultiSearch(
-                    id = it.id,
-                    title = it.title,
-                    posterPath = it.posterPath,
-                    releaseDate = it.releaseDate,
-                    voteAverage = it.voteAverage,
-                    mediaType = it.mediaType,
-                    overview = it.overview
-                )
+                SearchMapper.mapMultiSearchResponseToDomain(it)
             }
             LoadResult.Page(
                 data = results,

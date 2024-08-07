@@ -93,7 +93,7 @@ class PeopleRepository @Inject constructor(
                 is ApiResponseResult.Success -> {
                     val creditsList = response.data.map {
                         PeopleMapper.mapMultiCreditsResponseToDomain(it)
-                    }.filter { it.releaseDate?.isNotEmpty() == true }
+                    }.filter { it.releaseDate.isNotEmpty() }
                         .sortedByDescending { it.releaseDate }
 
                     emit(Resource.Success(creditsList))

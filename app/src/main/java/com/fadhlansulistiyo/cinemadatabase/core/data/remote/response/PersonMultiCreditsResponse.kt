@@ -8,5 +8,6 @@ data class PersonMultiCreditsResponse(
 	val id: Int,
 
 	@field:SerializedName("cast")
-	val cast: List<MultiCreditsMovieTvResponse>,
+	val cast: List<MultiCreditsMovieTvResponse>
+
 )

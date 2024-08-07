@@ -3,6 +3,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.remote.response
 import com.google.gson.annotations.SerializedName
 
 data class SeasonsResponse(
+
     @field:SerializedName("id")
     val id: Int,
 
@@ -25,5 +26,6 @@ data class SeasonsResponse(
     val seasonNumber: Int? = null,
 
     @field:SerializedName("poster_path")
-    val posterPath: Any? = null
+    val posterPath: String? = null
+
 )

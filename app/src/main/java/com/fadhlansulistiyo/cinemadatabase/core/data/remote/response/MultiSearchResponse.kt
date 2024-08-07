@@ -24,4 +24,5 @@ data class MultiSearchResponse(
 
     @field:SerializedName("overview")
     val overview: String? = null
+
 )

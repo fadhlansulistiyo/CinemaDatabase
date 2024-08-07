@@ -30,7 +30,7 @@ class TvAdapter : ListAdapter<Tv, TvAdapter.ListViewHolder>(DIFF_CALLBACK) {
     class ListViewHolder(private val binding: ItemTvBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tv: Tv) {
             binding.itemNameTv.text = tv.name
-            binding.itemRatingTv.text = tv.voteAverage?.toVoteAverageFormat(1)
+            binding.itemRatingTv.text = tv.voteAverage.toVoteAverageFormat(1)
             Glide.with(itemView.context)
                 .load(IMAGE_URL + tv.posterPath)
                 .apply(

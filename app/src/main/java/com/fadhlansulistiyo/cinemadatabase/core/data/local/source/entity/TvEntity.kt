@@ -15,15 +15,15 @@ data class TvEntity(
     var id: Int,
 
     @ColumnInfo("name")
-    var name: String,
+    var name: String? = null,
 
     @ColumnInfo("poster_path")
-    var posterPath: String,
+    var posterPath: String? = null,
 
     @ColumnInfo("first_air_date")
-    var firstAirDate: String,
+    var firstAirDate: String? = null,
 
     @ColumnInfo("vote_average")
-    var voteAverage: Double
+    var voteAverage: Double? = null,
 
 ) : Parcelable

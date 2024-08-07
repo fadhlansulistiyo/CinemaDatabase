@@ -8,13 +8,15 @@ import java.util.Date
 import java.util.Locale
 
 fun Double?.toVoteAverageFormat(digits: Int): String {
-    return this?.let {
+    return if (this == null || this == 0.0) {
+        NA
+    } else {
         val df = DecimalFormat().apply {
             decimalFormatSymbols = DecimalFormatSymbols(Locale.US)
             maximumFractionDigits = digits
         }
-        "${df.format(it)}/10"
-    } ?: NA
+        "${df.format(this)}/10"
+    }
 }
 
 fun String?.toFormattedDateString(): String {
@@ -30,15 +32,18 @@ fun String?.toFormattedDateString(): String {
 }
 
 fun Int?.toFormattedRuntime(): String {
-    return this?.let {
-        val hours = it / 60
-        val minutes = it % 60
-        if (hours > 0) {
-            String.format(Locale.getDefault(), "%dh %02dm", hours, minutes)
-        } else {
-            String.format(Locale.getDefault(), "%dm", minutes)
+    return when {
+        this == null || this == 0 -> NA
+        else -> {
+            val hours = this / 60
+            val minutes = this % 60
+            if (hours > 0) {
+                String.format(Locale.getDefault(), "%dh %02dm", hours, minutes)
+            } else {
+                String.format(Locale.getDefault(), "%dm", minutes)
+            }
         }
-    } ?: NA
+    }
 }
 
 fun Int?.toSeasonString(): String {

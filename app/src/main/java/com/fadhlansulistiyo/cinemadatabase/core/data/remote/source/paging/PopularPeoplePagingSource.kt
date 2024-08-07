@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.PopularPeople
+import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.PeopleMapper
 
 class PopularPeoplePagingSource(
     private val apiService: ApiService
@@ -14,11 +15,7 @@ class PopularPeoplePagingSource(
             val page = params.key ?: 1
             val response = apiService.getPopularPeople(page = page)
             val results = response.results.map {
-                PopularPeople(
-                    id = it.id,
-                    name = it.name,
-                    profilePath = it.profilePath
-                )
+                PeopleMapper.mapPeopleResponseToDomain(it)
             }
             LoadResult.Page(
                 data = results,

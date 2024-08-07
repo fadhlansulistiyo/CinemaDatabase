@@ -2,10 +2,10 @@ package com.fadhlansulistiyo.cinemadatabase.core.domain.model
 
 data class DetailPeople(
     val id: Int,
-    val birthday: String? = null,
-    val knownForDepartment: String? = null,
-    val profilePath: String? = null,
-    val biography: String? = null,
-    val placeOfBirth: String? = null,
-    val name: String? = null,
+    val birthday: String,
+    val knownForDepartment: String,
+    val profilePath: String,
+    val biography: String,
+    val placeOfBirth: String,
+    val name: String,
 )

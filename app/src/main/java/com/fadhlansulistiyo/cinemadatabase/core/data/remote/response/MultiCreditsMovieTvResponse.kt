@@ -21,4 +21,5 @@ data class MultiCreditsMovieTvResponse(
 
     @field:SerializedName("release_date", alternate = ["first_air_date"])
     val releaseDate: String? = null,
+
 )

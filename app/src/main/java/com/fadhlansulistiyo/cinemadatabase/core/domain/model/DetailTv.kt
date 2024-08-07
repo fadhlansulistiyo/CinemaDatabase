@@ -2,15 +2,15 @@ package com.fadhlansulistiyo.cinemadatabase.core.domain.model
 
 data class DetailTv(
     val id: Int,
-    val numberOfEpisodes: Int? = null,
-    val backdropPath: String? = null,
+    val numberOfEpisodes: Int,
+    val backdropPath: String,
     val genres: List<Genres>,
-    val numberOfSeasons: Int? = null,
-    val firstAirDate: String? = null,
-    val overview: String? = null,
-    val posterPath: String? = null,
+    val numberOfSeasons: Int,
+    val firstAirDate: String,
+    val overview: String,
+    val posterPath: String,
     val productionCompanies: List<ProductionCompanies>,
-    val voteAverage: Double? = null,
-    val name: String? = null,
+    val voteAverage: Double,
+    val name: String,
     val seasons: List<Seasons>,
 )

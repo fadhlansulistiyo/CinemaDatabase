@@ -15,5 +15,6 @@ data class ListMovieResponse(
 
 	@field:SerializedName("total_results")
 	val totalResults: Int
+
 )
 

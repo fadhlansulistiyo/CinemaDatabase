@@ -7,7 +7,8 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.PeopleRespo
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_NOT_YET_AVAILABLE
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.PopularPeople
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NA
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -28,13 +29,13 @@ object PeopleMapper {
         return peopleList
     }
 
-    // Map PeopleEntity to People
+    // Map PeopleEntity to Domain
     fun mapPeopleEntitiesToDomain(input: List<PeopleEntity>): List<People> =
         input.map {
             People(
                 id = it.id,
-                name = it.name,
-                profilePath = it.profilePath
+                name = it.name ?: NA,
+                profilePath = it.profilePath ?: ""
             )
         }
 
@@ -42,12 +43,12 @@ object PeopleMapper {
     fun mapDetailPeopleResponseToDomain(input: DetailPeopleResponse): DetailPeople {
         return DetailPeople(
             id = input.id,
-            name = input.name ?: DATA_NOT_YET_AVAILABLE,
-            birthday = input.birthday ?: DATA_NOT_YET_AVAILABLE,
-            knownForDepartment = input.knownForDepartment ?: DATA_NOT_YET_AVAILABLE,
+            name = input.name ?: NA,
+            birthday = input.birthday ?: "",
+            knownForDepartment = input.knownForDepartment ?: NA,
             profilePath = input.profilePath ?: "",
-            biography = input.biography ?: DATA_NOT_YET_AVAILABLE,
-            placeOfBirth = input.placeOfBirth ?: DATA_NOT_YET_AVAILABLE,
+            biography = input.biography ?: NA,
+            placeOfBirth = input.placeOfBirth ?: NA,
         )
     }
 
@@ -57,16 +58,23 @@ object PeopleMapper {
             val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val date = inputFormat.parse(it)
             date?.let { outputFormat.format(date) } ?: it
-        }
+        } ?: ""
 
         return MultiCreditsMovieTv(
             id = input.id,
             posterPath = input.posterPath ?: "",
-            mediaType = input.mediaType ?: DATA_NOT_YET_AVAILABLE,
+            mediaType = input.mediaType ?: NA,
             voteAverage = input.voteAverage ?: 0.0,
-            title = input.title ?: DATA_NOT_YET_AVAILABLE,
+            title = input.title ?: NA,
             releaseDate = releaseDate
         )
     }
 
+    fun mapPeopleResponseToDomain(input: PeopleResponse): PopularPeople {
+        return PopularPeople(
+            id = input.id,
+            name = input.name ?: NA,
+            profilePath = input.profilePath ?: ""
+        )
+    }
 }

@@ -35,7 +35,7 @@ class PopularPeopleAdapter :
             Glide.with(itemView.context)
                 .load(IMAGE_URL + person.profilePath)
                 .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
+                    RequestOptions.placeholderOf(R.drawable.ic_person_grey_32)
                         .error(R.drawable.ic_error)
                 )
                 .into(binding.profilePath)

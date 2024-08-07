@@ -31,10 +31,10 @@ class SeasonsAdapter : ListAdapter<Seasons, SeasonsAdapter.ListViewHolder>(DIFF_
         RecyclerView.ViewHolder(binding.root) {
         fun bind(season: Seasons) {
             binding.itemName.text = season.name
-            binding.itemAirDate.text = season.airDate?.toFormattedDateString()
-            binding.itemEpisodeCount.text = season.episodeCount?.toEpisodeString()
+            binding.itemAirDate.text = season.airDate.toFormattedDateString()
+            binding.itemEpisodeCount.text = season.episodeCount.toEpisodeString()
             binding.itemOverview.text = season.overview
-            binding.itemVoteAverage.text = season.voteAverage?.toVoteAverageFormat(1)
+            binding.itemVoteAverage.text = season.voteAverage.toVoteAverageFormat(1)
             Glide.with(itemView.context)
                 .load(IMAGE_URL + season.posterPath)
                 .apply(

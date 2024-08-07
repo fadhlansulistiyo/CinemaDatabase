@@ -32,7 +32,7 @@ class NowPlayingAdapter : ListAdapter<Movie, NowPlayingAdapter.ListViewHolder>(D
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             binding.itemTitleNowPlaying.text = movie.title
-            binding.tvItemRatingNowPlaying.text = movie.voteAverage?.toVoteAverageFormat(1)
+            binding.tvItemRatingNowPlaying.text = movie.voteAverage.toVoteAverageFormat(1)
             Glide.with(itemView.context)
                 .load(IMAGE_URL_ORIGINAL + movie.backdropPath)
                 .apply(

@@ -15,5 +15,6 @@ data class ListTvResponse(
 
 	@field:SerializedName("total_results")
 	val totalResults: Int
+
 )
 

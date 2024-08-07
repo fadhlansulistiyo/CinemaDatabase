@@ -122,6 +122,7 @@ class DetailPeopleActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun setupListeners() {
         binding.btnBack.setOnClickListener {
             onBackPressed()

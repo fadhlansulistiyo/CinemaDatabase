@@ -3,6 +3,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.remote.response
 import com.google.gson.annotations.SerializedName
 
 data class ListPeopleResponse(
+
 	@field:SerializedName("page")
 	val page: Int,
 
@@ -14,5 +15,6 @@ data class ListPeopleResponse(
 
 	@field:SerializedName("total_results")
 	val totalResults: Int
+
 )
 

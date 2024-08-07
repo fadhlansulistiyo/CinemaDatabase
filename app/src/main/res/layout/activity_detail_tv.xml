@@ -299,7 +299,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16sp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/urbanist_semibold"
             android:text="@string/seasons"
             android:textColor="@color/md_theme_primary"

@@ -12,7 +12,7 @@ data class PeopleEntity(
     var id: Int,
 
     @ColumnInfo("name")
-    var name: String,
+    var name: String? = null,
 
     @ColumnInfo("profile_path")
     var profilePath: String? = null

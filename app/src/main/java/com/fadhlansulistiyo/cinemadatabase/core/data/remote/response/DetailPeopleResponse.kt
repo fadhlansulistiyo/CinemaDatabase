@@ -24,4 +24,5 @@ data class DetailPeopleResponse(
 
 	@field:SerializedName("name")
 	val name: String? = null,
+
 )

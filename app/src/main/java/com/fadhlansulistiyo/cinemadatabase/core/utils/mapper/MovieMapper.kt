@@ -7,7 +7,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieRespon
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_NOT_YET_AVAILABLE
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NA
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapGenresResponseToDomain
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapProductionCompaniesResponseToDomain
 
@@ -30,16 +30,16 @@ object MovieMapper {
         return movieList
     }
 
-    // Map MovieEntity to Movie
+    // Map MovieEntity to Domain
     fun mapMovieEntitiesToDomain(input: List<MovieEntity>): List<Movie> =
         input.map {
             Movie(
                 id = it.id,
-                title = it.title,
-                posterPath = it.posterPath,
-                releaseDate = it.releaseDate,
-                voteAverage = it.voteAverage,
-                backdropPath = it.backdropPath,
+                title = it.title ?: NA,
+                posterPath = it.posterPath ?: "",
+                releaseDate = it.releaseDate ?: "",
+                voteAverage = it.voteAverage ?: 0.0,
+                backdropPath = it.backdropPath ?: "",
             )
         }
 
@@ -47,22 +47,15 @@ object MovieMapper {
     fun mapDetailMovieResponseToDomain(input: DetailMovieResponse): DetailMovie {
         return DetailMovie(
             id = input.id,
-            title = input.title ?: DATA_NOT_YET_AVAILABLE,
-            originalTitle = input.originalTitle ?: DATA_NOT_YET_AVAILABLE,
-            overview = input.overview ?: DATA_NOT_YET_AVAILABLE,
+            title = input.title ?: NA,
+            overview = input.overview ?: NA,
             runtime = input.runtime ?: 0,
             backdropPath = input.backdropPath ?: "",
-            revenue = input.revenue ?: 0,
-            releaseDate = input.releaseDate ?: DATA_NOT_YET_AVAILABLE,
+            releaseDate = input.releaseDate ?: "",
             genres = input.genres?.map { mapGenresResponseToDomain(it) } ?: emptyList(),
-            popularity = input.popularity ?: 0.0,
-            voteCount = input.voteCount ?: 0,
-            budget = input.budget ?: 0,
             posterPath = input.posterPath ?: "",
             productionCompanies = input.productionCompanies?.map { mapProductionCompaniesResponseToDomain(it) } ?: emptyList(),
             voteAverage = input.voteAverage ?: 0.0,
-            status = input.status ?: DATA_NOT_YET_AVAILABLE,
-            isWatchlist = false
         )
     }
 
@@ -70,8 +63,8 @@ object MovieMapper {
         return MovieCast(
             id = input.id,
             castId = input.castId ?: 0,
-            name = input.name ?: DATA_NOT_YET_AVAILABLE,
-            character = input.character ?: DATA_NOT_YET_AVAILABLE,
+            name = input.name ?: NA,
+            character = input.character ?: NA,
             profilePath = input.profilePath ?: "",
         )
     }

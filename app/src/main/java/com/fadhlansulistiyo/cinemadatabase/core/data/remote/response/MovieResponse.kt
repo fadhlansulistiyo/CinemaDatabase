@@ -3,6 +3,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.remote.response
 import com.google.gson.annotations.SerializedName
 
 data class MovieResponse(
+
     @field:SerializedName("id")
     val id: Int,
 
@@ -20,4 +21,5 @@ data class MovieResponse(
 
     @field:SerializedName("backdrop_path")
     val backdropPath: String? = null,
+
 )

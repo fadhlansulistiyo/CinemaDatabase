@@ -15,4 +15,5 @@ data class ListMultiSearchResponse(
 
 	@field:SerializedName("total_results")
 	val totalResults: Int
+
 )

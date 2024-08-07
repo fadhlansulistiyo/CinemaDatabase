@@ -33,7 +33,7 @@ class SearchViewModel @Inject constructor(
         .flatMapLatest { query ->
             searchUseCase.getMultiSearch(query).map { result ->
                 result.filter {
-                    ((it.title != null) && (it.mediaType == "tv" || it.mediaType == "movie"))
+                    (it.mediaType == "tv" || it.mediaType == "movie")
                 }
             }
         }

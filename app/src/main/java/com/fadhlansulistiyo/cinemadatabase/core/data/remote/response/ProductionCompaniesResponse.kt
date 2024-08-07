@@ -7,9 +7,7 @@ data class ProductionCompaniesResponse(
     @field:SerializedName("id")
     val id: Int,
 
-    @field:SerializedName("logo_path")
-    val logoPath: String? = null,
-
     @field:SerializedName("name")
     val name: String? = null
+
 )

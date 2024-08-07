@@ -101,25 +101,6 @@ class DetailMovieActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupListeners() {
-        binding.btnWatchlist.setOnClickListener {
-            val currentDetail = viewModel.movieDetail.value?.data ?: return@setOnClickListener
-            viewModel.toggleWatchlistMovie(
-                WatchlistMovie(
-                    id = currentDetail.id,
-                    title = currentDetail.title.toString(),
-                    posterPath = currentDetail.posterPath.toString(),
-                    releaseDate = currentDetail.releaseDate.toString(),
-                    voteAverage = currentDetail.voteAverage ?: 0.0
-                )
-            )
-        }
-
-        binding.btnBack.setOnClickListener {
-            onBackPressed()
-        }
-    }
-
     private fun setDetailMovie(detailMovie: DetailMovie) {
         binding.apply {
             Glide.with(this@DetailMovieActivity)
@@ -137,13 +118,35 @@ class DetailMovieActivity : AppCompatActivity() {
                         .error(R.drawable.ic_error)
                 )
                 .into(detailPosterPath)
-            detailTitle.text = detailMovie.title ?: ""
-            detailOverview.text = detailMovie.overview ?: ""
-            detailRuntime.text = detailMovie.runtime?.toFormattedRuntime()
-            detailReleaseDate.text = detailMovie.releaseDate?.toFormattedDateString()
-            detailGenres.text = detailMovie.genres?.joinToString(", ") { it?.name ?: "" }
-            detailCompanies.text = detailMovie.productionCompanies?.map { it?.name }?.toFormattedProductionCompanies()
-            detailVoteAverage.text = detailMovie.voteAverage?.toVoteAverageFormat(1)
+            detailTitle.text = detailMovie.title
+            detailOverview.text = detailMovie.overview
+            detailRuntime.text = detailMovie.runtime.toFormattedRuntime()
+            detailReleaseDate.text = detailMovie.releaseDate.toFormattedDateString()
+            detailGenres.text = detailMovie.genres.joinToString(", ") { it.name }
+            detailCompanies.text = detailMovie.productionCompanies.map { it.name }
+                .toFormattedProductionCompanies()
+            detailVoteAverage.text = detailMovie.voteAverage.toVoteAverageFormat(1)
+        }
+    }
+
+
+    private fun setupListeners() {
+        binding.btnWatchlist.setOnClickListener {
+            val currentDetail = viewModel.movieDetail.value?.data ?: return@setOnClickListener
+            viewModel.toggleWatchlistMovie(
+                WatchlistMovie(
+                    id = currentDetail.id,
+                    title = currentDetail.title,
+                    posterPath = currentDetail.posterPath,
+                    releaseDate = currentDetail.releaseDate,
+                    voteAverage = currentDetail.voteAverage
+                )
+            )
+        }
+
+        @Suppress("DEPRECATION")
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
         }
     }
 

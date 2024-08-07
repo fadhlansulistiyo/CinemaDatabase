@@ -22,6 +22,7 @@ import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailTvBinding
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toEpisodeString
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toVoteAverageFormat
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedProductionCompanies
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toSeasonString
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -105,25 +106,6 @@ class DetailTvActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupListeners() {
-        binding.btnWatchlist.setOnClickListener {
-            val currentDetail = viewModel.tvDetail.value?.data ?: return@setOnClickListener
-            viewModel.setUserFavorite(
-                WatchlistTv(
-                    id = currentDetail.id,
-                    name = currentDetail.name.toString(),
-                    posterPath = currentDetail.posterPath.toString(),
-                    firstAirDate = currentDetail.firstAirDate.toString(),
-                    voteAverage = currentDetail.voteAverage ?: 0.0
-                )
-            )
-        }
-
-        binding.btnBack.setOnClickListener {
-            onBackPressed()
-        }
-    }
-
     private fun setDetailTv(detailTv: DetailTv) {
         binding.apply {
             Glide.with(this@DetailTvActivity)
@@ -144,14 +126,34 @@ class DetailTvActivity : AppCompatActivity() {
 
             detailTitle.text = detailTv.name
             detailOverview.text = detailTv.overview
-            detailFirstAirDate.text = detailTv.firstAirDate?.toFormattedDateString()
-            detailNumberOfSeason.text = detailTv.numberOfSeasons?.toSeasonString()
-            detailNumberOfEpisode.text = detailTv.numberOfEpisodes?.toEpisodeString()
-            detailVoteAverage.text = detailTv.voteAverage?.toVoteAverageFormat(1)
+            detailFirstAirDate.text = detailTv.firstAirDate.toFormattedDateString()
+            detailNumberOfSeason.text = detailTv.numberOfSeasons.toSeasonString()
+            detailNumberOfEpisode.text = detailTv.numberOfEpisodes.toEpisodeString()
+            detailVoteAverage.text = detailTv.voteAverage.toVoteAverageFormat(1)
             detailGenres.text = detailTv.genres.joinToString(", ") { it.name }
-            detailCompanies.text = detailTv.productionCompanies.joinToString(" ") { "• ${it.name}" }
+            detailCompanies.text = detailTv.productionCompanies.map { it.name }.toFormattedProductionCompanies()
 
             seasonsAdapter.submitList(detailTv.seasons)
+        }
+    }
+
+    private fun setupListeners() {
+        binding.btnWatchlist.setOnClickListener {
+            val currentDetail = viewModel.tvDetail.value?.data ?: return@setOnClickListener
+            viewModel.setUserFavorite(
+                WatchlistTv(
+                    id = currentDetail.id,
+                    name = currentDetail.name,
+                    posterPath = currentDetail.posterPath,
+                    firstAirDate = currentDetail.firstAirDate,
+                    voteAverage = currentDetail.voteAverage
+                )
+            )
+        }
+
+        @Suppress("DEPRECATION")
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
         }
     }
 

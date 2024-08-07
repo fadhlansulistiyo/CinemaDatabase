@@ -44,7 +44,7 @@ class MultiCreditsAdapter(private val onItemClicked: (MultiCreditsMovieTv) -> Un
         fun bind(credits: MultiCreditsMovieTv) {
             with(binding) {
                 itemNameTv.text = credits.title
-                itemRatingTv.text = credits.voteAverage?.toVoteAverageFormat(1)
+                itemRatingTv.text = credits.voteAverage.toVoteAverageFormat(1)
                 Glide.with(itemView.context)
                     .load(IMAGE_URL + credits.posterPath)
                     .apply(

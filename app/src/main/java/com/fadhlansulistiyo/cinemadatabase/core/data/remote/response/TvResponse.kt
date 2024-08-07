@@ -3,6 +3,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.data.remote.response
 import com.google.gson.annotations.SerializedName
 
 data class TvResponse(
+
     @field:SerializedName("id")
     val id: Int,
 
@@ -17,4 +18,5 @@ data class TvResponse(
 
     @field:SerializedName("vote_average")
     val voteAverage: Double? = null,
+
 )
