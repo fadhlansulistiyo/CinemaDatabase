@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
     private fun initializeAutoScrollViewPagerHelper() {
         val viewPager = binding.viewPagerNowPlaying
         autoScrollViewPagerHelper =
-            AutoScrollViewPagerHelper(viewPager, scrollInterval = 4000L, scrollDuration = 500L)
+            AutoScrollViewPagerHelper(viewPager, scrollInterval = 3000L, scrollDuration = 500L)
     }
 
     private fun setupObservers() {

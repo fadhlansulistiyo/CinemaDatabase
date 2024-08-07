@@ -12,7 +12,7 @@ class AutoScrollViewPagerHelper(
     private val viewPager: ViewPager2,
     private val scrollInterval: Long = 3000L,
     private val scrollDuration: Long = 1000L,
-    private val initialDelay: Long = 5000L
+    private val initialDelay: Long = 3000L
 ) {
     private val handler = Handler(Looper.getMainLooper())
     private var runnable: Runnable? = null
