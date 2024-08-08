@@ -8,6 +8,6 @@ data class PersonMultiCreditsResponse(
 	val id: Int,
 
 	@field:SerializedName("cast")
-	val cast: List<com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MultiCreditsMovieTvResponse>
+	val cast: List<MultiCreditsMovieTvResponse>
 
 )

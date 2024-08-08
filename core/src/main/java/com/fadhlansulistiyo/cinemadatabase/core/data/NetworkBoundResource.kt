@@ -9,16 +9,16 @@ import kotlinx.coroutines.flow.map
 
 abstract class NetworkBoundResource<ResultType, RequestType> {
 
-    private val result: Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<ResultType>> = flow {
-        emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading())
+    private val result: Flow<Resource<ResultType>> = flow {
+        emit(Resource.Loading())
         val dbSource = loadFromDB().first()
         if (shouldFetch(dbSource)) {
-            emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading())
+            emit(Resource.Loading())
             when (val apiResponse = createCall().first()) {
                 is ApiResponseResult.Success -> {
                     saveCallResult(apiResponse.data)
                     emitAll(loadFromDB().map {
-                        com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success(
+                        Resource.Success(
                             it
                         )
                     })
@@ -26,7 +26,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
 
                 is ApiResponseResult.Empty -> {
                     emitAll(loadFromDB().map {
-                        com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success(
+                        Resource.Success(
                             it
                         )
                     })
@@ -34,12 +34,12 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
 
                 is ApiResponseResult.Error -> {
                     onFetchFailed()
-                    emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(apiResponse.errorMessage))
+                    emit(Resource.Error(apiResponse.errorMessage))
                 }
             }
         } else {
             emitAll(loadFromDB().map {
-                com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success(
+                Resource.Success(
                     it
                 )
             })
@@ -56,5 +56,5 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
 
     protected abstract suspend fun saveCallResult(data: RequestType)
 
-    fun asFlow(): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<ResultType>> = result
+    fun asFlow(): Flow<Resource<ResultType>> = result
 }

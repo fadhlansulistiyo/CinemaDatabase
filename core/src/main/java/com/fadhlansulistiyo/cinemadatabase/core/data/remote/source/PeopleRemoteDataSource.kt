@@ -12,12 +12,12 @@ import javax.inject.Singleton
 @Singleton
 class PeopleRemoteDataSource @Inject constructor(
     private val apiService: ApiService
-) : com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.BaseRemoteDataSource() {
+) : BaseRemoteDataSource() {
 
     fun getTrendingPeople(): Flow<ApiResponseResult<List<PeopleResponse>>> {
         return flowApiCall {
             val response = apiService.getTrendingPeople()
-            response.results.ifEmpty { throw com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.BaseRemoteDataSource.EmptyDataException() }
+            response.results.ifEmpty { throw EmptyDataException() }
         }
     }
 

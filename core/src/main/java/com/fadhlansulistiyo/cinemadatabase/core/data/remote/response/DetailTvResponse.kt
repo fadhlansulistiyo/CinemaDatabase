@@ -14,7 +14,7 @@ data class DetailTvResponse(
     val backdropPath: String? = null,
 
     @field:SerializedName("genres")
-    val genres: List<com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.GenresResponse>? = emptyList(),
+    val genres: List<GenresResponse>? = emptyList(),
 
     @field:SerializedName("number_of_seasons")
     val numberOfSeasons: Int? = null,
@@ -29,7 +29,7 @@ data class DetailTvResponse(
     val posterPath: String? = null,
 
     @field:SerializedName("production_companies")
-    val productionCompanies: List<com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ProductionCompaniesResponse>? = emptyList(),
+    val productionCompanies: List<ProductionCompaniesResponse>? = emptyList(),
 
     @field:SerializedName("vote_average")
     val voteAverage: Double? = null,
@@ -38,6 +38,6 @@ data class DetailTvResponse(
     val name: String? = null,
 
     @field:SerializedName("seasons")
-    val seasons: List<com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.SeasonsResponse>? = emptyList()
+    val seasons: List<SeasonsResponse>? = emptyList()
 
 )

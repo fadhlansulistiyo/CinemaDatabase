@@ -26,8 +26,8 @@ class TvRepository @Inject constructor(
     private val remoteDataSource: TvRemoteDataSource
 ) : ITvRepository {
 
-    override fun getAiringTodayTv(): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<Tv>>> =
-        object : com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource<List<Tv>, List<TvResponse>>() {
+    override fun getAiringTodayTv(): Flow<Resource<List<Tv>>> =
+        object : NetworkBoundResource<List<Tv>, List<TvResponse>>() {
             override fun loadFromDB(): Flow<List<Tv>> {
                 return localDataSource.getAllTv().map {
                     TvMapper.mapTvEntitiesToDomain(it)
@@ -48,48 +48,48 @@ class TvRepository @Inject constructor(
             }
         }.asFlow()
 
-    override suspend fun getDetailTv(seriesId: Int): com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailTv> {
+    override suspend fun getDetailTv(seriesId: Int): Resource<DetailTv> {
         return try {
             when (val response = remoteDataSource.getDetailTv(seriesId)) {
                 is ApiResponseResult.Success -> {
                     val tv = TvMapper.mapDetailTvResponseToDomain(response.data)
-                    com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success(tv)
+                    Resource.Success(tv)
                 }
 
                 is ApiResponseResult.Empty -> {
-                    com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(DATA_IS_EMPTY)
+                    Resource.Error(DATA_IS_EMPTY)
                 }
 
                 is ApiResponseResult.Error -> {
-                    com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(response.errorMessage)
+                    Resource.Error(response.errorMessage)
                 }
             }
         } catch (e: Exception) {
-            com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(e.toString())
+            Resource.Error(e.toString())
         }
     }
 
-    override fun getCast(seriesId: Int): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<TvCast>>> = flow {
-        emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading())
+    override fun getCast(seriesId: Int): Flow<Resource<List<TvCast>>> = flow {
+        emit(Resource.Loading())
         try {
             when (val response = remoteDataSource.getCast(seriesId)) {
                 is ApiResponseResult.Success -> {
                     val castList = response.data.map {
                         TvMapper.mapCastResponseToDomain(it)
                     }
-                    emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success(castList))
+                    emit(Resource.Success(castList))
                 }
 
                 is ApiResponseResult.Empty -> {
-                    emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(DATA_IS_EMPTY))
+                    emit(Resource.Error(DATA_IS_EMPTY))
                 }
 
                 is ApiResponseResult.Error -> {
-                    emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(response.errorMessage))
+                    emit(Resource.Error(response.errorMessage))
                 }
             }
         } catch (e: Exception) {
-            emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(e.toString()))
+            emit(Resource.Error(e.toString()))
         }
     }.flowOn(Dispatchers.IO)
 }

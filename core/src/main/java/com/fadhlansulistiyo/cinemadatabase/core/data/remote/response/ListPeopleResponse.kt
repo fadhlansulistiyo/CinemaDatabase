@@ -11,7 +11,7 @@ data class ListPeopleResponse(
 	val totalPages: Int,
 
     @field:SerializedName("results")
-	val results: List<com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.PeopleResponse>,
+	val results: List<PeopleResponse>,
 
     @field:SerializedName("total_results")
 	val totalResults: Int

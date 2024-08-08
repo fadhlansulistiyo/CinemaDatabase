@@ -11,11 +11,11 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PeopleInteractor @Inject constructor(private val peopleRepository: IPeopleRepository) : PeopleUseCase {
-    override fun getTrendingPeople(): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<People>>> {
+    override fun getTrendingPeople(): Flow<Resource<List<People>>> {
         return peopleRepository.getTrendingPeople()
     }
 
-    override suspend fun getDetailPeople(peopleId: Int): com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailPeople> {
+    override suspend fun getDetailPeople(peopleId: Int): Resource<DetailPeople> {
         return peopleRepository.getDetailPeople(peopleId)
     }
 
@@ -23,7 +23,7 @@ class PeopleInteractor @Inject constructor(private val peopleRepository: IPeople
         return peopleRepository.getPopularPeople()
     }
 
-    override fun getCredits(id: Int): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<MultiCreditsMovieTv>>> {
+    override fun getCredits(id: Int): Flow<Resource<List<MultiCreditsMovieTv>>> {
         return peopleRepository.getCredits(id)
     }
 }

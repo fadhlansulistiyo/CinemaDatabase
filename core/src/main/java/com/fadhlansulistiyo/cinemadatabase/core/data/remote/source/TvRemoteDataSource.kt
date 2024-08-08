@@ -12,12 +12,12 @@ import javax.inject.Singleton
 @Singleton
 class TvRemoteDataSource @Inject constructor(
     private val apiService: ApiService
-) : com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.BaseRemoteDataSource() {
+) : BaseRemoteDataSource() {
 
     fun getAiringTodayTv(): Flow<ApiResponseResult<List<TvResponse>>> {
         return flowApiCall {
             val response = apiService.getAiringTodayTv()
-            response.results.ifEmpty { throw com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.BaseRemoteDataSource.EmptyDataException() }
+            response.results.ifEmpty { throw EmptyDataException() }
         }
     }
 

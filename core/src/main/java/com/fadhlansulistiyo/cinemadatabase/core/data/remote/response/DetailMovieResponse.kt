@@ -23,13 +23,13 @@ data class DetailMovieResponse(
     val releaseDate: String? = null,
 
     @field:SerializedName("genres")
-    val genres: List<com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.GenresResponse>? = emptyList(),
+    val genres: List<GenresResponse>? = emptyList(),
 
     @field:SerializedName("poster_path")
     val posterPath: String? = null,
 
     @field:SerializedName("production_companies")
-    val productionCompanies: List<com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.ProductionCompaniesResponse>? = emptyList(),
+    val productionCompanies: List<ProductionCompaniesResponse>? = emptyList(),
 
     @field:SerializedName("vote_average")
     val voteAverage: Double? = null

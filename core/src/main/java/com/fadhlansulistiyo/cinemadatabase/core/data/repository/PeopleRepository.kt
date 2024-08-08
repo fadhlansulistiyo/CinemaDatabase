@@ -33,8 +33,8 @@ class PeopleRepository @Inject constructor(
     private val remoteDataSource: PeopleRemoteDataSource
 ) : IPeopleRepository {
 
-    override fun getTrendingPeople(): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<People>>> =
-        object : com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource<List<People>, List<PeopleResponse>>() {
+    override fun getTrendingPeople(): Flow<Resource<List<People>>> =
+        object : NetworkBoundResource<List<People>, List<PeopleResponse>>() {
             override fun loadFromDB(): Flow<List<People>> {
                 return localDataSource.getAllPeople().map {
                     PeopleMapper.mapPeopleEntitiesToDomain(it)
@@ -55,24 +55,24 @@ class PeopleRepository @Inject constructor(
             }
         }.asFlow()
 
-    override suspend fun getDetailPeople(peopleId: Int): com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailPeople> {
+    override suspend fun getDetailPeople(peopleId: Int): Resource<DetailPeople> {
         return try {
             when (val response = remoteDataSource.getDetailPeople(peopleId)) {
                 is ApiResponseResult.Success -> {
                     val people = PeopleMapper.mapDetailPeopleResponseToDomain(response.data)
-                    com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success(people)
+                    Resource.Success(people)
                 }
 
                 is ApiResponseResult.Empty -> {
-                    com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(DATA_IS_EMPTY)
+                    Resource.Error(DATA_IS_EMPTY)
                 }
 
                 is ApiResponseResult.Error -> {
-                    com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(response.errorMessage)
+                    Resource.Error(response.errorMessage)
                 }
             }
         } catch (e: Exception) {
-            com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(e.toString())
+            Resource.Error(e.toString())
         }
     }
 
@@ -86,8 +86,8 @@ class PeopleRepository @Inject constructor(
         ).flow
     }
 
-    override fun getCredits(id: Int): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<MultiCreditsMovieTv>>> = flow {
-        emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading())
+    override fun getCredits(id: Int): Flow<Resource<List<MultiCreditsMovieTv>>> = flow {
+        emit(Resource.Loading())
         try {
             when (val response = remoteDataSource.getCredits(id)) {
                 is ApiResponseResult.Success -> {
@@ -96,19 +96,19 @@ class PeopleRepository @Inject constructor(
                     }.filter { it.releaseDate.isNotEmpty() }
                         .sortedByDescending { it.releaseDate }
 
-                    emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success(creditsList))
+                    emit(Resource.Success(creditsList))
                 }
 
                 is ApiResponseResult.Empty -> {
-                    emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(DATA_IS_EMPTY))
+                    emit(Resource.Error(DATA_IS_EMPTY))
                 }
 
                 is ApiResponseResult.Error -> {
-                    emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(response.errorMessage))
+                    emit(Resource.Error(response.errorMessage))
                 }
             }
         } catch (e: Exception) {
-            emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(e.toString()))
+            emit(Resource.Error(e.toString()))
         }
     }.flowOn(Dispatchers.IO)
 }

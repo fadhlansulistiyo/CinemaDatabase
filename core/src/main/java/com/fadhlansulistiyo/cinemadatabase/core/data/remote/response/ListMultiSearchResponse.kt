@@ -11,7 +11,7 @@ data class ListMultiSearchResponse(
 	val totalPages: Int,
 
     @field:SerializedName("results")
-	val results: List<com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MultiSearchResponse>,
+	val results: List<MultiSearchResponse>,
 
     @field:SerializedName("total_results")
 	val totalResults: Int

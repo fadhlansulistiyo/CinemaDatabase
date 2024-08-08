@@ -10,15 +10,15 @@ import javax.inject.Inject
 
 class TvInteractor @Inject constructor(private val tvRepository: ITvRepository) : TvUseCase {
 
-    override fun getAiringTodayTv(): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<Tv>>> {
+    override fun getAiringTodayTv(): Flow<Resource<List<Tv>>> {
         return tvRepository.getAiringTodayTv()
     }
 
-    override suspend fun getDetailTv(seriesId: Int): com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailTv> {
+    override suspend fun getDetailTv(seriesId: Int): Resource<DetailTv> {
         return tvRepository.getDetailTv(seriesId)
     }
 
-    override fun getCast(seriesId: Int): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<TvCast>>> {
+    override fun getCast(seriesId: Int): Flow<Resource<List<TvCast>>> {
         return tvRepository.getCast(seriesId)
     }
 

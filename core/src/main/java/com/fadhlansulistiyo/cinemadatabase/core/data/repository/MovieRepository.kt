@@ -26,8 +26,8 @@ class MovieRepository @Inject constructor(
     private val remoteDataSource: MovieRemoteDataSource
 ) : IMovieRepository {
 
-    override fun getNowPlaying(): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<Movie>>> =
-        object : com.fadhlansulistiyo.cinemadatabase.core.data.NetworkBoundResource<List<Movie>, List<MovieResponse>>() {
+    override fun getNowPlaying(): Flow<Resource<List<Movie>>> =
+        object : NetworkBoundResource<List<Movie>, List<MovieResponse>>() {
             override fun loadFromDB(): Flow<List<Movie>> {
                 return localDataSource.getAllMovie().map {
                     MovieMapper.mapMovieEntitiesToDomain(it)
@@ -49,48 +49,48 @@ class MovieRepository @Inject constructor(
 
         }.asFlow()
 
-    override suspend fun getDetailMovie(movieId: Int): com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailMovie> {
+    override suspend fun getDetailMovie(movieId: Int): Resource<DetailMovie> {
         return try {
             when (val response = remoteDataSource.getDetailMovie(movieId)) {
                 is ApiResponseResult.Success -> {
                     val movie = MovieMapper.mapDetailMovieResponseToDomain(response.data)
-                    com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success(movie)
+                    Resource.Success(movie)
                 }
 
                 is ApiResponseResult.Empty -> {
-                    com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(DATA_IS_EMPTY)
+                    Resource.Error(DATA_IS_EMPTY)
                 }
 
                 is ApiResponseResult.Error -> {
-                    com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(response.errorMessage)
+                    Resource.Error(response.errorMessage)
                 }
             }
         } catch (e: Exception) {
-            com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(e.toString())
+            Resource.Error(e.toString())
         }
     }
 
-    override fun getCast(movieId: Int): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<MovieCast>>> = flow {
-        emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading())
+    override fun getCast(movieId: Int): Flow<Resource<List<MovieCast>>> = flow {
+        emit(Resource.Loading())
         try {
             when (val response = remoteDataSource.getCast(movieId)) {
                 is ApiResponseResult.Success -> {
                     val castList = response.data.map {
                         MovieMapper.mapCastResponseToDomain(it)
                     }
-                    emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success(castList))
+                    emit(Resource.Success(castList))
                 }
 
                 is ApiResponseResult.Empty -> {
-                    emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(DATA_IS_EMPTY))
+                    emit(Resource.Error(DATA_IS_EMPTY))
                 }
 
                 is ApiResponseResult.Error -> {
-                    emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(response.errorMessage))
+                    emit(Resource.Error(response.errorMessage))
                 }
             }
         } catch (e: Exception) {
-            emit(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(e.toString()))
+            emit(Resource.Error(e.toString()))
         }
     }.flowOn(Dispatchers.IO)
 }

@@ -9,8 +9,8 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.PopularPeople
 import kotlinx.coroutines.flow.Flow
 
 interface PeopleUseCase {
-    fun getTrendingPeople(): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<People>>>
-    suspend fun getDetailPeople(peopleId: Int): com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailPeople>
+    fun getTrendingPeople(): Flow<Resource<List<People>>>
+    suspend fun getDetailPeople(peopleId: Int): Resource<DetailPeople>
     fun getPopularPeople(): Flow<PagingData<PopularPeople>>
-    fun getCredits(id: Int): Flow<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<MultiCreditsMovieTv>>>
+    fun getCredits(id: Int): Flow<Resource<List<MultiCreditsMovieTv>>>
 }
