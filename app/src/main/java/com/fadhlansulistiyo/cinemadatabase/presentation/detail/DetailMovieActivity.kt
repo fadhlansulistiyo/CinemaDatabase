@@ -71,36 +71,36 @@ class DetailMovieActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleMovieDetail(detailMovie: com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailMovie>) {
+    private fun handleMovieDetail(detailMovie: Resource<DetailMovie>) {
         when (detailMovie) {
-            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error -> {
+            is Resource.Error -> {
                 binding.progressBar.visibility = View.GONE
                 showToast(detailMovie.message.toString())
             }
 
-            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading -> {
+            is Resource.Loading -> {
                 binding.progressBar.visibility = View.VISIBLE
             }
 
-            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success -> {
+            is Resource.Success -> {
                 binding.progressBar.visibility = View.GONE
                 detailMovie.data?.let { setDetailMovie(it) }
             }
         }
     }
 
-    private fun handleCastResource(movieCastResource: com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<MovieCast>>) {
+    private fun handleCastResource(movieCastResource: Resource<List<MovieCast>>) {
         when (movieCastResource) {
-            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error -> {
+            is Resource.Error -> {
                 binding.progressBarCast.visibility = View.GONE
                 showToast(movieCastResource.message.toString())
             }
 
-            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading -> {
+            is Resource.Loading -> {
                 binding.progressBarCast.visibility = View.VISIBLE
             }
 
-            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success -> {
+            is Resource.Success -> {
                 binding.progressBarCast.visibility = View.GONE
                 castAdapter.submitList(movieCastResource.data)
             }

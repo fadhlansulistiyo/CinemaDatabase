@@ -21,25 +21,25 @@ class DetailTvViewModel @Inject constructor(
     private val watchlistTvUSeCase: WatchlistTvUseCase
 ) : ViewModel() {
 
-    private val _tvDetail = MutableLiveData<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailTv>>()
-    val tvDetail: LiveData<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailTv>> get() = _tvDetail
+    private val _tvDetail = MutableLiveData<Resource<DetailTv>>()
+    val tvDetail: LiveData<Resource<DetailTv>> get() = _tvDetail
 
     private val _isWatchlist = MutableLiveData<Boolean>()
     val isWatchlist: LiveData<Boolean> get() = _isWatchlist
 
-    private val _tvCast = MutableLiveData<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<TvCast>>>()
-    val tvCast: LiveData<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<TvCast>>> = _tvCast
+    private val _tvCast = MutableLiveData<Resource<List<TvCast>>>()
+    val tvCast: LiveData<Resource<List<TvCast>>> = _tvCast
 
     fun fetchTvDetail(tvId: Int) {
         viewModelScope.launch {
             try {
-                _tvDetail.value = com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading()
+                _tvDetail.value = Resource.Loading()
                 val detailResult = tvUseCase.getDetailTv(tvId)
                 _tvDetail.value = detailResult
                 detailResult.data?.name?.let { checkIfFavorite(it) }
                 fetchCast(tvId)
             } catch (e: Exception) {
-                _tvDetail.value = com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(e.message ?: UNKNOWN_ERROR)
+                _tvDetail.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
             }
         }
     }
@@ -71,7 +71,7 @@ class DetailTvViewModel @Inject constructor(
                     _tvCast.postValue(it)
                 }
             } catch (e: Exception) {
-                _tvCast.postValue(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(e.message ?: UNKNOWN_ERROR))
+                _tvCast.postValue(Resource.Error(e.message ?: UNKNOWN_ERROR))
             }
         }
     }

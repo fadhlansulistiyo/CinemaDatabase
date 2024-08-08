@@ -66,22 +66,22 @@ class DetailPeopleActivity : AppCompatActivity() {
         viewModel.credits.observe(this) { handleCredits(it) }
     }
 
-    private fun handlePeopleDetail(detailPeople: com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailPeople>) {
+    private fun handlePeopleDetail(detailPeople: Resource<DetailPeople>) {
         when (detailPeople) {
-            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error -> showLoading(false)
-            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading -> showLoading(true)
-            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success -> {
+            is Resource.Error -> showLoading(false)
+            is Resource.Loading -> showLoading(true)
+            is Resource.Success -> {
                 showLoading(false)
                 detailPeople.data?.let { setDetailPeople(it) }
             }
         }
     }
 
-    private fun handleCredits(credits: com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<MultiCreditsMovieTv>>) {
+    private fun handleCredits(credits: Resource<List<MultiCreditsMovieTv>>) {
         when (credits) {
-            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error -> showLoading(false)
-            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading -> showLoading(true)
-            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success -> {
+            is Resource.Error -> showLoading(false)
+            is Resource.Loading -> showLoading(true)
+            is Resource.Success -> {
                 showLoading(false)
                 creditsAdapter.submitList(credits.data)
             }
