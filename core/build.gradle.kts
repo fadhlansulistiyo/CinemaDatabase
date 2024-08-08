@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -11,10 +9,6 @@ plugins {
 
 apply(from = "../shared_dependencies.gradle")
 
-val properties = Properties()
-project.rootProject.file("local.properties").inputStream().use { properties.load(it) }
-val apiKey: String = properties.getProperty("API_KEY")
-
 android {
     namespace = "com.fadhlansulistiyo.core"
     compileSdk = 34
@@ -24,7 +18,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-        buildConfigField("String", "API_KEY", "\"$apiKey\"")
+        buildConfigField("String", "API_KEY", "\"8141492a8c854b9cca03e80129698065\"")
     }
 
     buildTypes {
