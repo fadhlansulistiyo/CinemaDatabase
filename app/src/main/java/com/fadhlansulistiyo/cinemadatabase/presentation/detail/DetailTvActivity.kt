@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.presentation.detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -51,7 +52,12 @@ class DetailTvActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         seasonsAdapter = SeasonsAdapter()
-        castAdapter = CastAdapter()
+        castAdapter = CastAdapter { castId ->
+            val intent = Intent(this, DetailPeopleActivity::class.java).apply {
+                putExtra(DetailPeopleActivity.EXTRA_PEOPLE_ID, castId)
+            }
+            startActivity(intent)
+        }
         binding.detailRecyclerViewSeasons.adapter = seasonsAdapter
         binding.detailRecyclerViewCast.adapter = castAdapter
     }

@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,9 @@ import com.fadhlansulistiyo.cinemadatabase.core.ui.NowPlayingAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.PeopleAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.TvAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentHomeBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailMovieActivity
+import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailPeopleActivity
+import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailTvActivity
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.AutoScrollViewPagerHelper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,9 +54,24 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerViews() {
-        nowPlayingAdapter = NowPlayingAdapter()
-        tvAdapter = TvAdapter()
-        peopleAdapter = PeopleAdapter()
+        nowPlayingAdapter = NowPlayingAdapter {
+            Intent(activity, DetailMovieActivity::class.java).apply {
+                putExtra(DetailMovieActivity.EXTRA_MOVIE_ID, it)
+                startActivity(this)
+            }
+        }
+        tvAdapter = TvAdapter {
+            Intent(activity, DetailTvActivity::class.java).apply {
+                putExtra(DetailTvActivity.EXTRA_TV_ID, it)
+                startActivity(this)
+            }
+        }
+        peopleAdapter = PeopleAdapter {
+            Intent(activity, DetailPeopleActivity::class.java).apply {
+                putExtra(DetailPeopleActivity.EXTRA_PEOPLE_ID, it)
+                startActivity(this)
+            }
+        }
     }
 
     private fun initializeAutoScrollViewPagerHelper() {
@@ -73,27 +92,27 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun handleNowPlayingResource(resource: Resource<List<Movie>>) {
+    private fun handleNowPlayingResource(resource: com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<Movie>>) {
         when (resource) {
-            is Resource.Loading -> showNowPlayingLoading()
-            is Resource.Success -> showNowPlayingMovies(resource.data ?: emptyList())
-            is Resource.Error -> showNowPlayingError()
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading -> showNowPlayingLoading()
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success -> showNowPlayingMovies(resource.data ?: emptyList())
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error -> showNowPlayingError()
         }
     }
 
-    private fun handleAiringTodayTvResource(resource: Resource<List<Tv>>) {
+    private fun handleAiringTodayTvResource(resource: com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<Tv>>) {
         when (resource) {
-            is Resource.Loading -> showAiringTodayLoading()
-            is Resource.Success -> showAiringTodayTv(resource.data ?: emptyList())
-            is Resource.Error -> showAiringTodayError()
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading -> showAiringTodayLoading()
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success -> showAiringTodayTv(resource.data ?: emptyList())
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error -> showAiringTodayError()
         }
     }
 
-    private fun handleTrendingPeopleResource(resource: Resource<List<People>>) {
+    private fun handleTrendingPeopleResource(resource: com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<People>>) {
         when (resource) {
-            is Resource.Loading -> showTrendingPeopleLoading()
-            is Resource.Success -> showTrendingPeople(resource.data ?: emptyList())
-            is Resource.Error -> showTrendingPeopleError()
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading -> showTrendingPeopleLoading()
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success -> showTrendingPeople(resource.data ?: emptyList())
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error -> showTrendingPeopleError()
         }
     }
 

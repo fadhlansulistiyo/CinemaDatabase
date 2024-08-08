@@ -1,14 +1,18 @@
 package com.fadhlansulistiyo.cinemadatabase.presentation.watchlist
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
 import com.fadhlansulistiyo.cinemadatabase.core.ui.WatchlistMovieAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.WatchlistTvAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentWatchlistMovieBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailMovieActivity
+import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailTvActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,8 +58,18 @@ class WatchlistMovieTvFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
-        movieAdapter = WatchlistMovieAdapter()
-        tvAdapter = WatchlistTvAdapter()
+        movieAdapter = WatchlistMovieAdapter {
+            Intent(activity, DetailMovieActivity::class.java).apply {
+                putExtra(DetailMovieActivity.EXTRA_MOVIE_ID, it)
+                startActivity(this)
+            }
+        }
+        tvAdapter = WatchlistTvAdapter {
+            Intent(activity, DetailTvActivity::class.java).apply {
+                putExtra(DetailTvActivity.EXTRA_TV_ID, it)
+                startActivity(this)
+            }
+        }
     }
 
     private fun toggleEmptyWatchlistLayout(isEmpty: Boolean) {

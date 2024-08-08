@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.presentation.people
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.paging.LoadState
 import com.fadhlansulistiyo.cinemadatabase.core.ui.LoadingStateAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.PopularPeopleAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentPeopleBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailPeopleActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,7 +40,12 @@ class PeopleFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = PopularPeopleAdapter()
+        adapter = PopularPeopleAdapter {
+            Intent(activity, DetailPeopleActivity::class.java).apply {
+                putExtra(DetailPeopleActivity.EXTRA_PEOPLE_ID, it)
+                startActivity(this)
+            }
+        }
         binding.recyclerView.adapter = adapter.withLoadStateFooter(
             footer = LoadingStateAdapter { adapter.retry() }
         )

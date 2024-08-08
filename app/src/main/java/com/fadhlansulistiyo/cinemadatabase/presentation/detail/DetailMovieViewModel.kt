@@ -21,25 +21,25 @@ class DetailMovieViewModel @Inject constructor(
     private val watchlistMovieUseCase: WatchlistMovieUseCase
 ) : ViewModel() {
 
-    private val _movieDetail = MutableLiveData<Resource<DetailMovie>>()
-    val movieDetail: LiveData<Resource<DetailMovie>> get() = _movieDetail
+    private val _movieDetail = MutableLiveData<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailMovie>>()
+    val movieDetail: LiveData<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailMovie>> get() = _movieDetail
 
     private val _isWatchlist = MutableLiveData<Boolean>()
     val isWatchlist: LiveData<Boolean> get() = _isWatchlist
 
-    private val _movieCast = MutableLiveData<Resource<List<MovieCast>>>()
-    val movieCast: LiveData<Resource<List<MovieCast>>> = _movieCast
+    private val _movieCast = MutableLiveData<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<MovieCast>>>()
+    val movieCast: LiveData<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<MovieCast>>> = _movieCast
 
     fun fetchMovieDetail(movieId: Int) {
         viewModelScope.launch {
             try {
-                _movieDetail.value = Resource.Loading()
+                _movieDetail.value = com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading()
                 val detailResult = movieUseCase.getDetailMovie(movieId)
                 _movieDetail.value = detailResult
                 detailResult.data?.title?.let { checkIfWatchlist(it) }
                 fetchCast(movieId)
             } catch (e: Exception) {
-                _movieDetail.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
+                _movieDetail.value = com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(e.message ?: UNKNOWN_ERROR)
             }
         }
     }
@@ -71,7 +71,7 @@ class DetailMovieViewModel @Inject constructor(
                     _movieCast.postValue(it)
                 }
             } catch (e: Exception) {
-                _movieCast.postValue(Resource.Error(e.message ?: UNKNOWN_ERROR))
+                _movieCast.postValue(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(e.message ?: UNKNOWN_ERROR))
             }
         }
     }

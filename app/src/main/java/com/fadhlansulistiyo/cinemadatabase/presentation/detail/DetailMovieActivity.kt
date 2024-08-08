@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.presentation.detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -47,7 +48,12 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        castAdapter = CastAdapter()
+        castAdapter = CastAdapter { castId ->
+            val intent = Intent(this, DetailPeopleActivity::class.java).apply {
+                putExtra(DetailPeopleActivity.EXTRA_PEOPLE_ID, castId)
+            }
+            startActivity(intent)
+        }
         binding.detailRecyclerViewCast.adapter = castAdapter
     }
 
@@ -65,36 +71,36 @@ class DetailMovieActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleMovieDetail(detailMovie: Resource<DetailMovie>) {
+    private fun handleMovieDetail(detailMovie: com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailMovie>) {
         when (detailMovie) {
-            is Resource.Error -> {
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error -> {
                 binding.progressBar.visibility = View.GONE
                 showToast(detailMovie.message.toString())
             }
 
-            is Resource.Loading -> {
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading -> {
                 binding.progressBar.visibility = View.VISIBLE
             }
 
-            is Resource.Success -> {
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success -> {
                 binding.progressBar.visibility = View.GONE
                 detailMovie.data?.let { setDetailMovie(it) }
             }
         }
     }
 
-    private fun handleCastResource(movieCastResource: Resource<List<MovieCast>>) {
+    private fun handleCastResource(movieCastResource: com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<MovieCast>>) {
         when (movieCastResource) {
-            is Resource.Error -> {
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error -> {
                 binding.progressBarCast.visibility = View.GONE
                 showToast(movieCastResource.message.toString())
             }
 
-            is Resource.Loading -> {
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading -> {
                 binding.progressBarCast.visibility = View.VISIBLE
             }
 
-            is Resource.Success -> {
+            is com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Success -> {
                 binding.progressBarCast.visibility = View.GONE
                 castAdapter.submitList(movieCastResource.data)
             }

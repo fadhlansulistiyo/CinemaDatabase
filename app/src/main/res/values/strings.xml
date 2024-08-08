@@ -4,7 +4,6 @@
     <string name="title_search">Search</string>
     <string name="title_people">People</string>
     <string name="title_watchlist">Watchlist</string>
-    <string name="content_desc_poster">Poster of the Movie</string>
     <string name="now_playing_movies">Now Playing Movies</string>
     <string name="airing_today_tv">Airing Today Tv</string>
     <string name="trending_people">Trending People</string>
@@ -14,10 +13,7 @@
     <string name="tab_text_1">Movies</string>
     <string name="tab_text_2">Tv Shows</string>
     <string name="hint_search">Search</string>
-    <string name="retry">Try Again</string>
     <string name="movies_and_tv_shows_hint">Movies, Tv Shows …</string>
-    <string name="movie_backdrop">Movie Backdrop</string>
-    <string name="profile_path">Profile Path</string>
     <string name="dummy_genres">Action, Adventure, Drama</string>
     <string name="production_companies">Production Companies</string>
     <string name="seasons">Seasons</string>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="content_desc_poster">Poster of the Movie</string>
+    <string name="retry">Try Again</string>
+    <string name="movie_backdrop">Movie Backdrop</string>
+    <string name="profile_path">Profile Path</string>
+    <string name="overview">Overview</string>
+
+</resources>

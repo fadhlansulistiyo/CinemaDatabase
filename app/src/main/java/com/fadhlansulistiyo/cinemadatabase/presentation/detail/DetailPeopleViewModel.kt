@@ -18,21 +18,21 @@ class DetailPeopleViewModel @Inject constructor(
     private val peopleUseCase: PeopleUseCase
 ) : ViewModel() {
 
-    private val _peopleDetail = MutableLiveData<Resource<DetailPeople>>()
-    val peopleDetail: LiveData<Resource<DetailPeople>> get() = _peopleDetail
+    private val _peopleDetail = MutableLiveData<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailPeople>>()
+    val peopleDetail: LiveData<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<DetailPeople>> get() = _peopleDetail
 
-    private val _credits = MutableLiveData<Resource<List<MultiCreditsMovieTv>>>()
-    val credits: LiveData<Resource<List<MultiCreditsMovieTv>>> = _credits
+    private val _credits = MutableLiveData<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<MultiCreditsMovieTv>>>()
+    val credits: LiveData<com.fadhlansulistiyo.cinemadatabase.core.data.Resource<List<MultiCreditsMovieTv>>> = _credits
 
     fun fetchPeopleDetail(tvId: Int) {
         viewModelScope.launch {
             try {
-                _peopleDetail.value = Resource.Loading()
+                _peopleDetail.value = com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Loading()
                 val detailResult = peopleUseCase.getDetailPeople(tvId)
                 _peopleDetail.value = detailResult
                 fetchCredits(tvId)
             } catch (e: Exception) {
-                _peopleDetail.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
+                _peopleDetail.value = com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(e.message ?: UNKNOWN_ERROR)
             }
         }
     }
@@ -44,7 +44,7 @@ class DetailPeopleViewModel @Inject constructor(
                     _credits.postValue(it)
                 }
             } catch (e: Exception) {
-                _credits.postValue(Resource.Error(e.message ?: UNKNOWN_ERROR))
+                _credits.postValue(com.fadhlansulistiyo.cinemadatabase.core.data.Resource.Error(e.message ?: UNKNOWN_ERROR))
             }
         }
     }
