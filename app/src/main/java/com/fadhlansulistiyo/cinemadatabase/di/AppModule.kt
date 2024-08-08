@@ -36,13 +36,5 @@ abstract class AppModule {
 
     @Binds
     @ViewModelScoped
-    abstract fun provideWatchlistMovieUseCase(watchlistInteractor: WatchlistMovieInteractor): WatchlistMovieUseCase
-
-    @Binds
-    @ViewModelScoped
-    abstract fun provideWatchlistTvUseCase(watchlistInteractor: WatchlistTvInteractor): WatchlistTvUseCase
-
-    @Binds
-    @ViewModelScoped
     abstract fun provideSearchUseCase(searchInteractor: SearchInteractor): SearchUseCase
 }

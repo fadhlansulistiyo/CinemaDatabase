@@ -1,4 +1,4 @@
-package com.fadhlansulistiyo.cinemadatabase.presentation.watchlist
+package com.fadhlansulistiyo.cinemadatabase.watchlist.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -7,8 +7,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistTvUseCas
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel
-class WatchlistMovieTvViewModel @Inject constructor(
+class WatchlistMovieTvViewModel(
     watchlistMovieUseCase: WatchlistMovieUseCase,
     watchlistTvUseCase: WatchlistTvUseCase
 ) : ViewModel() {

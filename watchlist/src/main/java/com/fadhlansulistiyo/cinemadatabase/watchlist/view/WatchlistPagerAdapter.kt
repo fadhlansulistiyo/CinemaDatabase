@@ -1,4 +1,4 @@
-package com.fadhlansulistiyo.cinemadatabase.presentation.watchlist
+package com.fadhlansulistiyo.cinemadatabase.watchlist.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

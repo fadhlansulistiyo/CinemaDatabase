@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="76dp"
-    tools:context=".presentation.watchlist.WatchlistMovieTvFragment">
+    tools:context=".view.WatchlistMovieTvFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMovies"

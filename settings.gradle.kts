@@ -23,3 +23,4 @@ dependencyResolutionManagement {
 rootProject.name = "CinemaDatabase"
 include(":app")
 include(":core")
+include(":watchlist")

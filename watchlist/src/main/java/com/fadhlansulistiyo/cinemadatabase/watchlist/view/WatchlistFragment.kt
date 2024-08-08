@@ -1,4 +1,4 @@
-package com.fadhlansulistiyo.cinemadatabase.presentation.watchlist
+package com.fadhlansulistiyo.cinemadatabase.watchlist.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +8,10 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.fadhlansulistiyo.cinemadatabase.R
-import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentWatchlistBinding
+import com.fadhlansulistiyo.cinemadatabase.watchlist.databinding.FragmentWatchlistBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class WatchlistFragment : Fragment() {
 
     private var _binding: FragmentWatchlistBinding? = null

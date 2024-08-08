@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.watchlist.WatchlistFragment">
+    tools:context=".view.WatchlistFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"

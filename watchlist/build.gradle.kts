@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.dynamic.feature)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
@@ -10,16 +10,11 @@ plugins {
 apply(from = "../shared_dependencies.gradle")
 
 android {
-    namespace = "com.fadhlansulistiyo.cinemadatabase"
+    namespace = "com.fadhlansulistiyo.cinemadatabase.watchlist"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.fadhlansulistiyo.cinemadatabase"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -32,27 +27,19 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
     buildFeatures {
         viewBinding = true
-        buildConfig = true
     }
-    dynamicFeatures += setOf(":watchlist")
-    // Allow references to generated code
-    kapt {
-        correctErrorTypes = true
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
+    implementation(project(":app"))
     implementation(project(":core"))
-
-    // Show More TextView
-    implementation(libs.showmoretextview)
 }
