@@ -8,10 +8,6 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.SearchInteractor
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.SearchUseCase
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.TvInteractor
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.TvUseCase
-import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistMovieInteractor
-import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistMovieUseCase
-import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistTvInteractor
-import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistTvUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
