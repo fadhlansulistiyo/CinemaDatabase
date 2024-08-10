@@ -7,7 +7,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.TvResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NA
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.NA
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapGenresResponseToDomain
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapProductionCompaniesResponseToDomain
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.BaseMapper.mapSeasonsResponseToDomain

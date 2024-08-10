@@ -18,7 +18,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistTv
 import com.fadhlansulistiyo.cinemadatabase.core.ui.CastAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.SeasonsAdapter
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL_ORIGINAL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL_ORIGINAL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailTvBinding
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toEpisodeString
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toVoteAverageFormat

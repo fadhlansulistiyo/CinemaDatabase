@@ -1,9 +1,9 @@
 package com.fadhlansulistiyo.cinemadatabase.core.data.remote.source
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_IS_EMPTY
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NETWORK_ERROR
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NO_INTERNET_CONNECTION
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.DATA_IS_EMPTY
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.NETWORK_ERROR
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.NO_INTERNET_CONNECTION
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

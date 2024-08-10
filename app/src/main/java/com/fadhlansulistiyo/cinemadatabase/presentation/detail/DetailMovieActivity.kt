@@ -13,11 +13,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieDetailWithCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
 import com.fadhlansulistiyo.cinemadatabase.core.ui.CastAdapter
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL_ORIGINAL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL_ORIGINAL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailMovieBinding
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toVoteAverageFormat
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
@@ -62,48 +62,34 @@ class DetailMovieActivity : AppCompatActivity() {
             setWatchlistState(isWatchlist)
         }
 
-        viewModel.movieDetail.observe(this) { detailMovie ->
-            handleMovieDetail(detailMovie)
-        }
-
-        viewModel.movieCast.observe(this) { castResource ->
-            handleCastResource(castResource)
+        viewModel.movieDetailWithCast.observe(this) { resource ->
+            handleMovieDetailWithCast(resource)
         }
     }
 
-    private fun handleMovieDetail(detailMovie: Resource<DetailMovie>) {
-        when (detailMovie) {
+    private fun handleMovieDetailWithCast(resource: Resource<MovieDetailWithCast>) {
+        when (resource) {
             is Resource.Error -> {
-                binding.progressBar.visibility = View.GONE
-                showToast(detailMovie.message.toString())
+                showLoading(false)
+                showToast(resource.message.toString())
+                binding.errorLayout.visibility = View.VISIBLE
+                binding.errorMsg.textError.text = resource.message
             }
 
             is Resource.Loading -> {
-                binding.progressBar.visibility = View.VISIBLE
+                showLoading(true)
             }
 
             is Resource.Success -> {
-                binding.progressBar.visibility = View.GONE
-                detailMovie.data?.let { setDetailMovie(it) }
-            }
-        }
-    }
-
-    private fun handleCastResource(movieCastResource: Resource<List<MovieCast>>) {
-        when (movieCastResource) {
-            is Resource.Error -> {
-                binding.progressBarCast.visibility = View.GONE
-                showToast(movieCastResource.message.toString())
+                showLoading(false)
+                binding.layoutMain.visibility = View.VISIBLE
+                resource.data?.let {
+                    setDetailMovie(it.detail)
+                    castAdapter.submitList(it.cast)
+                }
             }
 
-            is Resource.Loading -> {
-                binding.progressBarCast.visibility = View.VISIBLE
-            }
-
-            is Resource.Success -> {
-                binding.progressBarCast.visibility = View.GONE
-                castAdapter.submitList(movieCastResource.data)
-            }
+            else -> {}
         }
     }
 
@@ -138,7 +124,8 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnWatchlist.setOnClickListener {
-            val currentDetail = viewModel.movieDetail.value?.data ?: return@setOnClickListener
+            val currentDetail =
+                viewModel.movieDetailWithCast.value?.data?.detail ?: return@setOnClickListener
             viewModel.toggleWatchlistMovie(
                 WatchlistMovie(
                     id = currentDetail.id,
@@ -175,6 +162,10 @@ class DetailMovieActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.loadingDetail.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showToast(message: String) {

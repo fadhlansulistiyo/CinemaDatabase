@@ -8,7 +8,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.PeopleUseCase
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.UNKNOWN_ERROR
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.UNKNOWN_ERROR
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

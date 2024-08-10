@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loadingDetail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/loadingBackdropPath"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/md_theme_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/loadingCardView"
+        style="@style/Widget.Material3.CardView.Filled"
+        android:layout_width="135dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-8dp"
+        android:background="@color/md_theme_outlineVariant"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/loadingTitle" />
+
+    <TextView
+        android:id="@+id/loadingTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/text_rounded_shape"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/loadingBackdropPath"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/loadingCardView"
+        tools:ignore="SpUsage" />
+
+    <TextView
+        android:id="@+id/loadingVoteAverage"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/text_rounded_shape"
+        android:drawablePadding="6dp"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/loadingTitle"
+        app:layout_constraintTop_toBottomOf="@id/loadingBackdropPath"
+        tools:ignore="SpUsage" />
+
+    <TextView
+        android:id="@+id/loadingRuntime"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/text_rounded_shape"
+        android:drawablePadding="6dp"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/loadingVoteAverage"
+        app:layout_constraintTop_toBottomOf="@id/loadingVoteAverage"
+        tools:ignore="SpUsage" />
+
+    <TextView
+        android:id="@+id/loadingReleaseDate"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/text_rounded_shape"
+        android:text="@string/placeholder_name"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/loadingRuntime"
+        app:layout_constraintTop_toBottomOf="@id/loadingRuntime"
+        tools:ignore="SpUsage" />
+
+    <TextView
+        android:id="@+id/loadingGenres"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/text_rounded_shape"
+        android:text="@string/placeholder_name"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/loadingReleaseDate"
+        app:layout_constraintTop_toBottomOf="@id/loadingReleaseDate" />
+
+    <TextView
+        android:id="@+id/loadingItemGenres"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/text_rounded_shape"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/loadingGenres"
+        app:layout_constraintTop_toBottomOf="@id/loadingGenres" />
+
+    <TextView
+        android:id="@+id/loadingItemGenres2"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/text_rounded_shape"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/loadingItemGenres"
+        app:layout_constraintTop_toBottomOf="@id/loadingItemGenres" />
+
+    <TextView
+        android:id="@+id/loadingTvDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/text_rounded_shape"
+        android:text="@string/placeholder_name"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/loadingCardView"
+        app:layout_constraintTop_toBottomOf="@id/loadingCardView" />
+
+    <TextView
+        android:id="@+id/loadingOverview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/text_rounded_shape"
+        android:text="@string/placeholder_name"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loadingTvDescription" />
+
+    <TextView
+        android:id="@+id/loadingOverview2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/text_rounded_shape"
+        android:text="@string/placeholder_name"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loadingOverview" />
+
+    <TextView
+        android:id="@+id/loadingOverview3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/text_rounded_shape"
+        android:text="@string/placeholder_name"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loadingOverview2" />
+
+    <TextView
+        android:id="@+id/loadingTvCompanies"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/text_rounded_shape"
+        android:text="@string/placeholder_name"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loadingOverview3" />
+
+    <TextView
+        android:id="@+id/loadingCompanies"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/text_rounded_shape"
+        android:text="@string/placeholder_name"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loadingTvCompanies" />
+
+    <TextView
+        android:id="@+id/loadingCompanies2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/text_rounded_shape"
+        android:text="@string/placeholder_name"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loadingCompanies" />
+
+    <TextView
+        android:id="@+id/loadingTvCast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/text_rounded_shape"
+        android:text="@string/placeholder_name"
+        android:textColor="@color/md_theme_outlineVariant"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loadingCompanies2" />
+
+
+    <LinearLayout
+        android:id="@+id/castItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loadingTvCast">
+
+        <include layout="@layout/placeholder_cast" />
+
+        <include layout="@layout/placeholder_cast" />
+
+        <include layout="@layout/placeholder_cast" />
+
+        <include layout="@layout/placeholder_cast" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -55,4 +55,7 @@ dependencies {
 
     // Show More TextView
     implementation(libs.showmoretextview)
+
+    // shimmer
+    implementation(libs.shimmer)
 }

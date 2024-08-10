@@ -1,6 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.presentation.utils
 
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NA
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.NA
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.SimpleDateFormat

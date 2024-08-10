@@ -21,15 +21,23 @@ class MovieRemoteDataSource @Inject constructor(
         }
     }
 
-    suspend fun getDetailMovie(movieId: Int): ApiResponseResult<DetailMovieResponse> {
+    private suspend fun getDetailMovie(movieId: Int): ApiResponseResult<DetailMovieResponse> {
         return handleApiCall {
             apiService.getDetailMovie(movieId)
         }
     }
 
-    suspend fun getCast(movieId: Int): ApiResponseResult<List<CastResponse>> {
+    private suspend fun getCast(movieId: Int): ApiResponseResult<List<CastResponse>> {
         return handleApiCall {
             apiService.getMovieCredits(movieId).cast
         }
+    }
+
+    suspend fun getMovieDetailWithCast(
+        movieId: Int
+    ): Pair<ApiResponseResult<DetailMovieResponse>, ApiResponseResult<List<CastResponse>>> {
+        val detail = getDetailMovie(movieId)
+        val cast = getCast(movieId)
+        return Pair(detail, cast)
     }
 }

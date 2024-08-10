@@ -2,7 +2,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.di
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.BASE_URL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

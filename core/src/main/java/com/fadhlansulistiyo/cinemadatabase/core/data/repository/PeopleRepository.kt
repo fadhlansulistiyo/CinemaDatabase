@@ -16,7 +16,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.PopularPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IPeopleRepository
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_IS_EMPTY
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.DATA_IS_EMPTY
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.PeopleMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

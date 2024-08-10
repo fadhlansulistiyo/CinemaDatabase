@@ -2,7 +2,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.utils.mapper
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MultiSearchResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiSearch
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NA
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.NA
 
 object SearchMapper {
     fun mapMultiSearchResponseToDomain(input: MultiSearchResponse): MultiSearch {

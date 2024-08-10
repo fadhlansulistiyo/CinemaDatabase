@@ -10,7 +10,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.ITvRepository
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_IS_EMPTY
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.DATA_IS_EMPTY
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.TvMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieDetailWithCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.MovieUseCase
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistMovieUseCase
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.UNKNOWN_ERROR
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.DATA_IS_NULL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.UNKNOWN_ERROR
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,25 +21,29 @@ class DetailMovieViewModel @Inject constructor(
     private val watchlistMovieUseCase: WatchlistMovieUseCase
 ) : ViewModel() {
 
-    private val _movieDetail = MutableLiveData<Resource<DetailMovie>>()
-    val movieDetail: LiveData<Resource<DetailMovie>> get() = _movieDetail
+    private val _movieDetailWithCast = MutableLiveData<Resource<MovieDetailWithCast>>()
+    val movieDetailWithCast: LiveData<Resource<MovieDetailWithCast>> get() = _movieDetailWithCast
 
     private val _isWatchlist = MutableLiveData<Boolean>()
     val isWatchlist: LiveData<Boolean> get() = _isWatchlist
 
-    private val _movieCast = MutableLiveData<Resource<List<MovieCast>>>()
-    val movieCast: LiveData<Resource<List<MovieCast>>> = _movieCast
-
     fun fetchMovieDetail(movieId: Int) {
         viewModelScope.launch {
+            _movieDetailWithCast.value = Resource.Loading()
             try {
-                _movieDetail.value = Resource.Loading()
-                val detailResult = movieUseCase.getDetailMovie(movieId)
-                _movieDetail.value = detailResult
-                detailResult.data?.title?.let { checkIfWatchlist(it) }
-                fetchCast(movieId)
+                val result = movieUseCase.getMovieDetail(movieId)
+                if (result is Resource.Success) {
+                    result.data?.let { movieDetailWithCast ->
+                        _movieDetailWithCast.value = Resource.Success(movieDetailWithCast)
+                        checkIfWatchlist(movieDetailWithCast.detail.title)
+                    } ?: run {
+                        _movieDetailWithCast.value = Resource.Error(DATA_IS_NULL)
+                    }
+                } else {
+                    _movieDetailWithCast.value = Resource.Error(result.message ?: UNKNOWN_ERROR)
+                }
             } catch (e: Exception) {
-                _movieDetail.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
+                _movieDetailWithCast.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
             }
         }
     }
@@ -61,18 +65,6 @@ class DetailMovieViewModel @Inject constructor(
         viewModelScope.launch {
             val watchlist = watchlistMovieUseCase.getWatchlistByTitle(title)
             _isWatchlist.postValue(watchlist != null)
-        }
-    }
-
-    private fun fetchCast(movieId: Int) {
-        viewModelScope.launch {
-            try {
-                movieUseCase.getCast(movieId).collect {
-                    _movieCast.postValue(it)
-                }
-            } catch (e: Exception) {
-                _movieCast.postValue(Resource.Error(e.message ?: UNKNOWN_ERROR))
-            }
         }
     }
 }

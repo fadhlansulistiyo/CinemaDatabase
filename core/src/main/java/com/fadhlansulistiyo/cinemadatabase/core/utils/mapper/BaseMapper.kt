@@ -6,7 +6,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.SeasonsResp
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Genres
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.ProductionCompanies
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Seasons
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NA
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.NA
 
 object BaseMapper {
 

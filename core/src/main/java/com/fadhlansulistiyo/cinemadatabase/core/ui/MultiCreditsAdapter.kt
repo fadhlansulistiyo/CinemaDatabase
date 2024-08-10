@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL
 import com.fadhlansulistiyo.cinemadatabase.core.utils.toVoteAverageFormat
 import com.fadhlansulistiyo.core.R
 import com.fadhlansulistiyo.core.databinding.ItemTvBinding

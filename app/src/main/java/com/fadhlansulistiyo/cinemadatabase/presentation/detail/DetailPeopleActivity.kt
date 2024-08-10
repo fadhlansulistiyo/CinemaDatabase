@@ -14,8 +14,8 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.ui.MultiCreditsAdapter
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.IMAGE_URL_ORIGINAL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL_ORIGINAL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailPeopleBinding
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
 import dagger.hilt.android.AndroidEntryPoint

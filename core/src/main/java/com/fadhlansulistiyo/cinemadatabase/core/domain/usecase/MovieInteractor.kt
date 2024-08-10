@@ -1,9 +1,8 @@
 package com.fadhlansulistiyo.cinemadatabase.core.domain.usecase
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieDetailWithCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -15,11 +14,7 @@ class MovieInteractor @Inject constructor(private val movieRepository: IMovieRep
         return movieRepository.getNowPlaying()
     }
 
-    override suspend fun getDetailMovie(movieId: Int): Resource<DetailMovie> {
-        return movieRepository.getDetailMovie(movieId)
-    }
-
-    override fun getCast(movieId: Int): Flow<Resource<List<MovieCast>>> {
-        return movieRepository.getCast(movieId)
+    override suspend fun getMovieDetail(movieId: Int): Resource<MovieDetailWithCast> {
+        return movieRepository.getMovieDetail(movieId)
     }
 }

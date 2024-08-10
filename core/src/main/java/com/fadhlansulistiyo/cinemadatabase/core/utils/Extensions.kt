@@ -1,6 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.core.utils
 
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NA
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.NA
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.SimpleDateFormat
@@ -31,33 +31,8 @@ fun String?.toFormattedDateString(): String {
     }
 }
 
-fun Int?.toFormattedRuntime(): String {
-    return when {
-        this == null || this == 0 -> NA
-        else -> {
-            val hours = this / 60
-            val minutes = this % 60
-            if (hours > 0) {
-                String.format(Locale.getDefault(), "%dh %02dm", hours, minutes)
-            } else {
-                String.format(Locale.getDefault(), "%dm", minutes)
-            }
-        }
-    }
-}
-
-fun Int?.toSeasonString(): String {
-    return this?.let {
-        if (it == 1) "$it Season" else "$it Seasons"
-    } ?: NA
-}
-
 fun Int?.toEpisodeString(): String {
     return this?.let {
         if (it == 1) "$it Episode" else "$it Episodes"
     } ?: NA
-}
-
-fun List<String?>?.toFormattedProductionCompanies(): String {
-    return this?.filterNotNull()?.joinToString(" • ", prefix = "• ") ?: ""
 }

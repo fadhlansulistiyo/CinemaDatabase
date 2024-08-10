@@ -6,16 +6,12 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.local.MovieLocalDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.MovieRemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieResponse
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieDetailWithCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.DATA_IS_EMPTY
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.UNKNOWN_ERROR
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.MovieMapper
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -49,48 +45,33 @@ class MovieRepository @Inject constructor(
 
         }.asFlow()
 
-    override suspend fun getDetailMovie(movieId: Int): Resource<DetailMovie> {
+    override suspend fun getMovieDetail(movieId: Int): Resource<MovieDetailWithCast> {
         return try {
-            when (val response = remoteDataSource.getDetailMovie(movieId)) {
-                is ApiResponseResult.Success -> {
-                    val movie = MovieMapper.mapDetailMovieResponseToDomain(response.data)
-                    Resource.Success(movie)
+            val (detailResponse, castResponse) = remoteDataSource.getMovieDetailWithCast(movieId)
+
+            when {
+                detailResponse is ApiResponseResult.Success && castResponse is ApiResponseResult.Success -> {
+                    val detail = MovieMapper.mapDetailMovieResponseToDomain(detailResponse.data)
+                    val cast = castResponse.data.map {
+                        MovieMapper.mapCastResponseToDomain(it)
+                    }
+                    Resource.Success(MovieDetailWithCast(detail, cast))
                 }
 
-                is ApiResponseResult.Empty -> {
-                    Resource.Error(DATA_IS_EMPTY)
+                detailResponse is ApiResponseResult.Error -> {
+                    Resource.Error(detailResponse.errorMessage)
                 }
 
-                is ApiResponseResult.Error -> {
-                    Resource.Error(response.errorMessage)
+                castResponse is ApiResponseResult.Error -> {
+                    Resource.Error(castResponse.errorMessage)
+                }
+
+                else -> {
+                    Resource.Error(UNKNOWN_ERROR)
                 }
             }
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
     }
-
-    override fun getCast(movieId: Int): Flow<Resource<List<MovieCast>>> = flow {
-        emit(Resource.Loading())
-        try {
-            when (val response = remoteDataSource.getCast(movieId)) {
-                is ApiResponseResult.Success -> {
-                    val castList = response.data.map {
-                        MovieMapper.mapCastResponseToDomain(it)
-                    }
-                    emit(Resource.Success(castList))
-                }
-
-                is ApiResponseResult.Empty -> {
-                    emit(Resource.Error(DATA_IS_EMPTY))
-                }
-
-                is ApiResponseResult.Error -> {
-                    emit(Resource.Error(response.errorMessage))
-                }
-            }
-        } catch (e: Exception) {
-            emit(Resource.Error(e.toString()))
-        }
-    }.flowOn(Dispatchers.IO)
 }

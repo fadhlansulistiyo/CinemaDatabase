@@ -24,4 +24,7 @@
     <string name="place_of_birth">Place of Birth</string>
     <string name="biography">Biography</string>
     <string name="empty_watchlist">You don\'t have a Watchlist yet</string>
+    <string name="placeholder_title">This is Text Placeholder</string>
+    <string name="placeholder_vote">7.8</string>
+    <string name="placeholder_name">Placeholder name</string>
 </resources>

@@ -8,7 +8,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.PopularPeople
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.Companion.NA
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.NA
 import java.text.SimpleDateFormat
 import java.util.Locale
 

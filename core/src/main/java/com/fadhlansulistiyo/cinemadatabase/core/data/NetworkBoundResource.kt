@@ -18,17 +18,13 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                 is ApiResponseResult.Success -> {
                     saveCallResult(apiResponse.data)
                     emitAll(loadFromDB().map {
-                        Resource.Success(
-                            it
-                        )
+                        Resource.Success(it)
                     })
                 }
 
                 is ApiResponseResult.Empty -> {
                     emitAll(loadFromDB().map {
-                        Resource.Success(
-                            it
-                        )
+                        Resource.Success(it)
                     })
                 }
 
@@ -39,9 +35,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
             }
         } else {
             emitAll(loadFromDB().map {
-                Resource.Success(
-                    it
-                )
+                Resource.Success(it)
             })
         }
     }
