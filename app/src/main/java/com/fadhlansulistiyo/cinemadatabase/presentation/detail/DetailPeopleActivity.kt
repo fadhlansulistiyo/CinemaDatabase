@@ -54,6 +54,7 @@ class DetailPeopleActivity : AppCompatActivity() {
             intent?.let { startActivity(it) }
         }
         binding.detailRecyclerViewMovie.adapter = creditsAdapter
+        binding.detailRecyclerViewMovie.setHasFixedSize(true)
     }
 
     private fun fetchPeopleDetail() {

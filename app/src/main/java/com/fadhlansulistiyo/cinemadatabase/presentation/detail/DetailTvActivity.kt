@@ -60,6 +60,7 @@ class DetailTvActivity : AppCompatActivity() {
         }
         binding.detailRecyclerViewSeasons.adapter = seasonsAdapter
         binding.detailRecyclerViewCast.adapter = castAdapter
+        binding.detailRecyclerViewCast.setHasFixedSize(true)
     }
 
     private fun setupObservers() {

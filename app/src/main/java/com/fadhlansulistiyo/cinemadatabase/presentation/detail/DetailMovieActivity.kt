@@ -55,6 +55,7 @@ class DetailMovieActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.detailRecyclerViewCast.adapter = castAdapter
+        binding.detailRecyclerViewCast.setHasFixedSize(true)
     }
 
     private fun setupObservers() {

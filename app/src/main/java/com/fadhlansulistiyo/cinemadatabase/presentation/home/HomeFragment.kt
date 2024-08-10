@@ -66,12 +66,14 @@ class HomeFragment : Fragment() {
                 startActivity(this)
             }
         }
+        binding.rvTrendingPeople.setHasFixedSize(true)
         peopleAdapter = PeopleAdapter {
             Intent(activity, DetailPeopleActivity::class.java).apply {
                 putExtra(DetailPeopleActivity.EXTRA_PEOPLE_ID, it)
                 startActivity(this)
             }
         }
+        binding.rvAiringTodayTv.setHasFixedSize(true)
     }
 
     private fun initializeAutoScrollViewPagerHelper() {
