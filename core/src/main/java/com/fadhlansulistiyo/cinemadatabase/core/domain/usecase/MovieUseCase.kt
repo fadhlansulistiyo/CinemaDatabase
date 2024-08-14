@@ -1,8 +1,6 @@
 package com.fadhlansulistiyo.cinemadatabase.core.domain.usecase
 
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieCast
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieDetailWithCast
 import kotlinx.coroutines.flow.Flow

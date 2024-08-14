@@ -84,14 +84,3 @@ class FadePageTransformer : ViewPager2.PageTransformer {
         }
     }
 }
-
-class ZoomOutPageTransformer : ViewPager2.PageTransformer {
-    override fun transformPage(view: View, position: Float) {
-        view.apply {
-            val scale = if (position < 0) 1 + position else 1 - position
-            scaleX = scale
-            scaleY = scale
-            alpha = if (position < -1 || position > 1) 0f else 1f
-        }
-    }
-}
