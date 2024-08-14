@@ -171,8 +171,12 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        binding.viewPagerNowPlaying.adapter = null
+        binding.rvAiringTodayTv.adapter = null
+        binding.rvTrendingPeople.adapter = null
+        binding.main.removeAllViews()
+        autoScrollViewPagerHelper.stopAutoScroll()
         super.onDestroyView()
         _binding = null
-        autoScrollViewPagerHelper.stopAutoScroll()
     }
 }
