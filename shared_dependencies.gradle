@@ -30,4 +30,7 @@ dependencies {
 
     // lottie
     implementation(libs.lottie)
+
+    // leak Canary
+    debugImplementation(libs.leakcanary.android)
 }
