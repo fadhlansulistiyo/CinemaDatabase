@@ -3,6 +3,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.domain.usecase
 import androidx.paging.PagingData
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeopleWithCredits
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.PopularPeople
@@ -15,15 +16,11 @@ class PeopleInteractor @Inject constructor(private val peopleRepository: IPeople
         return peopleRepository.getTrendingPeople()
     }
 
-    override suspend fun getDetailPeople(peopleId: Int): Resource<DetailPeople> {
+    override suspend fun getDetailPeople(peopleId: Int): Resource<DetailPeopleWithCredits> {
         return peopleRepository.getDetailPeople(peopleId)
     }
 
     override fun getPopularPeople(): Flow<PagingData<PopularPeople>> {
         return peopleRepository.getPopularPeople()
-    }
-
-    override fun getCredits(id: Int): Flow<Resource<List<MultiCreditsMovieTv>>> {
-        return peopleRepository.getCredits(id)
     }
 }

@@ -21,15 +21,23 @@ class PeopleRemoteDataSource @Inject constructor(
         }
     }
 
-    suspend fun getDetailPeople(peopleId: Int): ApiResponseResult<DetailPeopleResponse> {
+    private suspend fun getDetailPeople(peopleId: Int): ApiResponseResult<DetailPeopleResponse> {
         return handleApiCall {
             apiService.getDetailPeople(peopleId)
         }
     }
 
-    suspend fun getCredits(id: Int): ApiResponseResult<List<MultiCreditsMovieTvResponse>> {
+    private suspend fun getCredits(id: Int): ApiResponseResult<List<MultiCreditsMovieTvResponse>> {
         return handleApiCall {
             apiService.getCredits(id).cast
         }
+    }
+
+    suspend fun getDetailPeopleWithCredits(
+        peopleId: Int
+    ): Pair<ApiResponseResult<DetailPeopleResponse>, ApiResponseResult<List<MultiCreditsMovieTvResponse>>> {
+        val detail = getDetailPeople(peopleId)
+        val credits = getCredits(peopleId)
+        return Pair(detail, credits)
     }
 }

@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeopleWithCredits
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.ui.MultiCreditsAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailPeopleBinding
@@ -43,9 +44,7 @@ class DetailPeopleActivity : AppCompatActivity() {
         creditsAdapter = MultiCreditsAdapter { item ->
             onCreditItemClicked(item)
         }
-        binding.detailRecyclerViewMovie.apply {
-            adapter = creditsAdapter
-        }
+        binding.detailRecyclerViewMovie.adapter = creditsAdapter
     }
 
     private fun onCreditItemClicked(item: MultiCreditsMovieTv) {
@@ -66,32 +65,24 @@ class DetailPeopleActivity : AppCompatActivity() {
 
     private fun fetchPeopleDetail() {
         val peopleId = intent.getIntExtra(EXTRA_PEOPLE_ID, 0)
-        viewModel.fetchPeopleDetail(peopleId)
+        viewModel.fetchDetailPeople(peopleId)
     }
 
     private fun setupObservers() {
-        viewModel.peopleDetail.observe(this) { handlePeopleDetail(it) }
-        viewModel.credits.observe(this) { handleCredits(it) }
+        viewModel.detailPeople.observe(this) { handlePeopleDetail(it) }
     }
 
-    private fun handlePeopleDetail(detailPeople: Resource<DetailPeople>) {
+    private fun handlePeopleDetail(detailPeople: Resource<DetailPeopleWithCredits>) {
         when (detailPeople) {
             is Resource.Error -> showLoading(false)
             is Resource.Loading -> showLoading(true)
             is Resource.Success -> {
                 showLoading(false)
-                detailPeople.data?.let { setDetailPeople(it) }
-            }
-        }
-    }
+                detailPeople.data?.let {
+                    setDetailPeople(it.detail)
+                    creditsAdapter.submitList(it.credits)
 
-    private fun handleCredits(credits: Resource<List<MultiCreditsMovieTv>>) {
-        when (credits) {
-            is Resource.Error -> showLoading(false)
-            is Resource.Loading -> showLoading(true)
-            is Resource.Success -> {
-                showLoading(false)
-                creditsAdapter.submitList(credits.data)
+                }
             }
         }
     }
