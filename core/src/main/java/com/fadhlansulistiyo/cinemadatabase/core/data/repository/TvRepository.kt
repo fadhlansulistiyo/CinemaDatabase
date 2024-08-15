@@ -6,16 +6,12 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.local.TvLocalDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.TvRemoteDataSource
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.TvResponse
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTvWithCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.ITvRepository
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.DATA_IS_EMPTY
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.UNKNOWN_ERROR
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.TvMapper
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -48,48 +44,34 @@ class TvRepository @Inject constructor(
             }
         }.asFlow()
 
-    override suspend fun getDetailTv(seriesId: Int): Resource<DetailTv> {
+    override suspend fun getDetailTv(tvId: Int): Resource<DetailTvWithCast> {
         return try {
-            when (val response = remoteDataSource.getDetailTv(seriesId)) {
-                is ApiResponseResult.Success -> {
-                    val tv = TvMapper.mapDetailTvResponseToDomain(response.data)
-                    Resource.Success(tv)
+            val (detailResponse, castResponse) = remoteDataSource.getDetailTvWithCast(tvId)
+
+            when {
+                detailResponse is ApiResponseResult.Success && castResponse is ApiResponseResult.Success -> {
+                    val detail = TvMapper.mapDetailTvResponseToDomain(detailResponse.data)
+                    val cast = castResponse.data.map {
+                        TvMapper.mapCastResponseToDomain(it)
+                    }
+                    Resource.Success(DetailTvWithCast(detail, cast))
                 }
 
-                is ApiResponseResult.Empty -> {
-                    Resource.Error(DATA_IS_EMPTY)
+                detailResponse is ApiResponseResult.Error -> {
+                    Resource.Error(detailResponse.errorMessage)
                 }
 
-                is ApiResponseResult.Error -> {
-                    Resource.Error(response.errorMessage)
+                castResponse is ApiResponseResult.Error -> {
+                    Resource.Error(castResponse.errorMessage)
+                }
+
+                else -> {
+                    Resource.Error(UNKNOWN_ERROR)
                 }
             }
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
+
     }
-
-    override fun getCast(seriesId: Int): Flow<Resource<List<TvCast>>> = flow {
-        emit(Resource.Loading())
-        try {
-            when (val response = remoteDataSource.getCast(seriesId)) {
-                is ApiResponseResult.Success -> {
-                    val castList = response.data.map {
-                        TvMapper.mapCastResponseToDomain(it)
-                    }
-                    emit(Resource.Success(castList))
-                }
-
-                is ApiResponseResult.Empty -> {
-                    emit(Resource.Error(DATA_IS_EMPTY))
-                }
-
-                is ApiResponseResult.Error -> {
-                    emit(Resource.Error(response.errorMessage))
-                }
-            }
-        } catch (e: Exception) {
-            emit(Resource.Error(e.toString()))
-        }
-    }.flowOn(Dispatchers.IO)
 }

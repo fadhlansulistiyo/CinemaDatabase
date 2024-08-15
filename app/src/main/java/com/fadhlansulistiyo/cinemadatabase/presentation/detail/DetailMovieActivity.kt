@@ -12,7 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieDetailWithCast
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovieWithCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
 import com.fadhlansulistiyo.cinemadatabase.core.ui.CastAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailMovieBinding
@@ -52,10 +52,7 @@ class DetailMovieActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
-        binding.detailRecyclerViewCast.apply {
-            adapter = castAdapter
-            setHasFixedSize(true)
-        }
+        binding.detailRecyclerViewCast.adapter = castAdapter
     }
 
     private fun setupObservers() {
@@ -68,7 +65,7 @@ class DetailMovieActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleMovieDetailWithCast(resource: Resource<MovieDetailWithCast>) {
+    private fun handleMovieDetailWithCast(resource: Resource<DetailMovieWithCast>) {
         when (resource) {
             is Resource.Error -> {
                 showLoading(false)

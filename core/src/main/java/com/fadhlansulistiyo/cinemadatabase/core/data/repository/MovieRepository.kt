@@ -7,7 +7,7 @@ import com.fadhlansulistiyo.cinemadatabase.core.data.remote.source.MovieRemoteDa
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiResponseResult
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.response.MovieResponse
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieDetailWithCast
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovieWithCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IMovieRepository
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.UNKNOWN_ERROR
 import com.fadhlansulistiyo.cinemadatabase.core.utils.mapper.MovieMapper
@@ -45,7 +45,7 @@ class MovieRepository @Inject constructor(
 
         }.asFlow()
 
-    override suspend fun getMovieDetail(movieId: Int): Resource<MovieDetailWithCast> {
+    override suspend fun getMovieDetail(movieId: Int): Resource<DetailMovieWithCast> {
         return try {
             val (detailResponse, castResponse) = remoteDataSource.getMovieDetailWithCast(movieId)
 
@@ -55,7 +55,7 @@ class MovieRepository @Inject constructor(
                     val cast = castResponse.data.map {
                         MovieMapper.mapCastResponseToDomain(it)
                     }
-                    Resource.Success(MovieDetailWithCast(detail, cast))
+                    Resource.Success(DetailMovieWithCast(detail, cast))
                 }
 
                 detailResponse is ApiResponseResult.Error -> {

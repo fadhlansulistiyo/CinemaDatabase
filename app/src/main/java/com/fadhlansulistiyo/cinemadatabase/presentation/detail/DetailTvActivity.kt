@@ -12,7 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTvWithCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistTv
 import com.fadhlansulistiyo.cinemadatabase.core.ui.CastAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.SeasonsAdapter
@@ -56,10 +56,9 @@ class DetailTvActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
-        binding.detailRecyclerViewSeasons.adapter = seasonsAdapter
-        binding.detailRecyclerViewCast.apply {
-            adapter = castAdapter
-            setHasFixedSize(true)
+        with(binding) {
+            detailRecyclerViewSeasons.adapter = seasonsAdapter
+            recyclerViewCastTv.adapter = castAdapter
         }
     }
 
@@ -68,20 +67,16 @@ class DetailTvActivity : AppCompatActivity() {
             setWatchlistState(isWatchlist)
         }
 
-        viewModel.tvDetail.observe(this) { detailTv ->
-            handleTvDetail(detailTv)
-        }
-
-        viewModel.tvCast.observe(this) { castResource ->
-            handleCastResource(castResource)
+        viewModel.tvDetail.observe(this) { resource ->
+            handleTvDetail(resource)
         }
     }
 
-    private fun handleTvDetail(detailTv: Resource<DetailTv>) {
-        when (detailTv) {
+    private fun handleTvDetail(resource: Resource<DetailTvWithCast>) {
+        when (resource) {
             is Resource.Error -> {
                 binding.progressBar.visibility = View.GONE
-                showToast(detailTv.message.toString())
+                showToast(resource.message.toString())
             }
 
             is Resource.Loading -> {
@@ -90,26 +85,13 @@ class DetailTvActivity : AppCompatActivity() {
 
             is Resource.Success -> {
                 binding.progressBar.visibility = View.GONE
-                detailTv.data?.let { setDetailTv(it) }
-            }
-        }
-    }
-
-    private fun handleCastResource(tvCastResource: Resource<List<TvCast>>) {
-        when (tvCastResource) {
-            is Resource.Error -> {
-                binding.progressBarCast.visibility = View.GONE
-                showToast(tvCastResource.message.toString())
+                resource.data?.let {
+                    setDetailTv(it.detail)
+                    castAdapter.submitList(it.cast)
+                }
             }
 
-            is Resource.Loading -> {
-                binding.progressBarCast.visibility = View.VISIBLE
-            }
-
-            is Resource.Success -> {
-                binding.progressBarCast.visibility = View.GONE
-                castAdapter.submitList(tvCastResource.data)
-            }
+            else -> {}
         }
     }
 
@@ -124,7 +106,8 @@ class DetailTvActivity : AppCompatActivity() {
             detailNumberOfEpisode.text = detailTv.numberOfEpisodes.toEpisodeString()
             detailVoteAverage.text = detailTv.voteAverage.toVoteAverageFormat(1)
             detailGenres.text = detailTv.genres.joinToString(", ") { it.name }
-            detailCompanies.text = detailTv.productionCompanies.map { it.name }.toFormattedProductionCompanies()
+            detailCompanies.text =
+                detailTv.productionCompanies.map { it.name }.toFormattedProductionCompanies()
 
             seasonsAdapter.submitList(detailTv.seasons)
         }
@@ -132,7 +115,7 @@ class DetailTvActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnWatchlist.setOnClickListener {
-            val currentDetail = viewModel.tvDetail.value?.data ?: return@setOnClickListener
+            val currentDetail = viewModel.tvDetail.value?.data?.detail ?: return@setOnClickListener
             viewModel.toggleWatchlistTv(
                 WatchlistTv(
                     id = currentDetail.id,

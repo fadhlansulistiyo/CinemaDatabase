@@ -21,15 +21,23 @@ class TvRemoteDataSource @Inject constructor(
         }
     }
 
-    suspend fun getDetailTv(seriesId: Int): ApiResponseResult<DetailTvResponse> {
+    private suspend fun getDetailTv(seriesId: Int): ApiResponseResult<DetailTvResponse> {
         return handleApiCall {
             apiService.getDetailTv(seriesId)
         }
     }
 
-    suspend fun getCast(seriesId: Int): ApiResponseResult<List<CastResponse>> {
+    private suspend fun getCast(seriesId: Int): ApiResponseResult<List<CastResponse>> {
         return handleApiCall {
             apiService.getTvCredits(seriesId).cast
         }
+    }
+
+    suspend fun getDetailTvWithCast(
+        tvId: Int
+    ): Pair<ApiResponseResult<DetailTvResponse>, ApiResponseResult<List<CastResponse>>> {
+        val detail = getDetailTv(tvId)
+        val cast = getCast(tvId)
+        return Pair(detail, cast)
     }
 }

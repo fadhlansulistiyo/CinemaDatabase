@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTvWithCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.TvUseCase
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistTvUseCase
+import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.DATA_IS_NULL
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.UNKNOWN_ERROR
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,23 +21,27 @@ class DetailTvViewModel @Inject constructor(
     private val watchlistTvUSeCase: WatchlistTvUseCase
 ) : ViewModel() {
 
-    private val _tvDetail = MutableLiveData<Resource<DetailTv>>()
-    val tvDetail: LiveData<Resource<DetailTv>> get() = _tvDetail
+    private val _tvDetail = MutableLiveData<Resource<DetailTvWithCast>>()
+    val tvDetail: LiveData<Resource<DetailTvWithCast>> get() = _tvDetail
 
     private val _isWatchlist = MutableLiveData<Boolean>()
     val isWatchlist: LiveData<Boolean> get() = _isWatchlist
 
-    private val _tvCast = MutableLiveData<Resource<List<TvCast>>>()
-    val tvCast: LiveData<Resource<List<TvCast>>> = _tvCast
-
     fun fetchTvDetail(tvId: Int) {
         viewModelScope.launch {
+            _tvDetail.value = Resource.Loading()
             try {
-                _tvDetail.value = Resource.Loading()
-                val detailResult = tvUseCase.getDetailTv(tvId)
-                _tvDetail.value = detailResult
-                detailResult.data?.name?.let { checkIfWatchlist(it) }
-                fetchCast(tvId)
+                val result = tvUseCase.getDetailTv(tvId)
+                if (result is Resource.Success) {
+                    result.data?.let { tvDetailWithCast ->
+                        _tvDetail.value = Resource.Success(tvDetailWithCast)
+                        checkIfWatchlist(tvDetailWithCast.detail.name)
+                    } ?: run {
+                        _tvDetail.value = Resource.Error(DATA_IS_NULL)
+                    }
+                } else {
+                    _tvDetail.value = Resource.Error(result.message ?: UNKNOWN_ERROR)
+                }
             } catch (e: Exception) {
                 _tvDetail.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
             }
@@ -61,18 +65,6 @@ class DetailTvViewModel @Inject constructor(
         viewModelScope.launch {
             val watchlist = watchlistTvUSeCase.getWatchlistByTitle(title)
             _isWatchlist.postValue(watchlist != null)
-        }
-    }
-
-    private fun fetchCast(seriesId: Int) {
-        viewModelScope.launch {
-            try {
-                tvUseCase.getCast(seriesId).collect {
-                    _tvCast.postValue(it)
-                }
-            } catch (e: Exception) {
-                _tvCast.postValue(Resource.Error(e.message ?: UNKNOWN_ERROR))
-            }
         }
     }
 }

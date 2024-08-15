@@ -14,7 +14,6 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.ui.MultiCreditsAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailPeopleBinding
-import com.fadhlansulistiyo.cinemadatabase.presentation.utils.MediaType
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.loadImage
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.loadImageOriginal
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
@@ -46,17 +45,16 @@ class DetailPeopleActivity : AppCompatActivity() {
         }
         binding.detailRecyclerViewMovie.apply {
             adapter = creditsAdapter
-            setHasFixedSize(true)
         }
     }
 
     private fun onCreditItemClicked(item: MultiCreditsMovieTv) {
         val intent = when (item.mediaType) {
-            MediaType.MOVIE.toString() -> Intent(this, DetailMovieActivity::class.java).apply {
+            "movie" -> Intent(this, DetailMovieActivity::class.java).apply {
                 putExtra(DetailMovieActivity.EXTRA_MOVIE_ID, item.id)
             }
 
-            MediaType.TV.toString() -> Intent(this, DetailTvActivity::class.java).apply {
+            "tv" -> Intent(this, DetailTvActivity::class.java).apply {
                 putExtra(DetailTvActivity.EXTRA_TV_ID, item.id)
             }
 

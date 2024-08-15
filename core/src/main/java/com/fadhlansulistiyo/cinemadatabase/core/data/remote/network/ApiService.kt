@@ -57,7 +57,7 @@ interface ApiService {
         @Path("movie_id") movieId: Int
     ): MovieCreditsResponse
 
-    @GET("tv/{series_id}/credits?language=en-US")
+    @GET("tv/{series_id}/credits")
     suspend fun getTvCredits(
         @Path("series_id") seriesId: Int
     ): TvCreditsResponse

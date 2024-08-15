@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieDetailWithCast
+import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovieWithCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.MovieUseCase
 import com.fadhlansulistiyo.cinemadatabase.core.domain.usecase.WatchlistMovieUseCase
@@ -21,8 +21,8 @@ class DetailMovieViewModel @Inject constructor(
     private val watchlistMovieUseCase: WatchlistMovieUseCase
 ) : ViewModel() {
 
-    private val _movieDetailWithCast = MutableLiveData<Resource<MovieDetailWithCast>>()
-    val movieDetailWithCast: LiveData<Resource<MovieDetailWithCast>> get() = _movieDetailWithCast
+    private val _movieDetailWithCast = MutableLiveData<Resource<DetailMovieWithCast>>()
+    val movieDetailWithCast: LiveData<Resource<DetailMovieWithCast>> get() = _movieDetailWithCast
 
     private val _isWatchlist = MutableLiveData<Boolean>()
     val isWatchlist: LiveData<Boolean> get() = _isWatchlist
