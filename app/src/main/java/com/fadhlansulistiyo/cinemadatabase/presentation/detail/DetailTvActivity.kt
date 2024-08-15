@@ -74,15 +74,12 @@ class DetailTvActivity : AppCompatActivity() {
 
     private fun handleDetailTv(resource: Resource<DetailTvWithCast>) {
         when (resource) {
+            is Resource.Loading -> showLoading(true)
             is Resource.Error -> {
                 showLoading(false)
                 showToast(resource.message.toString())
                 binding.errorMsg.errorLayout.visibility = View.VISIBLE
                 binding.errorMsg.textError.text = resource.message
-            }
-
-            is Resource.Loading -> {
-                showLoading(true)
             }
 
             is Resource.Success -> {

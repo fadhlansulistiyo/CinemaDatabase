@@ -3,6 +3,7 @@ package com.fadhlansulistiyo.cinemadatabase.presentation.detail
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -72,13 +73,20 @@ class DetailPeopleActivity : AppCompatActivity() {
         viewModel.detailPeople.observe(this) { handlePeopleDetail(it) }
     }
 
-    private fun handlePeopleDetail(detailPeople: Resource<DetailPeopleWithCredits>) {
-        when (detailPeople) {
-            is Resource.Error -> showLoading(false)
+    private fun handlePeopleDetail(resource: Resource<DetailPeopleWithCredits>) {
+        when (resource) {
             is Resource.Loading -> showLoading(true)
+            is Resource.Error -> {
+                showLoading(false)
+                showToast(resource.message.toString())
+                binding.errorMsg.errorLayout.visibility = View.VISIBLE
+                binding.errorMsg.textError.text = resource.message
+            }
+
             is Resource.Success -> {
                 showLoading(false)
-                detailPeople.data?.let {
+                binding.layoutMainDetailPeople.visibility = View.VISIBLE
+                resource.data?.let {
                     setDetailPeople(it.detail)
                     creditsAdapter.submitList(it.credits)
 
@@ -99,10 +107,6 @@ class DetailPeopleActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
     private fun setupBinding() {
         _binding = ActivityDetailPeopleBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -114,6 +118,14 @@ class DetailPeopleActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.loadingDetail.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     @Suppress("DEPRECATION")
