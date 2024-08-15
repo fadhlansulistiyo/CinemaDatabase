@@ -35,7 +35,7 @@ class SearchResultAdapter(
                 itemAirDate.text = searchResult.releaseDate.toFormattedDateString()
                 itemVoteAverage.text = searchResult.voteAverage.toVoteAverageFormat(1)
                 itemOverview.text = searchResult.overview
-                binding.itemPosterPath.loadImage(itemView.context, searchResult.posterPath)
+                itemPosterPath.loadImage(itemView.context, searchResult.posterPath)
             }
 
             itemView.setOnClickListener {
