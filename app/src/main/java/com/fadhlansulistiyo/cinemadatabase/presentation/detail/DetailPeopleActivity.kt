@@ -8,15 +8,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.bumptech.glide.Glide
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.ui.MultiCreditsAdapter
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL_ORIGINAL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailPeopleBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.MediaType
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.loadImage
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.loadImageOriginal
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,19 +42,28 @@ class DetailPeopleActivity : AppCompatActivity() {
 
     private fun setupCreditsAdapter() {
         creditsAdapter = MultiCreditsAdapter { item ->
-            val intent = when (item.mediaType) {
-                "movie" -> Intent(this, DetailMovieActivity::class.java).apply {
-                    putExtra(DetailMovieActivity.EXTRA_MOVIE_ID, item.id)
-                }
-                "tv" -> Intent(this, DetailTvActivity::class.java).apply {
-                    putExtra(DetailTvActivity.EXTRA_TV_ID, item.id)
-                }
-                else -> null
-            }
-            intent?.let { startActivity(it) }
+            onCreditItemClicked(item)
         }
-        binding.detailRecyclerViewMovie.adapter = creditsAdapter
-        binding.detailRecyclerViewMovie.setHasFixedSize(true)
+        binding.detailRecyclerViewMovie.apply {
+            adapter = creditsAdapter
+            setHasFixedSize(true)
+        }
+    }
+
+    private fun onCreditItemClicked(item: MultiCreditsMovieTv) {
+        val intent = when (item.mediaType) {
+            MediaType.MOVIE.toString() -> Intent(this, DetailMovieActivity::class.java).apply {
+                putExtra(DetailMovieActivity.EXTRA_MOVIE_ID, item.id)
+            }
+
+            MediaType.TV.toString() -> Intent(this, DetailTvActivity::class.java).apply {
+                putExtra(DetailTvActivity.EXTRA_TV_ID, item.id)
+            }
+
+            else -> null
+        }
+        intent?.let { startActivity(it) }
+
     }
 
     private fun fetchPeopleDetail() {
@@ -91,13 +100,8 @@ class DetailPeopleActivity : AppCompatActivity() {
 
     private fun setDetailPeople(detailPeople: DetailPeople) {
         binding.apply {
-            Glide.with(this@DetailPeopleActivity)
-                .load(IMAGE_URL_ORIGINAL + detailPeople.profilePath)
-                .into(detailProfilePath)
-            Glide.with(this@DetailPeopleActivity)
-                .load(IMAGE_URL + detailPeople.profilePath)
-                .into(detailBackdropPath)
-
+            detailProfilePath.loadImageOriginal(this@DetailPeopleActivity, detailPeople.profilePath)
+            detailBackdropPath.loadImage(this@DetailPeopleActivity, detailPeople.profilePath)
             detailName.text = detailPeople.name
             itemKnownFor.text = detailPeople.knownForDepartment
             itemBirthDay.text = detailPeople.birthday.toFormattedDateString()

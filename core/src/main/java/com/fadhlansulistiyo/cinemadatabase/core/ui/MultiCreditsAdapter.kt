@@ -5,12 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.loadImage
 import com.fadhlansulistiyo.cinemadatabase.core.utils.toVoteAverageFormat
-import com.fadhlansulistiyo.core.R
 import com.fadhlansulistiyo.core.databinding.ItemTvBinding
 
 class MultiCreditsAdapter(private val onItemClicked: (MultiCreditsMovieTv) -> Unit) :
@@ -18,40 +15,27 @@ class MultiCreditsAdapter(private val onItemClicked: (MultiCreditsMovieTv) -> Un
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding = ItemTvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ListViewHolder(binding, onItemClicked)
+        return ListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val credits = getItem(position)
-        credits?.let { holder.bind(it) }
+        credits?.let { holder.bind(it, onItemClicked) }
     }
 
     class ListViewHolder(
-        private val binding: ItemTvBinding,
-        private val onItemClicked: (MultiCreditsMovieTv) -> Unit
+        private val binding: ItemTvBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            itemView.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = (bindingAdapter as MultiCreditsAdapter).getItem(position)
-                    item?.let { onItemClicked(it) }
-                }
-            }
-        }
-
-        fun bind(credits: MultiCreditsMovieTv) {
+        fun bind(credits: MultiCreditsMovieTv, onItemClicked: (MultiCreditsMovieTv) -> Unit) {
             with(binding) {
                 itemNameTv.text = credits.title
                 itemRatingTv.text = credits.voteAverage.toVoteAverageFormat(1)
-                Glide.with(itemView.context)
-                    .load(IMAGE_URL + credits.posterPath)
-                    .apply(
-                        RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
-                            .error(R.drawable.ic_error)
-                    )
-                    .into(itemPosterPathTv)
+                itemPosterPathTv.loadImage(itemView.context, credits.posterPath)
+            }
+
+            itemView.setOnClickListener {
+                onItemClicked(credits.copy())
             }
         }
     }

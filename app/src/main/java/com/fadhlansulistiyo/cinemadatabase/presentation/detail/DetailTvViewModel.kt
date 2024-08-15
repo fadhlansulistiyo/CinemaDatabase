@@ -36,7 +36,7 @@ class DetailTvViewModel @Inject constructor(
                 _tvDetail.value = Resource.Loading()
                 val detailResult = tvUseCase.getDetailTv(tvId)
                 _tvDetail.value = detailResult
-                detailResult.data?.name?.let { checkIfFavorite(it) }
+                detailResult.data?.name?.let { checkIfWatchlist(it) }
                 fetchCast(tvId)
             } catch (e: Exception) {
                 _tvDetail.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
@@ -44,7 +44,7 @@ class DetailTvViewModel @Inject constructor(
         }
     }
 
-    fun setUserFavorite(watchlistTv: WatchlistTv) {
+    fun toggleWatchlistTv(watchlistTv: WatchlistTv) {
         viewModelScope.launch {
             val watchlist = watchlistTvUSeCase.getWatchlistByTitle(watchlistTv.name)
             if (watchlist == null) {
@@ -57,7 +57,7 @@ class DetailTvViewModel @Inject constructor(
         }
     }
 
-    private fun checkIfFavorite(title: String) {
+    private fun checkIfWatchlist(title: String) {
         viewModelScope.launch {
             val watchlist = watchlistTvUSeCase.getWatchlistByTitle(title)
             _isWatchlist.postValue(watchlist != null)

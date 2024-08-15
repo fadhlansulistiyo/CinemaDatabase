@@ -5,14 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Seasons
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.loadImage
 import com.fadhlansulistiyo.cinemadatabase.core.utils.toEpisodeString
 import com.fadhlansulistiyo.cinemadatabase.core.utils.toFormattedDateString
 import com.fadhlansulistiyo.cinemadatabase.core.utils.toVoteAverageFormat
-import com.fadhlansulistiyo.core.R
 import com.fadhlansulistiyo.core.databinding.ItemSeasonsBinding
 
 class SeasonsAdapter : ListAdapter<Seasons, SeasonsAdapter.ListViewHolder>(DIFF_CALLBACK) {
@@ -30,19 +27,14 @@ class SeasonsAdapter : ListAdapter<Seasons, SeasonsAdapter.ListViewHolder>(DIFF_
     class ListViewHolder(private val binding: ItemSeasonsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(season: Seasons) {
-            binding.itemName.text = season.name
-            binding.itemAirDate.text = season.airDate.toFormattedDateString()
-            binding.itemEpisodeCount.text = season.episodeCount.toEpisodeString()
-            binding.itemOverview.text = season.overview
-            binding.itemVoteAverage.text = season.voteAverage.toVoteAverageFormat(1)
-            Glide.with(itemView.context)
-                .load(IMAGE_URL + season.posterPath)
-                .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
-                        .error(R.drawable.ic_error)
-                )
-                .into(binding.itemPosterPath)
-
+            with(binding) {
+                itemName.text = season.name
+                itemAirDate.text = season.airDate.toFormattedDateString()
+                itemEpisodeCount.text = season.episodeCount.toEpisodeString()
+                itemOverview.text = season.overview
+                itemVoteAverage.text = season.voteAverage.toVoteAverageFormat(1)
+                itemPosterPath.loadImage(itemView.context, season.posterPath)
+            }
         }
     }
 

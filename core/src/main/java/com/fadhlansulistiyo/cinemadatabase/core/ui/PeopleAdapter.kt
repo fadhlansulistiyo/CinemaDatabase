@@ -5,11 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL
-import com.fadhlansulistiyo.core.R
+import com.fadhlansulistiyo.cinemadatabase.core.utils.loadImage
 import com.fadhlansulistiyo.core.databinding.ItemPeopleBinding
 
 class PeopleAdapter(private val onItemClick: (Int) -> Unit) : ListAdapter<People, PeopleAdapter.ListViewHolder>(DIFF_CALLBACK) {
@@ -27,14 +24,10 @@ class PeopleAdapter(private val onItemClick: (Int) -> Unit) : ListAdapter<People
     class ListViewHolder(private val binding: ItemPeopleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(people: People, onItemClick: (Int) -> Unit) {
-            binding.itemName.text = people.name
-            Glide.with(itemView.context)
-                .load(IMAGE_URL + people.profilePath)
-                .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_person_grey_32)
-                        .error(R.drawable.ic_error)
-                )
-                .into(binding.itemProfilePeople)
+            with(binding) {
+                itemName.text = people.name
+                itemProfilePeople.loadImage(itemView.context, people.profilePath)
+            }
 
             itemView.setOnClickListener {
                 onItemClick(people.id)

@@ -5,12 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL_ORIGINAL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.loadImageOriginal
 import com.fadhlansulistiyo.cinemadatabase.core.utils.toVoteAverageFormat
-import com.fadhlansulistiyo.core.R
 import com.fadhlansulistiyo.core.databinding.ItemNowPlayingBinding
 
 class NowPlayingAdapter(private val onItemClick: (Int) -> Unit) :
@@ -30,15 +27,11 @@ class NowPlayingAdapter(private val onItemClick: (Int) -> Unit) :
     class ListViewHolder(private val binding: ItemNowPlayingBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie, onItemClick: (Int) -> Unit) {
-            binding.itemTitleNowPlaying.text = movie.title
-            binding.tvItemRatingNowPlaying.text = movie.voteAverage.toVoteAverageFormat(1)
-            Glide.with(itemView.context)
-                .load(IMAGE_URL_ORIGINAL + movie.backdropPath)
-                .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
-                        .error(R.drawable.ic_error)
-                )
-                .into(binding.itemPosterNowPlaying)
+            with(binding) {
+                itemTitleNowPlaying.text = movie.title
+                tvItemRatingNowPlaying.text = movie.voteAverage.toVoteAverageFormat(1)
+                itemPosterNowPlaying.loadImageOriginal(itemView.context, movie.backdropPath)
+            }
 
             itemView.setOnClickListener {
                 onItemClick(movie.id)

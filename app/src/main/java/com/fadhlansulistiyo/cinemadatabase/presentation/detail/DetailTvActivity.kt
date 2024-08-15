@@ -9,8 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailTv
@@ -18,8 +16,8 @@ import com.fadhlansulistiyo.cinemadatabase.core.domain.model.TvCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistTv
 import com.fadhlansulistiyo.cinemadatabase.core.ui.CastAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.SeasonsAdapter
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL_ORIGINAL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailTvBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.loadImageOriginal
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toEpisodeString
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toVoteAverageFormat
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
@@ -59,13 +57,15 @@ class DetailTvActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.detailRecyclerViewSeasons.adapter = seasonsAdapter
-        binding.detailRecyclerViewCast.adapter = castAdapter
-        binding.detailRecyclerViewCast.setHasFixedSize(true)
+        binding.detailRecyclerViewCast.apply {
+            adapter = castAdapter
+            setHasFixedSize(true)
+        }
     }
 
     private fun setupObservers() {
         viewModel.isWatchlist.observe(this) { isWatchlist ->
-            setFavoriteState(isWatchlist)
+            setWatchlistState(isWatchlist)
         }
 
         viewModel.tvDetail.observe(this) { detailTv ->
@@ -115,22 +115,8 @@ class DetailTvActivity : AppCompatActivity() {
 
     private fun setDetailTv(detailTv: DetailTv) {
         binding.apply {
-            Glide.with(this@DetailTvActivity)
-                .load(IMAGE_URL_ORIGINAL + detailTv.backdropPath)
-                .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
-                        .error(R.drawable.ic_error)
-                )
-                .into(detailBackdropPath)
-
-            Glide.with(this@DetailTvActivity)
-                .load(IMAGE_URL_ORIGINAL + detailTv.posterPath)
-                .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
-                        .error(R.drawable.ic_error)
-                )
-                .into(detailPosterPath)
-
+            detailBackdropPath.loadImageOriginal(this@DetailTvActivity, detailTv.backdropPath)
+            detailPosterPath.loadImageOriginal(this@DetailTvActivity, detailTv.posterPath)
             detailTitle.text = detailTv.name
             detailOverview.text = detailTv.overview
             detailFirstAirDate.text = detailTv.firstAirDate.toFormattedDateString()
@@ -147,7 +133,7 @@ class DetailTvActivity : AppCompatActivity() {
     private fun setupListeners() {
         binding.btnWatchlist.setOnClickListener {
             val currentDetail = viewModel.tvDetail.value?.data ?: return@setOnClickListener
-            viewModel.setUserFavorite(
+            viewModel.toggleWatchlistTv(
                 WatchlistTv(
                     id = currentDetail.id,
                     name = currentDetail.name,
@@ -164,12 +150,10 @@ class DetailTvActivity : AppCompatActivity() {
         }
     }
 
-    private fun setFavoriteState(isFavorite: Boolean) {
-        if (isFavorite) {
-            binding.btnWatchlist.setImageResource(R.drawable.baseline_watchlist_filled)
-        } else {
-            binding.btnWatchlist.setImageResource(R.drawable.baseline_watchlist)
-        }
+    private fun setWatchlistState(isWatchlist: Boolean) {
+        binding.btnWatchlist.setImageResource(
+            if (isWatchlist) R.drawable.baseline_watchlist_filled else R.drawable.baseline_watchlist
+        )
     }
 
     private fun setupBinding() {

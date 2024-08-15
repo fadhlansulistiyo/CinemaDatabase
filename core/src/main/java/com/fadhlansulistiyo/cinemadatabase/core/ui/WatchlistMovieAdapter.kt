@@ -5,12 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.loadImage
 import com.fadhlansulistiyo.cinemadatabase.core.utils.toVoteAverageFormat
-import com.fadhlansulistiyo.core.R
 import com.fadhlansulistiyo.core.databinding.ItemWatchlistBinding
 
 class WatchlistMovieAdapter(private val onItemClick: (Int) -> Unit) :
@@ -31,15 +28,11 @@ class WatchlistMovieAdapter(private val onItemClick: (Int) -> Unit) :
     class MyViewHolder(private val binding: ItemWatchlistBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: WatchlistMovie, onItemClick: (Int) -> Unit) {
-            binding.itemTitle.text = movie.title
-            binding.itemRatingTv.text = movie.voteAverage.toVoteAverageFormat(1)
-            Glide.with(itemView.context)
-                .load(IMAGE_URL + movie.posterPath)
-                .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
-                        .error(R.drawable.ic_error)
-                )
-                .into(binding.itemPosterPath)
+            with(binding) {
+                itemTitle.text = movie.title
+                itemRatingTv.text = movie.voteAverage.toVoteAverageFormat(1)
+                itemPosterPath.loadImage(itemView.context, movie.posterPath)
+            }
 
             itemView.setOnClickListener {
                 onItemClick(movie.id)

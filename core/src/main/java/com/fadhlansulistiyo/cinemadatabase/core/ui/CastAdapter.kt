@@ -6,11 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Cast
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL
-import com.fadhlansulistiyo.core.R
+import com.fadhlansulistiyo.cinemadatabase.core.utils.loadImage
 import com.fadhlansulistiyo.core.databinding.ItemCastBinding
 
 class CastAdapter(private val onItemClick: (Int) -> Unit) :
@@ -29,15 +26,11 @@ class CastAdapter(private val onItemClick: (Int) -> Unit) :
     class ListViewHolder(private val binding: ItemCastBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(cast: Cast, onItemClick: (Int) -> Unit) {
-            binding.itemName.text = cast.name
-            binding.itemCharacter.text = cast.character
-            Glide.with(itemView.context)
-                .load(IMAGE_URL + cast.profilePath)
-                .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_person_grey_32)
-                        .error(R.drawable.ic_error)
-                )
-                .into(binding.itemProfilePeople)
+            with(binding) {
+                itemName.text = cast.name
+                itemCharacter.text = cast.character
+                itemProfilePeople.loadImage(itemView.context, cast.profilePath)
+            }
 
             itemView.setOnClickListener {
                 onItemClick(cast.id)

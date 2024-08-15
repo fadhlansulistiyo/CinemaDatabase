@@ -5,11 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.fadhlansulistiyo.core.R
-import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Tv
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL
+import com.fadhlansulistiyo.cinemadatabase.core.utils.loadImage
 import com.fadhlansulistiyo.cinemadatabase.core.utils.toVoteAverageFormat
 import com.fadhlansulistiyo.core.databinding.ItemTvBinding
 
@@ -27,14 +24,11 @@ class TvAdapter(private val onItemClick: (Int) -> Unit) : ListAdapter<Tv, TvAdap
 
     class ListViewHolder(private val binding: ItemTvBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tv: Tv, onItemClick: (Int) -> Unit) {
-            binding.itemNameTv.text = tv.name
-            binding.itemRatingTv.text = tv.voteAverage.toVoteAverageFormat(1)
-            Glide.with(itemView.context)
-                .load(IMAGE_URL + tv.posterPath)
-                .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp).error(R.drawable.ic_error)
-                )
-                .into(binding.itemPosterPathTv)
+            with(binding) {
+                itemNameTv.text = tv.name
+                itemRatingTv.text = tv.voteAverage.toVoteAverageFormat(1)
+                itemPosterPathTv.loadImage(itemView.context, tv.posterPath)
+            }
 
             itemView.setOnClickListener {
                 onItemClick(tv.id)

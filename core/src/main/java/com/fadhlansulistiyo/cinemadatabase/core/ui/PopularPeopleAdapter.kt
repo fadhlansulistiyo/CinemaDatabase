@@ -5,11 +5,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.PopularPeople
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL
-import com.fadhlansulistiyo.core.R
+import com.fadhlansulistiyo.cinemadatabase.core.utils.loadImage
 import com.fadhlansulistiyo.core.databinding.ItemListPersonBinding
 
 class PopularPeopleAdapter(private val onItemClick: (Int) -> Unit) :
@@ -29,14 +26,10 @@ class PopularPeopleAdapter(private val onItemClick: (Int) -> Unit) :
     class PopularPeopleViewHolder(private val binding: ItemListPersonBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(person: PopularPeople, onItemClick: (Int) -> Unit) {
-            binding.name.text = person.name
-            Glide.with(itemView.context)
-                .load(IMAGE_URL + person.profilePath)
-                .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_person_grey_32)
-                        .error(R.drawable.ic_error)
-                )
-                .into(binding.profilePath)
+            with(binding) {
+                name.text = person.name
+                profilePath.loadImage(itemView.context, person.profilePath)
+            }
 
             itemView.setOnClickListener {
                 onItemClick(person.id)

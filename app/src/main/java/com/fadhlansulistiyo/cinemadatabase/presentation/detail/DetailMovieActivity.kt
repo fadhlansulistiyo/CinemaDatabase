@@ -9,16 +9,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailMovie
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MovieDetailWithCast
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.WatchlistMovie
 import com.fadhlansulistiyo.cinemadatabase.core.ui.CastAdapter
-import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.IMAGE_URL_ORIGINAL
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityDetailMovieBinding
+import com.fadhlansulistiyo.cinemadatabase.presentation.utils.loadImageOriginal
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toVoteAverageFormat
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedDateString
 import com.fadhlansulistiyo.cinemadatabase.presentation.utils.toFormattedProductionCompanies
@@ -54,8 +52,10 @@ class DetailMovieActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
-        binding.detailRecyclerViewCast.adapter = castAdapter
-        binding.detailRecyclerViewCast.setHasFixedSize(true)
+        binding.detailRecyclerViewCast.apply {
+            adapter = castAdapter
+            setHasFixedSize(true)
+        }
     }
 
     private fun setupObservers() {
@@ -96,21 +96,8 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private fun setDetailMovie(detailMovie: DetailMovie) {
         binding.apply {
-            Glide.with(this@DetailMovieActivity)
-                .load(IMAGE_URL_ORIGINAL + detailMovie.backdropPath)
-                .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
-                        .error(R.drawable.ic_error)
-                )
-                .into(detailBackdropPath)
-
-            Glide.with(this@DetailMovieActivity)
-                .load(IMAGE_URL_ORIGINAL + detailMovie.posterPath)
-                .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_movie_grey_24dp)
-                        .error(R.drawable.ic_error)
-                )
-                .into(detailPosterPath)
+            detailPosterPath.loadImageOriginal(this@DetailMovieActivity, detailMovie.posterPath)
+            detailBackdropPath.loadImageOriginal(this@DetailMovieActivity, detailMovie.backdropPath)
             detailTitle.text = detailMovie.title
             detailOverview.text = detailMovie.overview
             detailRuntime.text = detailMovie.runtime.toFormattedRuntime()
@@ -145,11 +132,9 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun setWatchlistState(isWatchlist: Boolean) {
-        if (isWatchlist) {
-            binding.btnWatchlist.setImageResource(R.drawable.baseline_watchlist_filled)
-        } else {
-            binding.btnWatchlist.setImageResource(R.drawable.baseline_watchlist)
-        }
+        binding.btnWatchlist.setImageResource(
+            if (isWatchlist) R.drawable.baseline_watchlist_filled else R.drawable.baseline_watchlist
+        )
     }
 
     private fun setupBinding() {
