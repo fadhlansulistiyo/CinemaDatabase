@@ -1,8 +1,9 @@
 package com.fadhlansulistiyo.cinemadatabase.presentation
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.fadhlansulistiyo.cinemadatabase.R
 import com.fadhlansulistiyo.cinemadatabase.databinding.ActivityMainBinding
@@ -21,9 +22,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        navView.setupWithNavController(navController)
+        val navController = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)?.findNavController()
 
-        // setup Modularization
+        if (navController != null) {
+            navView.setupWithNavController(navController)
+        } else {
+            navView.visibility = View.GONE
+        }
     }
 }
