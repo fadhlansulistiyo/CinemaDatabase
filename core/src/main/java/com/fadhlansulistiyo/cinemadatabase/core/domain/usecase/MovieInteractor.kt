@@ -14,7 +14,7 @@ class MovieInteractor @Inject constructor(private val movieRepository: IMovieRep
         return movieRepository.getNowPlaying()
     }
 
-    override suspend fun getMovieDetail(movieId: Int): Resource<DetailMovieWithCast> {
-        return movieRepository.getMovieDetail(movieId)
+    override suspend fun getDetailMovie(movieId: Int): Resource<DetailMovieWithCast> {
+        return movieRepository.getDetailMovie(movieId)
     }
 }

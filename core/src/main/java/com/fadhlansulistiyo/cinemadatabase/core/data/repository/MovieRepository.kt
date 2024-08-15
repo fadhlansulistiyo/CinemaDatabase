@@ -45,9 +45,9 @@ class MovieRepository @Inject constructor(
 
         }.asFlow()
 
-    override suspend fun getMovieDetail(movieId: Int): Resource<DetailMovieWithCast> {
+    override suspend fun getDetailMovie(movieId: Int): Resource<DetailMovieWithCast> {
         return try {
-            val (detailResponse, castResponse) = remoteDataSource.getMovieDetailWithCast(movieId)
+            val (detailResponse, castResponse) = remoteDataSource.getDetailMovieWithCast(movieId)
 
             when {
                 detailResponse is ApiResponseResult.Success && castResponse is ApiResponseResult.Success -> {

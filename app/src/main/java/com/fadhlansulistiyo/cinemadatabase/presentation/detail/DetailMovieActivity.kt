@@ -39,7 +39,7 @@ class DetailMovieActivity : AppCompatActivity() {
         handleWindowInsets()
 
         val movieId = intent.getIntExtra(EXTRA_MOVIE_ID, 0)
-        viewModel.fetchMovieDetail(movieId)
+        viewModel.fetchDetailMovie(movieId)
         setupRecyclerView()
         setupObservers()
         setupListeners()
@@ -60,12 +60,12 @@ class DetailMovieActivity : AppCompatActivity() {
             setWatchlistState(isWatchlist)
         }
 
-        viewModel.movieDetailWithCast.observe(this) { resource ->
-            handleMovieDetailWithCast(resource)
+        viewModel.detailMovie.observe(this) { resource ->
+            handleDetailMovie(resource)
         }
     }
 
-    private fun handleMovieDetailWithCast(resource: Resource<DetailMovieWithCast>) {
+    private fun handleDetailMovie(resource: Resource<DetailMovieWithCast>) {
         when (resource) {
             is Resource.Error -> {
                 showLoading(false)
@@ -110,7 +110,7 @@ class DetailMovieActivity : AppCompatActivity() {
     private fun setupListeners() {
         binding.btnWatchlist.setOnClickListener {
             val currentDetail =
-                viewModel.movieDetailWithCast.value?.data?.detail ?: return@setOnClickListener
+                viewModel.detailMovie.value?.data?.detail ?: return@setOnClickListener
             viewModel.toggleWatchlistMovie(
                 WatchlistMovie(
                     id = currentDetail.id,

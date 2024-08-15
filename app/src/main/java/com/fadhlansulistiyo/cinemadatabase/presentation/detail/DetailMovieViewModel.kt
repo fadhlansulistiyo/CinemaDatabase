@@ -21,29 +21,29 @@ class DetailMovieViewModel @Inject constructor(
     private val watchlistMovieUseCase: WatchlistMovieUseCase
 ) : ViewModel() {
 
-    private val _movieDetailWithCast = MutableLiveData<Resource<DetailMovieWithCast>>()
-    val movieDetailWithCast: LiveData<Resource<DetailMovieWithCast>> get() = _movieDetailWithCast
+    private val _detailMovie = MutableLiveData<Resource<DetailMovieWithCast>>()
+    val detailMovie: LiveData<Resource<DetailMovieWithCast>> get() = _detailMovie
 
     private val _isWatchlist = MutableLiveData<Boolean>()
     val isWatchlist: LiveData<Boolean> get() = _isWatchlist
 
-    fun fetchMovieDetail(movieId: Int) {
+    fun fetchDetailMovie(movieId: Int) {
         viewModelScope.launch {
-            _movieDetailWithCast.value = Resource.Loading()
+            _detailMovie.value = Resource.Loading()
             try {
-                val result = movieUseCase.getMovieDetail(movieId)
+                val result = movieUseCase.getDetailMovie(movieId)
                 if (result is Resource.Success) {
-                    result.data?.let { movieDetailWithCast ->
-                        _movieDetailWithCast.value = Resource.Success(movieDetailWithCast)
-                        checkIfWatchlist(movieDetailWithCast.detail.title)
+                    result.data?.let { detailMovie ->
+                        _detailMovie.value = Resource.Success(detailMovie)
+                        checkIfWatchlist(detailMovie.detail.title)
                     } ?: run {
-                        _movieDetailWithCast.value = Resource.Error(DATA_IS_NULL)
+                        _detailMovie.value = Resource.Error(DATA_IS_NULL)
                     }
                 } else {
-                    _movieDetailWithCast.value = Resource.Error(result.message ?: UNKNOWN_ERROR)
+                    _detailMovie.value = Resource.Error(result.message ?: UNKNOWN_ERROR)
                 }
             } catch (e: Exception) {
-                _movieDetailWithCast.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
+                _detailMovie.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
             }
         }
     }

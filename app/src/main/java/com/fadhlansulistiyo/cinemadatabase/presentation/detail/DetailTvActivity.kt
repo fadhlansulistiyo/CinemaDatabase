@@ -42,7 +42,7 @@ class DetailTvActivity : AppCompatActivity() {
         handleWindowInsets()
 
         val tvId = intent.getIntExtra(EXTRA_TV_ID, 0)
-        viewModel.fetchTvDetail(tvId)
+        viewModel.fetchDetailTv(tvId)
         setupRecyclerView()
         setupObservers()
         setupListeners()
@@ -67,12 +67,12 @@ class DetailTvActivity : AppCompatActivity() {
             setWatchlistState(isWatchlist)
         }
 
-        viewModel.tvDetail.observe(this) { resource ->
-            handleTvDetail(resource)
+        viewModel.detailTv.observe(this) { resource ->
+            handleDetailTv(resource)
         }
     }
 
-    private fun handleTvDetail(resource: Resource<DetailTvWithCast>) {
+    private fun handleDetailTv(resource: Resource<DetailTvWithCast>) {
         when (resource) {
             is Resource.Error -> {
                 binding.progressBar.visibility = View.GONE
@@ -115,7 +115,7 @@ class DetailTvActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnWatchlist.setOnClickListener {
-            val currentDetail = viewModel.tvDetail.value?.data?.detail ?: return@setOnClickListener
+            val currentDetail = viewModel.detailTv.value?.data?.detail ?: return@setOnClickListener
             viewModel.toggleWatchlistTv(
                 WatchlistTv(
                     id = currentDetail.id,

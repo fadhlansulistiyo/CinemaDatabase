@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface IMovieRepository {
     fun getNowPlaying(): Flow<Resource<List<Movie>>>
-    suspend fun getMovieDetail(movieId: Int): Resource<DetailMovieWithCast>
+    suspend fun getDetailMovie(movieId: Int): Resource<DetailMovieWithCast>
 }

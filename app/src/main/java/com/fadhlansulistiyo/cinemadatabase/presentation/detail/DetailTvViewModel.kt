@@ -21,29 +21,29 @@ class DetailTvViewModel @Inject constructor(
     private val watchlistTvUSeCase: WatchlistTvUseCase
 ) : ViewModel() {
 
-    private val _tvDetail = MutableLiveData<Resource<DetailTvWithCast>>()
-    val tvDetail: LiveData<Resource<DetailTvWithCast>> get() = _tvDetail
+    private val _detailTv = MutableLiveData<Resource<DetailTvWithCast>>()
+    val detailTv: LiveData<Resource<DetailTvWithCast>> get() = _detailTv
 
     private val _isWatchlist = MutableLiveData<Boolean>()
     val isWatchlist: LiveData<Boolean> get() = _isWatchlist
 
-    fun fetchTvDetail(tvId: Int) {
+    fun fetchDetailTv(tvId: Int) {
         viewModelScope.launch {
-            _tvDetail.value = Resource.Loading()
+            _detailTv.value = Resource.Loading()
             try {
                 val result = tvUseCase.getDetailTv(tvId)
                 if (result is Resource.Success) {
-                    result.data?.let { tvDetailWithCast ->
-                        _tvDetail.value = Resource.Success(tvDetailWithCast)
-                        checkIfWatchlist(tvDetailWithCast.detail.name)
+                    result.data?.let { detailTv ->
+                        _detailTv.value = Resource.Success(detailTv)
+                        checkIfWatchlist(detailTv.detail.name)
                     } ?: run {
-                        _tvDetail.value = Resource.Error(DATA_IS_NULL)
+                        _detailTv.value = Resource.Error(DATA_IS_NULL)
                     }
                 } else {
-                    _tvDetail.value = Resource.Error(result.message ?: UNKNOWN_ERROR)
+                    _detailTv.value = Resource.Error(result.message ?: UNKNOWN_ERROR)
                 }
             } catch (e: Exception) {
-                _tvDetail.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
+                _detailTv.value = Resource.Error(e.message ?: UNKNOWN_ERROR)
             }
         }
     }
