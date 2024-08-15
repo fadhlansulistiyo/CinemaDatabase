@@ -70,7 +70,7 @@ class DetailMovieActivity : AppCompatActivity() {
             is Resource.Error -> {
                 showLoading(false)
                 showToast(resource.message.toString())
-                binding.errorLayout.visibility = View.VISIBLE
+                binding.errorMsg.errorLayout.visibility = View.VISIBLE
                 binding.errorMsg.textError.text = resource.message
             }
 
@@ -80,7 +80,7 @@ class DetailMovieActivity : AppCompatActivity() {
 
             is Resource.Success -> {
                 showLoading(false)
-                binding.layoutMain.visibility = View.VISIBLE
+                binding.layoutMainDetailMovie.visibility = View.VISIBLE
                 resource.data?.let {
                     setDetailMovie(it.detail)
                     castAdapter.submitList(it.cast)

@@ -75,16 +75,19 @@ class DetailTvActivity : AppCompatActivity() {
     private fun handleDetailTv(resource: Resource<DetailTvWithCast>) {
         when (resource) {
             is Resource.Error -> {
-                binding.progressBar.visibility = View.GONE
+                showLoading(false)
                 showToast(resource.message.toString())
+                binding.errorMsg.errorLayout.visibility = View.VISIBLE
+                binding.errorMsg.textError.text = resource.message
             }
 
             is Resource.Loading -> {
-                binding.progressBar.visibility = View.VISIBLE
+                showLoading(true)
             }
 
             is Resource.Success -> {
-                binding.progressBar.visibility = View.GONE
+                showLoading(false)
+                binding.layoutMainDetailTv.visibility = View.VISIBLE
                 resource.data?.let {
                     setDetailTv(it.detail)
                     castAdapter.submitList(it.cast)
@@ -150,6 +153,10 @@ class DetailTvActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.loadingDetail.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showToast(message: String) {

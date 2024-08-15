@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,321 +7,340 @@
     android:layout_height="match_parent"
     tools:context=".presentation.detail.DetailTvActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/loadingDetail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <include layout="@layout/placeholder_detail" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
-        <ImageView
-            android:id="@+id/detailBackdropPath"
+    <ScrollView
+        android:id="@+id/layoutMainDetailTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:contentDescription="@string/movie_backdrop"
-            android:foreground="#59181A20"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
-
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/baseline_back_button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
-            android:id="@+id/btnWatchlist"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/baseline_watchlist"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardView"
-            style="@style/Widget.Material3.CardView.Filled"
-            android:layout_width="135dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="-8dp"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/detailTitle">
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/detailPosterPath"
+                android:id="@+id/detailBackdropPath"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/content_desc_poster"
-                android:scaleType="fitXY"
+                android:layout_height="250dp"
+                android:contentDescription="@string/movie_backdrop"
+                android:foreground="#59181A20"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars" />
-        </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/detailTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/urbanist_extrabold"
-            android:maxLines="2"
-            android:textColor="@color/white"
-            android:textSize="18dp"
-            app:layout_constraintBottom_toBottomOf="@id/detailBackdropPath"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cardView"
-            tools:ignore="SpUsage"
-            tools:text="@tools:sample/full_names" />
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/baseline_back_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
-        <TextView
-            android:id="@+id/detailNumberOfSeason"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:drawablePadding="6dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/urbanist_medium"
-            android:lines="1"
-            android:textColor="@color/text_color"
-            android:textSize="14sp"
-            app:drawableStartCompat="@drawable/baseline_format_list_numbered_12"
-            app:drawableTint="@color/md_theme_primary"
-            app:layout_constraintStart_toStartOf="@id/detailTitle"
-            app:layout_constraintTop_toBottomOf="@id/detailBackdropPath"
-            tools:ignore="SpUsage"
-            tools:layout_editor_absoluteX="167dp"
-            tools:layout_editor_absoluteY="307dp"
-            tools:text="4 Season" />
+            <ImageView
+                android:id="@+id/btnWatchlist"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/baseline_watchlist"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
-        <TextView
-            android:id="@+id/detailVoteAverage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:drawablePadding="6dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/urbanist_medium"
-            android:lines="1"
-            android:textColor="@color/text_color"
-            android:textSize="14sp"
-            app:drawableStartCompat="@drawable/ic_star_rate_12dp"
-            app:drawableTint="@color/md_theme_primary"
-            app:layout_constraintStart_toStartOf="@id/detailFirstAirDate"
-            app:layout_constraintTop_toBottomOf="@id/detailFirstAirDate"
-            tools:ignore="SpUsage"
-            tools:text="4.8" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView"
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="135dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="-8dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/detailTitle">
 
-        <TextView
-            android:id="@+id/detailFirstAirDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:drawablePadding="6dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/urbanist_medium"
-            android:lines="1"
-            android:textColor="@color/text_color"
-            android:textSize="14sp"
-            app:drawableStartCompat="@drawable/baseline_calendar_today_12"
-            app:drawableTint="@color/md_theme_primary"
-            app:layout_constraintStart_toStartOf="@id/detailNumberOfSeason"
-            app:layout_constraintTop_toBottomOf="@id/detailNumberOfSeason"
-            tools:ignore="SpUsage"
-            tools:text="01 Jan 2024" />
+                <ImageView
+                    android:id="@+id/detailPosterPath"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/content_desc_poster"
+                    android:scaleType="fitXY"
+                    tools:src="@tools:sample/avatars" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/detailTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/urbanist_extrabold"
+                android:maxLines="2"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="@id/detailBackdropPath"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cardView"
+                tools:ignore="SpUsage"
+                tools:text="@tools:sample/full_names" />
+
+            <TextView
+                android:id="@+id/detailNumberOfSeason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="6dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/urbanist_medium"
+                android:lines="1"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/baseline_format_list_numbered_12"
+                app:drawableTint="@color/md_theme_primary"
+                app:layout_constraintStart_toStartOf="@id/detailTitle"
+                app:layout_constraintTop_toBottomOf="@id/detailBackdropPath"
+                tools:ignore="SpUsage"
+                tools:layout_editor_absoluteX="167dp"
+                tools:layout_editor_absoluteY="307dp"
+                tools:text="4 Season" />
+
+            <TextView
+                android:id="@+id/detailVoteAverage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:drawablePadding="6dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/urbanist_medium"
+                android:lines="1"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_star_rate_12dp"
+                app:drawableTint="@color/md_theme_primary"
+                app:layout_constraintStart_toStartOf="@id/detailFirstAirDate"
+                app:layout_constraintTop_toBottomOf="@id/detailFirstAirDate"
+                tools:ignore="SpUsage"
+                tools:text="4.8" />
+
+            <TextView
+                android:id="@+id/detailFirstAirDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:drawablePadding="6dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/urbanist_medium"
+                android:lines="1"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/baseline_calendar_today_12"
+                app:drawableTint="@color/md_theme_primary"
+                app:layout_constraintStart_toStartOf="@id/detailNumberOfSeason"
+                app:layout_constraintTop_toBottomOf="@id/detailNumberOfSeason"
+                tools:ignore="SpUsage"
+                tools:text="01 Jan 2024" />
 
 
-        <TextView
-            android:id="@+id/detailNumberOfEpisode"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:drawablePadding="6dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/urbanist_medium"
-            android:lines="1"
-            android:textColor="@color/text_color"
-            android:textSize="14sp"
-            app:drawableStartCompat="@drawable/baseline_circle_6"
-            app:drawableTint="@color/md_theme_primary"
-            app:layout_constraintBottom_toBottomOf="@id/detailNumberOfSeason"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/detailNumberOfSeason"
-            app:layout_constraintTop_toTopOf="@id/detailNumberOfSeason"
-            tools:ignore="SpUsage"
-            tools:text="44 Eps" />
+            <TextView
+                android:id="@+id/detailNumberOfEpisode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:drawablePadding="6dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/urbanist_medium"
+                android:lines="1"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/baseline_circle_6"
+                app:drawableTint="@color/md_theme_primary"
+                app:layout_constraintBottom_toBottomOf="@id/detailNumberOfSeason"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/detailNumberOfSeason"
+                app:layout_constraintTop_toTopOf="@id/detailNumberOfSeason"
+                tools:ignore="SpUsage"
+                tools:text="44 Eps" />
 
-        <TextView
-            android:id="@+id/tvGenres"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/urbanist_semibold"
-            android:text="@string/genres"
-            android:textColor="@color/md_theme_primary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/detailVoteAverage"
-            app:layout_constraintTop_toBottomOf="@id/detailVoteAverage" />
+            <TextView
+                android:id="@+id/tvGenres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/urbanist_semibold"
+                android:text="@string/genres"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/detailVoteAverage"
+                app:layout_constraintTop_toBottomOf="@id/detailVoteAverage" />
 
-        <TextView
-            android:id="@+id/detailGenres"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/urbanist_medium"
-            android:maxLines="2"
-            android:textColor="@color/text_color"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tvGenres"
-            app:layout_constraintTop_toBottomOf="@id/tvGenres"
-            tools:text="@string/dummy_genres" />
+            <TextView
+                android:id="@+id/detailGenres"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/urbanist_medium"
+                android:maxLines="2"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvGenres"
+                app:layout_constraintTop_toBottomOf="@id/tvGenres"
+                tools:text="@string/dummy_genres" />
 
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/urbanist_semibold"
-            android:text="@string/overview"
-            android:textColor="@color/md_theme_primary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/cardView"
-            app:layout_constraintTop_toBottomOf="@id/cardView"
-            tools:ignore="SpUsage" />
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/urbanist_semibold"
+                android:text="@string/overview"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/cardView"
+                app:layout_constraintTop_toBottomOf="@id/cardView"
+                tools:ignore="SpUsage" />
 
-        <TextView
-            android:id="@+id/detailOverview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/urbanist_medium"
-            android:textColor="@color/text_color"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDescription"
-            tools:ignore="SpUsage"
-            tools:text="@string/overview" />
+            <TextView
+                android:id="@+id/detailOverview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/urbanist_medium"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription"
+                tools:ignore="SpUsage"
+                tools:text="@string/overview" />
 
-        <TextView
-            android:id="@+id/tvCompanies"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/urbanist_semibold"
-            android:text="@string/production_companies"
-            android:textColor="@color/md_theme_primary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailOverview" />
+            <TextView
+                android:id="@+id/tvCompanies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/urbanist_semibold"
+                android:text="@string/production_companies"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detailOverview" />
 
-        <TextView
-            android:id="@+id/detailCompanies"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/urbanist_medium"
-            android:textColor="@color/text_color"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvCompanies"
-            tools:text="Marvel Production" />
+            <TextView
+                android:id="@+id/detailCompanies"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/urbanist_medium"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvCompanies"
+                tools:text="Marvel Production" />
 
-        <TextView
-            android:id="@+id/tvCast"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16sp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/urbanist_semibold"
-            android:text="@string/movieCast"
-            android:textColor="@color/md_theme_primary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailCompanies"
-            tools:ignore="SpUsage" />
+            <TextView
+                android:id="@+id/tvCast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/urbanist_semibold"
+                android:text="@string/movieCast"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detailCompanies"
+                tools:ignore="SpUsage" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewCastTv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:paddingBottom="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvCast"
-            tools:listitem="@layout/item_cast" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewCastTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvCast"
+                tools:listitem="@layout/item_cast" />
 
-        <TextView
-            android:id="@+id/tvSeason"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16sp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/urbanist_semibold"
-            android:text="@string/seasons"
-            android:textColor="@color/md_theme_primary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recyclerViewCastTv"
-            tools:ignore="SpUsage" />
+            <TextView
+                android:id="@+id/tvSeason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/urbanist_semibold"
+                android:text="@string/seasons"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerViewCastTv"
+                tools:ignore="SpUsage" />
 
-        <ProgressBar
-            android:id="@+id/progressBarSeasons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvSeason" />
+            <ProgressBar
+                android:id="@+id/progressBarSeasons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSeason" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/detailRecyclerViewSeasons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:paddingBottom="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvSeason"
-            tools:listitem="@layout/item_seasons" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/detailRecyclerViewSeasons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSeason"
+                tools:listitem="@layout/item_seasons" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-</androidx.core.widget.NestedScrollView>
+    <include
+        android:id="@+id/errorMsg"
+        layout="@layout/error_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
