@@ -21,7 +21,7 @@ interface ApiService {
     @GET("tv/airing_today?language=en-US&page=1")
     suspend fun getAiringTodayTv(): ListTvResponse
 
-    @GET("trending/person/day")
+    @GET("trending/person/week")
     suspend fun getTrendingPeople(): ListPeopleResponse
 
     @GET("movie/{movie_id}")
