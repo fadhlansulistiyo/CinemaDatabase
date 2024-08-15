@@ -2,9 +2,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.domain.usecase
 
 import androidx.paging.PagingData
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.DetailPeopleWithCredits
-import com.fadhlansulistiyo.cinemadatabase.core.domain.model.MultiCreditsMovieTv
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.People
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.PopularPeople
 import com.fadhlansulistiyo.cinemadatabase.core.domain.repository.IPeopleRepository
