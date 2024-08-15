@@ -65,4 +65,8 @@ dependencies {
     // android lifecycle
     api(libs.androidx.lifecycle.livedata.ktx)
     api(libs.androidx.lifecycle.viewmodel.ktx)
+
+    // encryption
+    implementation(libs.android.database.sqlcipher)
+    implementation(libs.androidx.sqlite.ktx)
 }
