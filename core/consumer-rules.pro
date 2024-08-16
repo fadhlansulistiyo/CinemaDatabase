@@ -81,8 +81,6 @@ public *;
  # Keep annotations
 -keepattributes *Annotation*
 
--keep class com.fadhlansulistiyo.cinemadatabase.core.data.remote.** { *; }
-
 -ignorewarnings
 
 # Uncomment for DexGuard only

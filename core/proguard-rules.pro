@@ -7,6 +7,8 @@
 -keep class com.fadhlansulistiyo.cinemadatabase.core.domain.** { *; }
 -keep class com.fadhlansulistiyo.cinemadatabase.core.data.Resource { *; }
 -keep class com.fadhlansulistiyo.cinemadatabase.core.data.remote.** { *; }
+-keep class com.fadhlansulistiyo.cinemadatabase.core.data.repository.** { *; }
+-keep class com.fadhlansulistiyo.cinemadatabase.core.data.local.** { *; }
 
 # Keep classes with @Inject constructors
 -keepclasseswithmembernames class * {
