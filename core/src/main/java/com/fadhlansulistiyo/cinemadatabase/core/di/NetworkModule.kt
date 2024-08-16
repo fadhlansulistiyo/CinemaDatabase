@@ -3,6 +3,7 @@ package com.fadhlansulistiyo.cinemadatabase.core.di
 import com.fadhlansulistiyo.cinemadatabase.core.data.remote.network.ApiService
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS
 import com.fadhlansulistiyo.cinemadatabase.core.utils.CONSTANTS.BASE_URL
+import com.fadhlansulistiyo.core.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +26,15 @@ class NetworkModule {
             .build()
 
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(
+                HttpLoggingInterceptor().setLevel(
+                    if (BuildConfig.DEBUG) {
+                        HttpLoggingInterceptor.Level.BODY
+                    } else {
+                        HttpLoggingInterceptor.Level.NONE
+                    }
+                )
+            )
             .addInterceptor { chain ->
                 val original = chain.request()
                 val originalHttpUrl = original.url
