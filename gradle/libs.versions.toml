@@ -28,6 +28,7 @@ activity = "1.9.0"
 shimmer = "0.5.0"
 showmoretextview = "1.0.3"
 sqliteKtx = "2.4.0"
+viewbinding = "8.5.2"
 viewpager2 = "1.1.0"
 legacySupportV4 = "1.0.0"
 fragmentKtx = "1.8.1"
@@ -37,6 +38,7 @@ pagingRuntimeKtx = "3.1.0"
 android-database-sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "androidDatabaseSqlcipher" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-sqlite-ktx = { module = "androidx.sqlite:sqlite-ktx", version.ref = "sqliteKtx" }
+androidx-viewbinding = { module = "androidx.databinding:viewbinding", version.ref = "viewbinding" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
