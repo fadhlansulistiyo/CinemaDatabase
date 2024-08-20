@@ -1,4 +1,4 @@
-![App Screenshot](screenshots/main_banner.png)
+![App Screenshot](screenshots/main_banner_v2.png)
 
 # Cinema Database (CinDes)
 
