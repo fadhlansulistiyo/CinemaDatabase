@@ -71,7 +71,7 @@ Cinema Database (CinDes) is an Android application that showcases a collection o
 
 ## Acknowledgments
 
-This project was developed as part of the capstone project for the [Dicoding](https://www.dicoding.com/academies/165) class - Becoming an Android Developer Expert (Menjadi Android Developer Expert). Special thanks to Dicoding for providing comprehensive learning resources and guidance throughout the course.
+This project was developed as part of the capstone project for the [Dicoding](https://www.dicoding.com/academies/165) class - Becoming an Android Developer Expert (Dicoding - Menjadi Android Developer Expert). Special thanks to Dicoding for providing comprehensive learning resources and guidance throughout the course.
 
 ## CircleCI
 [![fadhlansulistiyo](https://circleci.com/gh/fadhlansulistiyo/CinemaDatabase.svg?style=svg)](https://circleci.com/gh/fadhlansulistiyo/CinemaDatabase)
