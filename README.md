@@ -58,7 +58,16 @@ Cinema Database (CinDes) is an Android application that showcases a collection o
 - **ShowMoreText (by Sanjay Prajapat)**: Custom view for showing expandable text.
 
 ## Screenshots (Dark Theme)
+
+![](screenshots/banner1-dark.png)
+![](screenshots/banner2-dark.png)
+![](screenshots/banner3-dark.png)
+
 ## Screenshots (Light Theme)
+
+![](screenshots/banner1-light.png)
+![](screenshots/banner2-light.png)
+![](screenshots/banner3-light.png)
 
 ## Acknowledgments
 
