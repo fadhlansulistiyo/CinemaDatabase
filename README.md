@@ -38,14 +38,24 @@ Cinema Database (CinDes) is an Android application that showcases a collection o
 
 - **Architecture**: Clean Architecture (Data, Domain, and Presentation layers)
 - **Language**: Kotlin
-- **UI**: Jetpack Navigation, ViewPager2, Shimmer, Lottie
-- **Networking**: Retrofit, Coroutines Flow
-- **Local Storage**: Room, SQLCipher
-- **Dependency Injection**: Hilt
-- **Pagination**: Paging Library
-- **Code Optimization**: ProGuard, LeakCanary
-- **Security**: Certificate Pinning
-- **Custom UI Components**: ShowMoreText (by Sanjay Prajapat)
+- **Dynamic Feature**: Implements a dynamic feature module for the Watchlist feature.
+- **Library Module**: Core functionality is encapsulated within a reusable library module.
+- **Coroutines**: Manages asynchronous programming.
+- **Data Stream (Coroutines Flow)**: Streams asynchronous data.
+- **Hilt**: Dependency Injection framework for managing app components.
+- **Retrofit**: Type-safe HTTP client for API communication.
+- **Room**: Local database solution for managing app data.
+- **SQLCipher**: Adds encryption to the local database for enhanced security.
+- **Jetpack Navigation Component**: Manages in-app navigation, including Bottom Navigation.
+- **Glide**: Image loading and caching library.
+- **ViewPager2**: Enhanced ViewPager for swiping movies.
+- **Paging**: Handles efficient data pagination for lists.
+- **ProGuard**: Obfuscation tool used to protect the app code.
+- **Certificate Pinning**: Ensures secure connections by pinning SSL certificates.
+- **Lottie**: Library for rendering animations.
+- **Shimmer**: Adds shimmer effects to UI components.
+- **LeakCanary**: Tool for detecting memory leaks during development.
+- **ShowMoreText (by Sanjay Prajapat)**: Custom view for showing expandable text.
 
 ## Screenshots (Dark Theme)
 
