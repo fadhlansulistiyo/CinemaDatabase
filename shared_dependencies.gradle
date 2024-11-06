@@ -31,9 +31,6 @@ dependencies {
     // lottie
     implementation(libs.lottie)
 
-    // leak Canary
-    debugImplementation(libs.leakcanary.android)
-
     // viewBinding
     implementation(libs.androidx.viewbinding)
 }

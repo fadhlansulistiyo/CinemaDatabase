@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
+
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
         val hostname = "api.themoviedb.org"
