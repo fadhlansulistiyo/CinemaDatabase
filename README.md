@@ -36,8 +36,8 @@ Cinema Database (CinDes) is an Android application that showcases a collection o
 
 ## Tech Stack
 
-- **Clean Architecture**: Organized into Data, Domain, and Presentation layers for modularity and separation of concerns.
-- **Kotlin**: Primary programming language used for developing the application.
+- **Architecture**: Clean Architecture (Data, Domain, and Presentation layers)
+- **Language**: Kotlin
 - **Dynamic Feature**: Implements a dynamic feature module for the Watchlist feature.
 - **Library Module**: Core functionality is encapsulated within a reusable library module.
 - **Coroutines**: Manages asynchronous programming.
