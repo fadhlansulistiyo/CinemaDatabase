@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.fadhlansulistiyo.cinemadatabase.core.data.Resource
 import com.fadhlansulistiyo.cinemadatabase.core.domain.model.Movie
@@ -14,7 +15,6 @@ import com.fadhlansulistiyo.cinemadatabase.core.ui.NowPlayingAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.PeopleAdapter
 import com.fadhlansulistiyo.cinemadatabase.core.ui.TvAdapter
 import com.fadhlansulistiyo.cinemadatabase.databinding.FragmentHomeBinding
-import com.fadhlansulistiyo.cinemadatabase.presentation.base.BaseFragment
 import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailMovieActivity
 import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailPeopleActivity
 import com.fadhlansulistiyo.cinemadatabase.presentation.detail.DetailTvActivity
@@ -22,7 +22,10 @@ import com.fadhlansulistiyo.cinemadatabase.presentation.utils.AutoScrollViewPage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: HomeViewModel by viewModels()
 
@@ -31,37 +34,62 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private lateinit var peopleAdapter: PeopleAdapter
     private lateinit var autoScrollViewPagerHelper: AutoScrollViewPagerHelper
 
-    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentHomeBinding.inflate(inflater, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerViews()
-        initializeAutoScrollViewPagerHelper()
-        setupObservers()
+
+        if (activity != null) {
+            setupRecyclerViews()
+            initializeAutoScrollViewPagerHelper()
+            setupObservers()
+        }
     }
 
     private fun setupRecyclerViews() {
-        nowPlayingAdapter = NowPlayingAdapter { openDetailActivity(DetailMovieActivity::class.java, it) }
-        tvAdapter = TvAdapter { openDetailActivity(DetailTvActivity::class.java, it) }
-        peopleAdapter = PeopleAdapter { openDetailActivity(DetailPeopleActivity::class.java, it) }
-    }
-
-    private fun openDetailActivity(activityClass: Class<*>, itemId: Int) {
-        Intent(requireContext(), activityClass).apply {
-            putExtra("EXTRA_ID", itemId)
-            startActivity(this)
+        nowPlayingAdapter = NowPlayingAdapter {
+            Intent(activity, DetailMovieActivity::class.java).apply {
+                putExtra(DetailMovieActivity.EXTRA_MOVIE_ID, it)
+                startActivity(this)
+            }
+        }
+        tvAdapter = TvAdapter {
+            Intent(activity, DetailTvActivity::class.java).apply {
+                putExtra(DetailTvActivity.EXTRA_TV_ID, it)
+                startActivity(this)
+            }
+        }
+        peopleAdapter = PeopleAdapter {
+            Intent(activity, DetailPeopleActivity::class.java).apply {
+                putExtra(DetailPeopleActivity.EXTRA_PEOPLE_ID, it)
+                startActivity(this)
+            }
         }
     }
 
     private fun initializeAutoScrollViewPagerHelper() {
-        autoScrollViewPagerHelper = AutoScrollViewPagerHelper(binding.viewPagerNowPlaying, 3000L, 200L)
+        val viewPager = binding.viewPagerNowPlaying
+        autoScrollViewPagerHelper =
+            AutoScrollViewPagerHelper(viewPager, scrollInterval = 3000L, scrollDuration = 200L)
     }
 
     private fun setupObservers() {
-        viewModel.getNowPlaying.observe(viewLifecycleOwner, ::handleNowPlayingResource)
-        viewModel.getAiringTodayTv.observe(viewLifecycleOwner, ::handleAiringTodayTvResource)
-        viewModel.getTrendingPeople.observe(viewLifecycleOwner, ::handleTrendingPeopleResource)
+        viewModel.getNowPlaying.observe(viewLifecycleOwner) { resource ->
+            handleNowPlayingResource(resource)
+        }
+        viewModel.getAiringTodayTv.observe(viewLifecycleOwner) { resource ->
+            handleAiringTodayTvResource(resource)
+        }
+        viewModel.getTrendingPeople.observe(viewLifecycleOwner) { resource ->
+            handleTrendingPeopleResource(resource)
+        }
     }
 
     private fun handleNowPlayingResource(resource: Resource<List<Movie>>) {
@@ -147,5 +175,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.main.removeAllViews()
         autoScrollViewPagerHelper.stopAutoScroll()
         super.onDestroyView()
+        _binding = null
     }
 }
